@@ -1,0 +1,65 @@
+\documentclass[a4paper,12pt,titlepage]{article}
+
+% \usepackage{indentfirst}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=blue,
+	urlcolor=black
+}
+
+\renewcommand{\contentsname}{Sadržaj}
+
+\begin{document}
+	\begin{titlepage}
+		\title{Automatsko prepoznavanje teksta sa tablica automobila}
+		\author{Autor: Andrija Urošević \\ \footnotesize Mentor: dr Nemanja Ilić}
+		\date{Mart 2024}
+		\maketitle
+	\end{titlepage}
+	
+	\pagenumbering{roman}
+	
+	\section*{Predgovor}
+	\addcontentsline{toc}{section}{Predgovor}
+	Ovo je predgovor. 
+	\newpage
+	
+	\tableofcontents
+	\newpage
+	
+	\pagenumbering{arabic}
+	
+	\section*{Sažetak}
+	\addcontentsline{toc}{section}{Sažetak}
+	Sažeti pregled o transformerima i zadatku automatskog prepoznavanja teksta sa tablica automobila.
+	\newpage
+	
+	\section{Uvod}
+	\newpage
+	
+	\section{Transformeri}
+	\newpage
+	
+	\section{Primene}
+	\newpage
+	
+	\section{Implementacija}
+	\subsection{Tehnologije}
+	\subsubsection{FastAPI}
+	\subsubsection{Docker}
+	\subsection{Rezultati}
+	
+	\section{Buduća poboljšanja}
+	\newpage
+	
+	\section{Zaključak}
+	\newpage
+	
+	\section*{Literatura}
+	\addcontentsline{toc}{section}{Literatura}
+	\newpage
+\end{document}
