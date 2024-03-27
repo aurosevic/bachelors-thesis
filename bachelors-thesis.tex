@@ -1,7 +1,8 @@
 \documentclass[a4paper,12pt,titlepage]{article}
 
-% \usepackage{indentfirst}
 \usepackage{hyperref}
+\usepackage{babel}
+\usepackage{lmodern}
 \hypersetup{
 	colorlinks,
 	citecolor=black,
@@ -13,9 +14,10 @@
 \renewcommand{\contentsname}{Sadržaj}
 
 \begin{document}
+	\emergencystretch 3em
 	\begin{titlepage}
-		\title{Automatsko prepoznavanje teksta sa tablica automobila}
-		\author{\\\\Autor: Andrija Urošević\and \\\\Mentor: dr Nemanja Ilić\\\\ \and Računarski fakultet}
+		\title{Automatsko prepoznavanje teksta sa tablica automobila koristeći SVTR}
+		\author{\\\\Student: Andrija Urošević\and \\\\Mentor: dr Nemanja Ilić\\\\ \and Računarski fakultet}
 		\date{Mart 2024}
 		\maketitle
 	\end{titlepage}
@@ -24,7 +26,7 @@
 	
 	\section*{Predgovor}
 	\addcontentsline{toc}{section}{Predgovor}
-	Ovo je predgovor. 
+	Prostor za predgovor. 
 	\newpage
 	
 	\tableofcontents
@@ -34,23 +36,55 @@
 	
 	\section*{Sažetak}
 	\addcontentsline{toc}{section}{Sažetak}
-	Sažeti pregled o transformerima i zadatku automatskog prepoznavanja teksta sa tablica automobila.
+	Automatsko prepoznavanje teksta sa tablica automobila je proces identifikacije i izdvajanja teksta koji se nalazi na registracionim tablicama vozila. Ovaj zadatak je važan u mnogim aplikacijama, uključujući nadzor saobraćaja, bezbednost, praćenje vozila i upravljanje saobraćajem. Korišćenjem SVTR (Jedan Vizuelni Model za Prepoznavanje Teksta na Sceni) pristupa, u poređenju sa tradicionalnim pristupom koji koristi dva odvojena modela - jedan za izdvajanje karakteristika slike i drugi za dekodiranje teksta - SVTR koristi jedan vizuelni model. Ovaj model koristi tokenizaciju slike po delovima kako bi podelio tekst sa slike na male delove (karakteristične komponente). Nakon toga, karakteristične komponente prolaze kroz seriju hijerarhijskih faza gde se vrše operacije mešanja, spajanja i kombinovanja. Konačno, koristi se jednostavna linearna predikcija za prepoznavanje karaktera. Ovaj pristup omogućava postizanje konkurentne tačnosti na zadacima prepoznavanja teksta sa tablica automobila, dok istovremeno pruža veću efikasnost u poređenju sa tradicionalnim metodama.
 	\newpage
 	
 	\section{Uvod}
+	Automatsko prepoznavanje teksta je ključna tehnologija u oblasti kompjuterske vizije koja ima široku primenu u različitim aplikacijama, uključujući prepoznavanje registarskih tablica vozila, prepoznavanje rukopisa, prepoznavanje dokumenata i mnoge druge. Glavni cilj automatskog prepoznavanja teksta je pretvaranje vizuelno prikazanog teksta u format koji računari mogu razumeti i obrađivati, omogućavajući im da interpretiraju tekstualne informacije slično kao što to radi čovek.
+	\newline
+	
+	Tokom 1990-ih, široko usvajanje ličnih računara i interneta dovelo je do značajnog povećanja korišćenja tehnologije prepoznavanja teksta. Sistemi prepoznavanja teksta su se koristili za digitalizaciju knjiga, časopisa i drugih štampanih materijala, čineći lakšim pretragu i pristup informacijama. Ova tehnologija je takođe korišćena za automatizaciju procesa unosa podataka u industrijama poput finansija, zdravstva i vlade.
+	
+	Početkom 2000-ih, tehnologija prepoznavanja teksta napredovala je sa uvođenjem novih algoritama i poboljšanjem hardvera. Sistemi za prepoznavanje teksta postali su precizniji i sposobni da prepoznaju širi spektar karaktera i jezika. To je otvorilo put za široko usvajanje tehnologije prepoznavanja teksta u različitim industrijama i aplikacijama, poput upravljanja dokumentima i obrade faktura. U ovom vremenskom periodu, Google je lansirao Google Books, koristeći prepoznavanje teksta za digitalizaciju desetina miliona knjiga i čineći njihov tekst pretraživim.
+	\newline
+	
+	Tradicionalni pristupi ovom zadatku obično uključuju korišćenje više modela i složenih arhitektura, što može dovesti do povećane složenosti, troškova obrade i vremena izvršavanja. U poslednjih nekoliko godina, napredak dubokog učenja doveo je do značajnog poboljšanja performansi sistema za prepoznavanje teksta.
 	\newpage
 	
-	\section{Transformeri}
+	\section{Istorijski pregled prepoznavanja teksta}
+	\url{https://people.ischool.berkeley.edu/~buckland/statistical.html}
+	\newline
+	\url{https://www.historyofinformation.com/detail.php?id=684}
+	\subsection{Tesseract OCR}
+	\subsection{CNN}
+	RNN
+	\subsection{SVTR}
+	Tradicionalni modeli za prepoznavanje teksta obično uključuju dve odvojene komponente: vizuelni model za izdvajanje karakteristika sa slike i sekvencijalni model za dekodiranje izdvojenih karakteristika u tekst. SVTR eliminiše potrebu za sekvencijalnim modelom u potpunosti, čineći ga jednostavnijim i efikasnijim.
+	
+	Uklanjanjem komponente sekvencijalnog modeliranja, SVTR postiže konkurentnu preciznost na zadacima prepoznavanja teksta, pružajući veću efikasnost u poređenju sa tradicionalnim metodama.
+	
 	\newpage
 	
 	\section{Primene}
+	Slanje upozorenja za parking
+	\newpage
+	
+	\section{Prikupljanje podataka i rad sa podacima}
+	\subsection{Upoznavanje sa podacima}
+	\subsection{Razvrstavanje i čišćenje podataka}
+	\subsection{Pravljenje sintetičkog data seta}
 	\newpage
 	
 	\section{Implementacija}
+	\subsection{Komponente sistema}
+	\subsubsection{Detektor tablica}
+	\subsubsection{Detektor teksta}
+	\subsubsection{Prepoznavanje teksta}
 	\subsection{Tehnologije}
 	\subsubsection{FastAPI}
 	\subsubsection{Docker}
 	\subsection{Rezultati}
+	\newpage
 	
 	\section{Buduća poboljšanja}
 	\newpage
