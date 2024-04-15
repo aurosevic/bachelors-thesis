@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt,titlepage]{article}
+\documentclass[a4paper,12pt]{article}
 
 \usepackage{hyperref}
 \usepackage{babel}
@@ -13,13 +13,31 @@
 
 \renewcommand{\contentsname}{Sadržaj}
 
+\title{Automatsko prepoznavanje teksta sa tablica automobila koristeći Jedan Vizuelni Model za Prepoznavanje Teksta na Sceni}
+\date{}
+
 \begin{document}
 	\emergencystretch 3em
 	\begin{titlepage}
-		\title{Automatsko prepoznavanje teksta sa tablica automobila koristeći SVTR}
-		\author{\\\\Student: Andrija Urošević\and \\\\Mentor: dr Nemanja Ilić\\\\ \and Računarski fakultet}
-		\date{Mart 2024}
-		\maketitle
+		\pagenumbering{gobble} % Remove page numbering
+		\centering
+		{\huge\bfseries \maketitle}
+		
+		{\large
+			\textbf{Student:}
+			Andrija Urošević
+			\par
+%			\hspace{0.7cm}
+			\bigskip
+			\textbf{Mentor:}
+			dr Nemanja Ilić
+		}
+	
+		\vfill
+		{\large Računarski fakultet,\par}
+		{\large Univerzitet Union\par}
+		\bigskip
+		\date{April 2024}
 	\end{titlepage}
 	
 	\pagenumbering{roman}
@@ -36,6 +54,15 @@
 	
 	\section*{Sažetak}
 	\addcontentsline{toc}{section}{Sažetak}
+	Popularni modeli za prepoznavanje teksta sa scene su najčešće građeni od iz dva bloka: vizuelnog modela za ekstrakciju karakteristika i modela za transkripciju teksta iz ekstraktovanih karakteristika. Iako je takva hibridna arhitektura precizna ona ima dve očigledne mane, a to su kompleksnost i smanjena efikasnost. Autori rada predlažu korišćenje Jednog Vizuelnog modela za prepoznavanje teksta na sceni sa prisputom tokenizacije slike, gde se u potpunosti izostavlja sekvencijalno modelovanje. Takav pristup prepoznavanju teksta prvo rastavi tekst sa slike na deliće gde svaki delić predstavlja jednu karakter-komponentu.
+	
+	Predložena metoda, nazvana SVTR, prvo dekomponuje sliku teksta u male segmente nazvane komponente karaktera. Zatim se hijerarhijske faze ponavljaju putem mešanja, spajanja i/ili kombinovanja na nivou komponenti. Globalni i lokalni blokovi mešanja osmišljeni su kako bi percipirali među-karakterske i unutar-karakterske obrasce, što dovodi do opažanja komponenata karaktera na različitim novoima granularnosti. Na taj način, karakteri se prepoznaju jednostavnom linearnom predikcijom.
+	
+	Prepoznavanje teksta na sceni ima za cilj da tekst sa slika konvertuje u digitalni niz karaktera, što prenosi semantiku visokog nivoa ključnu za razumevanje scene. Zadatak prepoznavanja teksta sa scene je izazovan zbog varijacija u: deformacijama teksta, fontovima, preklapanjima rezličitih tekstova, prekompleksnim pozadinama, itd.
+	% TODO: Insert image with different kinds of texts
+	
+	U proteklim godinama uloženi su brojni napori kako bi se poboljšala tačnost prepoznavanja teksta. Moderni pristupi za prepoznavanje teksta, pored tačnosti, takođe uzimaju u obzir i faktore poput brzine izvršavanja modela zbog praktičnih zahteva.
+	\par
 	Automatsko prepoznavanje teksta sa tablica automobila je proces identifikacije i izdvajanja teksta koji se nalazi na registracionim tablicama vozila. Ovaj zadatak je važan u mnogim aplikacijama, uključujući nadzor saobraćaja, bezbednost, praćenje vozila i upravljanje saobraćajem. Korišćenjem SVTR (Jedan Vizuelni Model za Prepoznavanje Teksta na Sceni) pristupa, u poređenju sa tradicionalnim pristupom koji koristi dva odvojena modela - jedan za izdvajanje karakteristika slike i drugi za dekodiranje teksta - SVTR koristi jedan vizuelni model. Ovaj model koristi tokenizaciju slike po delovima kako bi podelio tekst sa slike na male delove (karakteristične komponente). Nakon toga, karakteristične komponente prolaze kroz seriju hijerarhijskih faza gde se vrše operacije mešanja, spajanja i kombinovanja. Konačno, koristi se jednostavna linearna predikcija za prepoznavanje karaktera. Ovaj pristup omogućava postizanje konkurentne tačnosti na zadacima prepoznavanja teksta sa tablica automobila, dok istovremeno pruža veću efikasnost u poređenju sa tradicionalnim metodama.
 	\newpage
 	
@@ -81,6 +108,7 @@
 	\subsubsection{Detektor teksta}
 	\subsubsection{Prepoznavanje teksta}
 	\subsection{Tehnologije}
+	\subsubsection{PaddlePaddle}
 	\subsubsection{FastAPI}
 	\subsubsection{Docker}
 	\subsection{Rezultati}
