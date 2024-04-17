@@ -1,7 +1,8 @@
 \documentclass[a4paper,12pt]{article}
 
 \usepackage{hyperref}
-\usepackage{babel}
+\usepackage[serbian]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \hypersetup{
 	colorlinks,
@@ -12,6 +13,9 @@
 }
 
 \renewcommand{\contentsname}{Sadržaj}
+
+%\bibliographystyle{IEEEannot}
+%\bibliography{annot}
 
 \title{Automatsko prepoznavanje teksta sa tablica automobila koristeći Jedan Vizuelni Model za Prepoznavanje Teksta na Sceni}
 \date{}
@@ -43,8 +47,8 @@
 	\pagenumbering{roman}
 	
 	\section*{Predgovor}
-	\addcontentsline{toc}{section}{Predgovor}
-	Prostor za predgovor. 
+%	\addcontentsline{toc}{section}{Predgovor}
+	Prostor za predgovor.
 	\newpage
 	
 	\tableofcontents
@@ -53,7 +57,8 @@
 	\pagenumbering{arabic}
 	
 	\section*{Sažetak}
-	\addcontentsline{toc}{section}{Sažetak}
+%	\addcontentsline{toc}{section}{Sažetak}
+%	\noindent % Use this if the [serbian]{babel} is used if you want first paragraph not to be indented.
 	Popularni modeli za prepoznavanje teksta sa scene su najčešće građeni od iz dva bloka: vizuelnog modela za ekstrakciju karakteristika i modela za transkripciju teksta iz ekstraktovanih karakteristika. Iako je takva hibridna arhitektura precizna ona ima dve očigledne mane, a to su kompleksnost i smanjena efikasnost. Autori rada predlažu korišćenje Jednog Vizuelnog modela za prepoznavanje teksta na sceni sa prisputom tokenizacije slike, gde se u potpunosti izostavlja sekvencijalno modelovanje. Takav pristup prepoznavanju teksta prvo rastavi tekst sa slike na deliće gde svaki delić predstavlja jednu karakter-komponentu.
 	
 	Predložena metoda, nazvana SVTR, prvo dekomponuje sliku teksta u male segmente nazvane komponente karaktera. Zatim se hijerarhijske faze ponavljaju putem mešanja, spajanja i/ili kombinovanja na nivou komponenti. Globalni i lokalni blokovi mešanja osmišljeni su kako bi percipirali među-karakterske i unutar-karakterske obrasce, što dovodi do opažanja komponenata karaktera na različitim novoima granularnosti. Na taj način, karakteri se prepoznaju jednostavnom linearnom predikcijom.
@@ -62,6 +67,8 @@
 	% TODO: Insert image with different kinds of texts
 	
 	U proteklim godinama uloženi su brojni napori kako bi se poboljšala tačnost prepoznavanja teksta. Moderni pristupi za prepoznavanje teksta, pored tačnosti, takođe uzimaju u obzir i faktore poput brzine izvršavanja modela zbog praktičnih zahteva.
+	
+	Metodološki, prepoznavanje teksta na sceni može se posmatrati kao prelazak iz modaliteta slike u niz karaktera. Obično, prepoznavanje teksta se sastoji od dva osnovna dela, vizuelnog modela za ekstrakciju karakteristika i sekvencijskog modela za transkripciju teksta.
 	\par
 	Automatsko prepoznavanje teksta sa tablica automobila je proces identifikacije i izdvajanja teksta koji se nalazi na registracionim tablicama vozila. Ovaj zadatak je važan u mnogim aplikacijama, uključujući nadzor saobraćaja, bezbednost, praćenje vozila i upravljanje saobraćajem. Korišćenjem SVTR (Jedan Vizuelni Model za Prepoznavanje Teksta na Sceni) pristupa, u poređenju sa tradicionalnim pristupom koji koristi dva odvojena modela - jedan za izdvajanje karakteristika slike i drugi za dekodiranje teksta - SVTR koristi jedan vizuelni model. Ovaj model koristi tokenizaciju slike po delovima kako bi podelio tekst sa slike na male delove (karakteristične komponente). Nakon toga, karakteristične komponente prolaze kroz seriju hijerarhijskih faza gde se vrše operacije mešanja, spajanja i kombinovanja. Konačno, koristi se jednostavna linearna predikcija za prepoznavanje karaktera. Ovaj pristup omogućava postizanje konkurentne tačnosti na zadacima prepoznavanja teksta sa tablica automobila, dok istovremeno pruža veću efikasnost u poređenju sa tradicionalnim metodama.
 	\newpage
@@ -79,13 +86,15 @@
 	\newpage
 	
 	\section{Istorijski pregled prepoznavanja teksta}
-	\url{https://people.ischool.berkeley.edu/~buckland/statistical.html}
-	\newline
-	\url{https://www.historyofinformation.com/detail.php?id=684}
-	\subsection{Tesseract OCR}
-	\subsection{CNN}
-	RNN
-	\subsection{SVTR}
+	
+	Prvi primeri i prva faza tehnologije optičkog prepoznavanja karaktera(OCR) pojavili su se sredinom 20. veka, pretežno tokom 1950-ih i 1960-ih godina. Ovo doba obeležilo je razvoj ranih sistema OCR-a, koji su koristili osnovne tehnike prepoznavanja obrazaca kako bi prepoznali mašinski odštampane karaktere. Ovi sistemi su često bili ograničeni na prepoznavanje određenih fontova i imali su relativno nisku stopu tačnosti u poređenju sa modernom OCR tehnologijom. Glavna primena im je bila čitanje standardizovanih obrazaca i dokumenata sa jasno štampanim tekstom i poznatim fontom.
+	
+	Druga faza tehnologije optičkog prepoznavanja karaktera dogodila se krajem 20. veka i početkom 21. veka, počevši oko 1970-ih i nastavljajući se u 2000-ima. Ovo doba je obeleženo značajnim napretkom u tehnologiji OCR-a, uključujući razvoj sofisticiranih algoritama i tehnika za prepoznavanje karaktera. Ovi napredci doveli su do veće tačnosti i mogućnosti prepoznavanja šireg spektra fontova, jezika i rasporeda dokumenata. Dodatno, integracija pristupa mašinskog učenja i neuronskih mreža doprinela je daljem poboljšanju performansi OCR-a. U ovoj fazi došlo je do primene OCR sistema u širem spektru aplikacija, od skeniranja i konverzije dokumenata u digitalno arhiviranje, do automatizovanog unosa podataka i ekstrakcije teksta u različitim industrijama.
+	
+	Treća faza tehnologije optičkog prepoznavanja karaktera je trenutno aktuelna i predstavlja trenutno stanje napretka u sistemima OCR-a. Ovo doba karakteriše integracija najnovijih tehnologija poput dubokog učenja, konvolucionih neuronskih mreža (CNN) i rekurentnih neuronskih mreža (RNN) u algoritme OCR-a. Ove napredne tehnike značajno su poboljšale tačnost i pouzdanost sistema OCR-a, omogućavajući prepoznavanje složenih dokumenata sa različitim fontovima, rasporedima i jezicima. Osim toga, pojava OCR usluga zasnovanih na cloud-u i integracija OCR funkcionalnosti u mobilne uređaje učinili su OCR dostupnijim i svestranijim nego ikad ranije. Treća faza takođe obuhvata napretke u analizi i razumevanju dokumenata, omogućavajući OCR sistemima da izvlače ne samo tekst već i strukturalne i semantičke informacije iz dokumenata, što dovodi do poboljšanih sposobnosti obrade dokumenata i pretraživanja informacija.
+
+	\subsection{Korišćenje Jednog Vizuelnog Modela za Prepoznavanje Teksta na Sceni}
+	
 	Tradicionalni modeli za prepoznavanje teksta obično uključuju dve odvojene komponente: vizuelni model za izdvajanje karakteristika sa slike i sekvencijalni model za dekodiranje izdvojenih karakteristika u tekst. SVTR eliminiše potrebu za sekvencijalnim modelom u potpunosti, čineći ga jednostavnijim i efikasnijim.
 	
 	Uklanjanjem komponente sekvencijalnog modeliranja, SVTR postiže konkurentnu preciznost na zadacima prepoznavanja teksta, pružajući veću efikasnost u poređenju sa tradicionalnim metodama.
@@ -109,8 +118,8 @@
 	\subsubsection{Prepoznavanje teksta}
 	\subsection{Tehnologije}
 	\subsubsection{PaddlePaddle}
-	\subsubsection{FastAPI}
 	\subsubsection{Docker}
+	\subsubsection{FastAPI}
 	\subsection{Rezultati}
 	\newpage
 	
@@ -121,6 +130,6 @@
 	\newpage
 	
 	\section*{Literatura}
-	\addcontentsline{toc}{section}{Literatura}
+%	\addcontentsline{toc}{section}{Literatura}
 	\newpage
 \end{document}
