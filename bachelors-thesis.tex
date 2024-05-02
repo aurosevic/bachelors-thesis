@@ -4,6 +4,9 @@
 \usepackage[serbian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{caption}
+
 \hypersetup{
 	colorlinks,
 	citecolor=black,
@@ -59,44 +62,33 @@
 	\section*{Sažetak}
 	\addcontentsline{toc}{section}{Sažetak}
 	\noindent
-	Automatsko prepoznavanje teksta sa registarskih tablica automobila ključno je za savremene sisteme nadzora saobraćaja i obezbeđenje sigurnosti na putevima. Identifikacija ovih tablica ima različite primene, uključujući praćenje ukradenih vozila, naplatu putarine, sigurnosne provere i nadzor saobraćaja. U proteklim decenijama, napredak u oblasti obrade slike i mašinskog učenja omogućio je razvoj efikasnih sistema za automatsko prepoznavanje teksta sa tablica vozila. Primena dubokih neuronskih mreža i algoritama dubokog učenja omogućila je visoku tačnost prepoznavanja teksta, čak i u složenim scenama i različitim uslovima snimanja. Ovaj rad istražuje metode i tehnike za automatsko prepoznavanje teksta sa tablica automobila, sa ciljem razvoja sistema koji može precizno identifikovati registarske tablice u realnom vremenu. Eksperimentalni rezultati prikazuju performanse sistema u stvarnim uslovima i ukazuju na mogućnosti za primenu u različitim oblastima, uključujući nadzor saobraćaja, bezbednosne provere i identifikaciju vozila.
+	Automatsko prepoznavanje teksta sa registarskih tablica automobila od izuzetne je važnositi za savremene sisteme nadzora saobraćaja, praćenje vozila i obezbeđenje sigurnosti na putevima. Identifikacija registarskih tablica ima različite primene, uključujući praćenje ukradenih vozila, naplatu putarine, sigurnosne provere i nadzor saobraćaja. U proteklim decenijama, napredak u oblasti obrade slike i mašinskog učenja omogućio je razvoj efikasnih sistema za automatsko prepoznavanje teksta sa tablica vozila. Primena dubokih neuronskih mreža i algoritama dubokog učenja omogućila je visoku tačnost prepoznavanja teksta, čak i u složenim scenama i različitim uslovima snimanja. Ovaj rad istražuje metode i tehnike za automatsko prepoznavanje teksta sa tablica automobila, sa ciljem razvoja sistema koji može precizno identifikovati registarske tablice u realnom vremenu. Eksperimentalni rezultati prikazuju performanse sistema u stvarnim uslovima i ukazuju na mogućnosti za primenu u različitim oblastima, uključujući nadzor saobraćaja, bezbednosne provere i identifikaciju vozila.
 	\newpage
 	
 	\section{Uvod}
-	Automatsko prepoznavanje registarskih tablica sa slika obuhvata nekoliko ključnih koraka koji se odvijaju u procesu od prikupljanja podataka do konačne integracije sistema u softver za prepoznavanje tablica automobila.
+	Automatsko prepoznavanje teksta je ključna tehnologija u oblasti kompjuterske vizije koja ima široku primenu u različitim aplikacijama, uključujući prepoznavanje registarskih tablica vozila, prepoznavanje rukopisa, prepoznavanje dokumenata i mnoge druge. Glavni cilj automatskog prepoznavanja teksta je pretvaranje vizuelno prikazanog teksta u format koji računari mogu razumeti i obrađivati, omogućavajući im da interpretiraju tekstualne informacije slično kao što to radi čovek.
+		
+	Automatsko prepoznavanje teksta sa registarskih tablica automobila obuhvata nekoliko ključnih koraka koji se odvijaju u procesu od prikupljanja podataka do konačne integracije sistema u softver za prepoznavanje tablica automobila.
 	
 	Prikupljanje raznovrsnog skupa slika registarskih tablica vozila ključno je za uspešno treniranje modela. Ove slike treba da obuhvataju različite tipove tablica, različite uslove osvetljenja i pozadine kako bi model bio što robustniji. Nakon prikupljanja, slike treba pažljivo razvrstati na one koje su pogodne za treniranje modela i one koje nisu. Ovo uključuje filtriranje slika sa veoma lošim kvalitetom, zamućenim ili nejasnim tablicama. Kako bi se obogatio skup podataka i poboljšala generalizacija modela, potrebno je primeniti tehnike augmentacije podataka. Ovo uključuje manipulaciju sa slikama kao što su rotacija, promena osvetljenja, izobličenja i dodavanje šuma. Pored toga, sintetički podaci se mogu generisati korišćenjem programa za generisanje tablica sa tekstom. Svaka slika mora biti precizno označena sa tačnim tekstualnim sadržajem registarske tablice kako bi se koristila za obuku modela. Ovaj proces može biti ručan ili se može koristiti alat za automatsko lejbelovanje. Nakon pripreme podataka, sledi faza treniranja mreže za prepoznavanje teksta. U ovoj fazi, model se obučava nad označenim podacima kako bi naučio da prepoznaje tekst sa slika tablica. Kada je model obučen, integriše se u softver za prepoznavanje tablica automobila. Ovaj softver obično obuhvata module za detekciju tablica, detekciju teksta na tablicama, formatiranje izlaza i druge funkcionalnosti.
 	
 	Kako bi omogućili portabilnost i lakšu distribuciju sistema za prepoznavanje tablica, koristi se Docker kontejner. Docker omogućava pakovanje softverskih aplikacija i njihovo pokretanje u izolovanim okruženjima. Još jedna od bitnih komponenata je Python web framework - FastAPI koji omogućava brzo kreiranje API-ja za komunikaciju sa softverskim komponentama. Integracija Docker-a i FastAPI modula omogućava da se servis za prepoznavanje teksta koristi nezavisno od platforme na kojoj se izvršava, čineći ga pristupačnim i jednostavnim za upotrebu u različitim okruženjima.
 	\newpage
-
-	% START: Text to be arranged in sections
 	
-	Popularni modeli za prepoznavanje teksta sa scene su najčešće građeni od iz dva bloka: vizuelnog modela za ekstrakciju karakteristika i modela za transkripciju teksta iz ekstraktovanih karakteristika. Iako je takva hibridna arhitektura precizna ona ima dve očigledne mane, a to su kompleksnost i smanjena efikasnost. Autori rada predlažu korišćenje Jednog Vizuelnog modela za prepoznavanje teksta na sceni sa prisputom tokenizacije slike, gde se u potpunosti izostavlja sekvencijalno modelovanje. Takav pristup prepoznavanju teksta prvo rastavi tekst sa slike na deliće gde svaki delić predstavlja jednu karakter-komponentu.
-	
-	Predložena metoda, nazvana SVTR, prvo dekomponuje sliku teksta u male segmente nazvane komponente karaktera. Zatim se hijerarhijske faze ponavljaju putem mešanja, spajanja i/ili kombinovanja na nivou komponenti. Globalni i lokalni blokovi mešanja osmišljeni su kako bi percipirali među-karakterske i unutar-karakterske obrasce, što dovodi do opažanja komponenata karaktera na različitim novoima granularnosti. Na taj način, karakteri se prepoznaju jednostavnom linearnom predikcijom.
-	
+	\section{O prepoznavanju teksta}
 	Prepoznavanje teksta na sceni ima za cilj da tekst sa slika konvertuje u digitalni niz karaktera, što prenosi semantiku visokog nivoa ključnu za razumevanje scene. Zadatak prepoznavanja teksta sa scene je izazovan zbog varijacija u: deformacijama teksta, fontovima, preklapanjima rezličitih tekstova, prekompleksnim pozadinama, itd.
-	% TODO: Insert image with different kinds of texts
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics{assets/text.png}
+		\caption{Tekst na sceni sa različitim fontovima, pozadinama, uglovima, osvetljenjem i slično}
+		\label{fig:my_figure} % Optional label for referencing the figure
+	\end{figure}
 	
 	U proteklim godinama uloženi su brojni napori kako bi se poboljšala tačnost prepoznavanja teksta. Moderni pristupi za prepoznavanje teksta, pored tačnosti, takođe uzimaju u obzir i faktore poput brzine izvršavanja modela zbog praktičnih zahteva.
 	
 	Metodološki, prepoznavanje teksta na sceni može se posmatrati kao prelazak iz modaliteta slike u niz karaktera. Obično, prepoznavanje teksta se sastoji od dva osnovna dela, vizuelnog modela za ekstrakciju karakteristika i sekvencijskog modela za transkripciju teksta.
-	\par
-	Automatsko prepoznavanje teksta sa tablica automobila je proces identifikacije i izdvajanja teksta koji se nalazi na registracionim tablicama vozila. Ovaj zadatak je važan u mnogim aplikacijama, uključujući nadzor saobraćaja, bezbednost, praćenje vozila i upravljanje saobraćajem. Korišćenjem SVTR (Jedan Vizuelni Model za Prepoznavanje Teksta na Sceni) pristupa, u poređenju sa tradicionalnim pristupom koji koristi dva odvojena modela - jedan za izdvajanje karakteristika slike i drugi za dekodiranje teksta - SVTR koristi jedan vizuelni model. Ovaj model koristi tokenizaciju slike po delovima kako bi podelio tekst sa slike na male delove (karakteristične komponente). Nakon toga, karakteristične komponente prolaze kroz seriju hijerarhijskih faza gde se vrše operacije mešanja, spajanja i kombinovanja. Konačno, koristi se jednostavna linearna predikcija za prepoznavanje karaktera. Ovaj pristup omogućava postizanje konkurentne tačnosti na zadacima prepoznavanja teksta sa tablica automobila, dok istovremeno pruža veću efikasnost u poređenju sa tradicionalnim metodama.
-	
-	Automatsko prepoznavanje teksta je ključna tehnologija u oblasti kompjuterske vizije koja ima široku primenu u različitim aplikacijama, uključujući prepoznavanje registarskih tablica vozila, prepoznavanje rukopisa, prepoznavanje dokumenata i mnoge druge. Glavni cilj automatskog prepoznavanja teksta je pretvaranje vizuelno prikazanog teksta u format koji računari mogu razumeti i obrađivati, omogućavajući im da interpretiraju tekstualne informacije slično kao što to radi čovek.
-	\newline
-	
-	Tokom 1990-ih, široko usvajanje ličnih računara i interneta dovelo je do značajnog povećanja korišćenja tehnologije prepoznavanja teksta. Sistemi prepoznavanja teksta su se koristili za digitalizaciju knjiga, časopisa i drugih štampanih materijala, čineći lakšim pretragu i pristup informacijama. Ova tehnologija je takođe korišćena za automatizaciju procesa unosa podataka u industrijama poput finansija, zdravstva i vlade.
-	
-	Početkom 2000-ih, tehnologija prepoznavanja teksta napredovala je sa uvođenjem novih algoritama i poboljšanjem hardvera. Sistemi za prepoznavanje teksta postali su precizniji i sposobni da prepoznaju širi spektar karaktera i jezika. To je otvorilo put za široko usvajanje tehnologije prepoznavanja teksta u različitim industrijama i aplikacijama, poput upravljanja dokumentima i obrade faktura. U ovom vremenskom periodu, Google je lansirao Google Books, koristeći prepoznavanje teksta za digitalizaciju desetina miliona knjiga i čineći njihov tekst pretraživim.
-	\newline
-	
-	Tradicionalni pristupi ovom zadatku obično uključuju korišćenje više modela i složenih arhitektura, što može dovesti do povećane složenosti, troškova obrade i vremena izvršavanja. U poslednjih nekoliko godina, napredak dubokog učenja doveo je do značajnog poboljšanja performansi sistema za prepoznavanje teksta.
 	\newpage
-	
-	% END: Text to be arranged in sections
 	
 	\section{Istorijski pregled prepoznavanja teksta}
 	
@@ -108,7 +100,7 @@
 
 	\subsection{Korišćenje Jednog Vizuelnog Modela za Prepoznavanje Teksta na Sceni}
 	
-	Tradicionalni modeli za prepoznavanje teksta obično uključuju dve odvojene komponente: vizuelni model za izdvajanje karakteristika sa slike i sekvencijalni model za dekodiranje izdvojenih karakteristika u tekst. SVTR eliminiše potrebu za sekvencijalnim modelom u potpunosti, čineći ga jednostavnijim i efikasnijim.
+	Tradicionalni modeli za prepoznavanje teksta obično uključuju dve odvojene komponente: vizuelni model za izdvajanje karakteristika sa slike i sekvencijalni model za dekodiranje izdvojenih karakteristika u tekst. Jedan vizuelni model za prepoznavanje teksta na sceni(SVTR) eliminiše potrebu za sekvencijalnim modelom u potpunosti, čineći ga jednostavnijim i efikasnijim.
 	
 	Uklanjanjem komponente sekvencijalnog modeliranja, SVTR postiže konkurentnu preciznost na zadacima prepoznavanja teksta, pružajući veću efikasnost u poređenju sa tradicionalnim metodama.
 	
@@ -122,6 +114,8 @@
 	\subsection{Upoznavanje sa podacima}
 	\subsection{Razvrstavanje i čišćenje podataka}
 	\subsection{Pravljenje sintetičkog data seta}
+	\subsubsection{Generisanje pozadina tablica}
+	\subsubsection{Generisanje teskta na tablicama}
 	\newpage
 	
 	\section{Implementacija}
