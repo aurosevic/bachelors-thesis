@@ -44,7 +44,7 @@
 		{\large Računarski fakultet,\par}
 		{\large Univerzitet Union\par}
 		\bigskip
-		\date{April 2024}
+		\date{Maj 2024}
 	\end{titlepage}
 	
 	\pagenumbering{roman}
@@ -75,14 +75,15 @@
 	Kako bi omogućili portabilnost i lakšu distribuciju sistema za prepoznavanje tablica, koristi se Docker kontejner. Docker omogućava pakovanje softverskih aplikacija i njihovo pokretanje u izolovanim okruženjima. Još jedna od bitnih komponenata je Python web framework - FastAPI koji omogućava brzo kreiranje API-ja za komunikaciju sa softverskim komponentama. Integracija Docker-a i FastAPI modula omogućava da se servis za prepoznavanje teksta koristi nezavisno od platforme na kojoj se izvršava, čineći ga pristupačnim i jednostavnim za upotrebu u različitim okruženjima.
 	\newpage
 	
-	\section{O prepoznavanju teksta}
-	Prepoznavanje teksta na sceni ima za cilj da tekst sa slika konvertuje u digitalni niz karaktera, što prenosi semantiku visokog nivoa ključnu za razumevanje scene. Zadatak prepoznavanja teksta sa scene je izazovan zbog varijacija u: deformacijama teksta, fontovima, preklapanjima rezličitih tekstova, prekompleksnim pozadinama, itd.
+	\section{Prepoznavanje teksta}
+	\subsection{Uvod u prepoznavanje teksta}
+	Prepoznavanje teksta na sceni ima za cilj da tekst sa slika konvertuje u digitalni niz karaktera, što prenosi semantiku visokog nivoa ključnu za razumevanje scene. Zadatak prepoznavanja teksta sa scene je izazovan zbog varijacija u: deformacijama teksta, fontovima, preklapanjima različitih tekstova, prekompleksnim pozadinama, itd. Dodatno, otežavajući faktor može biti i to što se tekst može pojaviti pod različitim uglovima.
 	
 	\begin{figure}[h]
 		\centering
 		\includegraphics{assets/text.png}
-		\caption{Tekst na sceni sa različitim fontovima, pozadinama, uglovima, osvetljenjem i slično}
-		\label{fig:my_figure} % Optional label for referencing the figure
+		\caption{Tekst na sceni sa različitim fontovima, pozadinama, osvetljenjem i slično}
+		\label{fig:tekst-na-sceni}
 	\end{figure}
 	
 	U proteklim godinama uloženi su brojni napori kako bi se poboljšala tačnost prepoznavanja teksta. Moderni pristupi za prepoznavanje teksta, pored tačnosti, takođe uzimaju u obzir i faktore poput brzine izvršavanja modela zbog praktičnih zahteva.
@@ -90,7 +91,7 @@
 	Metodološki, prepoznavanje teksta na sceni može se posmatrati kao prelazak iz modaliteta slike u niz karaktera. Obično, prepoznavanje teksta se sastoji od dva osnovna dela, vizuelnog modela za ekstrakciju karakteristika i sekvencijskog modela za transkripciju teksta.
 	\newpage
 	
-	\section{Istorijski pregled prepoznavanja teksta}
+	\subsection{Istorijski pregled prepoznavanja teksta}
 	
 	Prvi primeri i prva faza tehnologije optičkog prepoznavanja karaktera(OCR) pojavili su se sredinom 20. veka, pretežno tokom 1950-ih i 1960-ih godina. Ovo doba obeležilo je razvoj ranih sistema OCR-a, koji su koristili osnovne tehnike prepoznavanja obrazaca kako bi prepoznali mašinski odštampane karaktere. Ovi sistemi su često bili ograničeni na prepoznavanje određenih fontova i imali su relativno nisku stopu tačnosti u poređenju sa modernom OCR tehnologijom. Glavna primena im je bila čitanje standardizovanih obrazaca i dokumenata sa jasno štampanim tekstom i poznatim fontom.
 	
@@ -103,14 +104,15 @@
 	Tradicionalni modeli za prepoznavanje teksta obično uključuju dve odvojene komponente: vizuelni model za izdvajanje karakteristika sa slike i sekvencijalni model za dekodiranje izdvojenih karakteristika u tekst. Jedan vizuelni model za prepoznavanje teksta na sceni(SVTR) eliminiše potrebu za sekvencijalnim modelom u potpunosti, čineći ga jednostavnijim i efikasnijim.
 	
 	Uklanjanjem komponente sekvencijalnog modeliranja, SVTR postiže konkurentnu preciznost na zadacima prepoznavanja teksta, pružajući veću efikasnost u poređenju sa tradicionalnim metodama.
+	itd...
 	
 	\newpage
 	
 	\section{Primene}
-	Slanje upozorenja za parking
+%	Slanje upozorenja za parking
 	\newpage
 	
-	\section{Prikupljanje podataka i rad sa podacima}
+	\section{Prikupljanje i rad sa podacima}
 	\subsection{Upoznavanje sa podacima}
 	\subsection{Razvrstavanje i čišćenje podataka}
 	\subsection{Pravljenje sintetičkog data seta}
@@ -119,6 +121,7 @@
 	\newpage
 	
 	\section{Implementacija}
+	\subsection{Treniranje modela prepoznavanja teksta}
 	\subsection{Komponente sistema}
 	\subsubsection{Detektor tablica}
 	\subsubsection{Detektor teksta}
@@ -127,7 +130,9 @@
 	\subsubsection{PaddlePaddle}
 	\subsubsection{Docker}
 	\subsubsection{FastAPI}
-	\subsection{Rezultati}
+	\newpage
+	
+	\section{Rezultati}
 	\newpage
 	
 	\section{Buduća poboljšanja}
