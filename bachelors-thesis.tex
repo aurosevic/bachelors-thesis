@@ -1,11 +1,21 @@
 \documentclass[a4paper,12pt]{article}
 
 \usepackage{hyperref}
+\usepackage{cmsrb}
+\usepackage[T1]{fontenc}
 \usepackage[serbian]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{csquotes}
 \usepackage{lmodern}
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage[
+	backend=biber,
+	style=alphabetic,
+	sorting=ynt
+]{biblatex}
+\addbibresource{citation.bib}
+\bibliography{citation}
 
 \hypersetup{
 	colorlinks,
@@ -17,11 +27,9 @@
 
 \renewcommand{\contentsname}{Sadržaj}
 
-%\bibliographystyle{IEEEannot}
-%\bibliography{annot}
-
-\title{Automatsko prepoznavanje teksta sa tablica automobila koristeći Jedan Vizuelni Model za Prepoznavanje Teksta na Sceni}
+\title{Automatsko prepoznavanje teksta sa tablica automobila koristeći Jedinstveni Vizuelni Model za Prepoznavanje Teksta na Sceni}
 \date{}
+%\author{Student: {\normalfont Andrija Urošević} \\ \newline Mentor: {\normalfont dr Nemanja Ilić}}
 
 \begin{document}
 	\emergencystretch 3em
@@ -101,9 +109,10 @@
 
 	\subsection{Korišćenje Jednog Vizuelnog Modela za Prepoznavanje Teksta na Sceni}
 	
-	Tradicionalni modeli za prepoznavanje teksta obično uključuju dve odvojene komponente: vizuelni model za izdvajanje karakteristika sa slike i sekvencijalni model za dekodiranje izdvojenih karakteristika u tekst. Jedan vizuelni model za prepoznavanje teksta na sceni(SVTR) eliminiše potrebu za sekvencijalnim modelom u potpunosti, čineći ga jednostavnijim i efikasnijim.
+	Tradicionalni modeli za prepoznavanje teksta obično uključuju dve odvojene komponente: vizuelni model za izdvajanje karakteristika sa slike i sekvencijalni model za dekodiranje izdvojenih karakteristika u tekst. Jedinstveni vizuelni model za prepoznavanje teksta na sceni(SVTR) eliminiše potrebu za sekvencijalnim modelom u potpunosti, čineći ga jednostavnijim i efikasnijim.
 	
 	Uklanjanjem komponente sekvencijalnog modeliranja, SVTR postiže konkurentnu preciznost na zadacima prepoznavanja teksta, pružajući veću efikasnost u poređenju sa tradicionalnim metodama.
+	\cite{du2022svtr}
 	itd...
 	
 	\newpage
@@ -141,7 +150,6 @@
 	\section{Zaključak}
 	\newpage
 	
-	\section*{Literatura}
+	\printbibliography
 	\addcontentsline{toc}{section}{Literatura}
-	\newpage
 \end{document}
