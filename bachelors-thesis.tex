@@ -52,7 +52,7 @@
 		{\large Računarski fakultet,\par}
 		{\large Univerzitet Union\par}
 		\bigskip
-		\date{Maj 2024}
+		\date{Jul 2024}
 	\end{titlepage}
 	
 	\pagenumbering{roman}
@@ -89,7 +89,7 @@
 	
 	\begin{figure}[h]
 		\centering
-		\includegraphics{assets/text.png}
+		\includegraphics[width=\textwidth]{assets/text.png}
 		\caption{Tekst na sceni sa različitim fontovima, pozadinama, osvetljenjem i slično}
 		\label{fig:tekst-na-sceni}
 	\end{figure}
@@ -106,8 +106,25 @@
 	Druga faza tehnologije optičkog prepoznavanja karaktera dogodila se krajem 20. veka i početkom 21. veka, počevši oko 1970-ih i nastavljajući se u 2000-ima. Ovo doba je obeleženo značajnim napretkom u tehnologiji OCR-a, uključujući razvoj sofisticiranih algoritama i tehnika za prepoznavanje karaktera. Ovi napredci doveli su do veće tačnosti i mogućnosti prepoznavanja šireg spektra fontova, jezika i rasporeda dokumenata. Dodatno, integracija pristupa mašinskog učenja i neuronskih mreža doprinela je daljem poboljšanju performansi OCR-a. U ovoj fazi došlo je do primene OCR sistema u širem spektru aplikacija, od skeniranja i konverzije dokumenata u digitalno arhiviranje, do automatizovanog unosa podataka i ekstrakcije teksta u različitim industrijama.
 	
 	Treća faza tehnologije optičkog prepoznavanja karaktera je trenutno aktuelna i predstavlja trenutno stanje napretka u sistemima OCR-a. Ovo doba karakteriše integracija najnovijih tehnologija poput dubokog učenja, konvolucionih neuronskih mreža (CNN) i rekurentnih neuronskih mreža (RNN) u algoritme OCR-a. Ove napredne tehnike značajno su poboljšale tačnost i pouzdanost sistema OCR-a, omogućavajući prepoznavanje složenih dokumenata sa različitim fontovima, rasporedima i jezicima. Osim toga, pojava OCR usluga zasnovanih na cloud-u i integracija OCR funkcionalnosti u mobilne uređaje učinili su OCR dostupnijim i svestranijim nego ikad ranije. Treća faza takođe obuhvata napretke u analizi i razumevanju dokumenata, omogućavajući OCR sistemima da izvlače ne samo tekst već i strukturalne i semantičke informacije iz dokumenata, što dovodi do poboljšanih sposobnosti obrade dokumenata i pretraživanja informacija.
+	
+	\subsection{Arhitekture modela za prpoznavanje teksta na slici}
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\textwidth]{assets/text-recognition-model-architertures.png}
+		\caption{Arhitekture modela za prepoznavanje teksta sa scene}
+		\label{fig:arhitekture-tr-modela}
+	\end{figure}
+	
+	Modeli zasnovani na CNN-RNN \cite{shi2015endtoend} prvo koriste CNN za ekstrakciju karakteristika. Karakteristike se zatim preoblikuju u sekvencu koju BiLSTM modeluje uz pomoć CTC gubitka kako bi generisao predikciju (Slika 2(a)). Odlikuju se efikasnošću i ostaju izbor za neke komercijalne proizvode za prepoznavanje teksta sa scene. Međutim, preoblikovanje karakteristika u sekvencu je osetljivo na deformacije teksta, što ograničava efikasnost takvih modela.
+	
+	Kasnije su pristupi zasnovani na auto-regresivnim metodama kodera-dekodera postale popularne \cite{sheng2019nrtr, li2019show, zheng2023cdistnet}. Ove metode transformišu prepoznavanje u iterativni proces dekodiranja (Slika 2(b)). Kao rezultat, postignuta je poboljšana tačnost jer je uzeta u obzir kontekstualna informacija. Međutim, brzina izvođenja je spora zbog transkripcije karakter po karakter. Ovaj postupak je dodatno proširen na softversku strukturu zasnovanu na viziji i jeziku \cite{yu2020accuratescenetextrecognition, fang2021readlikehumansautonomous}, gde je jezičko znanje uključeno (Slika 2(c)) i sprovedena je paralelna predikcija. Ipak, ovaj postupak često zahteva model sa velikim kapacitetom ili složenu paradigmu prepoznavanja kako bi se osigurala tačnost prepoznavanja, što ograničava njegovu efikasnost.
+	
+	U poslednje vreme, naglasak je na razvoju pojednostavljenih arhitektura kako bi se dobilo na brzini izvršavanja. Na primer, korišćenje složene paradigme obuke, ali jednostavnog modela za izvršavanje. Rešenje zasnovano na CRNN-RNN ponovo je pregledano u sledećem radu: \cite{Hu_Cai_Hou_Yi_Lin_2020}. Koristi mehanizam pažnje i grafovsku neuronsku mrežu za agregaciju sekvencijalnih karakteristika koje odgovaraju istom karakteru. Pri izvršavanju, deo za modelovanje zasnovan na mehanizmu pažnje je odbačen kako bi se uskladila tačnost i brzina.
+	
+	Nedavni uspeh transformera za obradu slike \cite{dosovitskiy2021imageworth16x16words, liu2021swintransformerhierarchicalvision}, inspirisao je nastanak jedinstvenog vizuelnog modela za prepoznavanje teskta na sceni(SVTR) \cite{du2022svtrscenetextrecognition}. SVTR najpre razlaže tekst slike na male 2D isečke koji se nazvaju komponente karaktera, od kojih svaka komponenta može sadržati samo deo karaktera. Tokenizacija slike po isečcima praćena mehanizmom samopažnje se primenjuje da bi se uhvatile indicije prepoznavanja teksta među komponentama karaktera. Za ovu svrhu je razvijena prilagođena arhitektura za tekst, čija osnovna struktura sadrži progresivno smanjujuću visinu mape karakteristika u tri faze i uključujue operacije mešanja, spajanja i/ili kombinovanja. Osmišljeni su lokalni i globalni blokovi mešanja koji se rekurzivno primenjuju u svakoj fazi, zajedno sa operacijom spajanja ili kombinovanja, stičući tako afinitete na nivou lokalnih komponenti koje predstavljaju karakteristike slične potezima karaktera i dugoročne zavisnosti između različitih karaktera. Dakle, osnovna struktura ekstraktuje karakteristike komponenti na različitim rastojanjima i na više skala, formirajući višeslojnu percepciju karakteristika karaktera. Kao rezultat, prepoznavanje teksta se postiže jednostavnom linearnom predikcijom. U celom procesu koristi se samo jedan vizuelni model (Slika 2(d)).
 
-	\subsection{Korišćenje Jednog Vizuelnog Modela za Prepoznavanje Teksta na Sceni}
+	\subsection{Korišćenje Jedinstvenog Vizuelnog Modela za Prepoznavanje Teksta na Sceni}
 	
 	Tradicionalni modeli za prepoznavanje teksta obično uključuju dve odvojene komponente: vizuelni model za izdvajanje karakteristika sa slike i sekvencijalni model za dekodiranje izdvojenih karakteristika u tekst. Jedinstveni vizuelni model za prepoznavanje teksta na sceni(SVTR) eliminiše potrebu za sekvencijalnim modelom u potpunosti, čineći ga jednostavnijim i efikasnijim.
 	
@@ -123,6 +140,7 @@
 	
 	\section{Prikupljanje i rad sa podacima}
 	\subsection{Upoznavanje sa podacima}
+	\subsection{Augmentacija podataka}
 	\subsection{Razvrstavanje i čišćenje podataka}
 	\subsection{Pravljenje sintetičkog data seta}
 	\subsubsection{Generisanje pozadina tablica}
