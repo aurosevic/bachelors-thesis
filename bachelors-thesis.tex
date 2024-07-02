@@ -15,7 +15,8 @@
 	sorting=ynt
 ]{biblatex}
 \addbibresource{citation.bib}
-\bibliography{citation}
+\usepackage{amsmath}
+\usepackage{float}
 
 \hypersetup{
 	colorlinks,
@@ -87,11 +88,11 @@
 	\subsection{Uvod u prepoznavanje teksta}
 	Prepoznavanje teksta na sceni ima za cilj da tekst sa slika konvertuje u digitalni niz karaktera, što prenosi semantiku visokog nivoa ključnu za razumevanje scene. Zadatak prepoznavanja teksta sa scene je izazovan zbog varijacija u: deformacijama teksta, fontovima, preklapanjima različitih tekstova, prekompleksnim pozadinama, itd. Dodatno, otežavajući faktor može biti i to što se tekst može pojaviti pod različitim uglovima.
 	
-	\begin{figure}[h]
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/text.png}
 		\caption{Tekst na sceni sa različitim fontovima, pozadinama, osvetljenjem i slično}
-		\label{fig:tekst-na-sceni}
+		\label{fig:text-on-scene}
 	\end{figure}
 	
 	U proteklim godinama uloženi su brojni napori kako bi se poboljšala tačnost prepoznavanja teksta. Moderni pristupi za prepoznavanje teksta, pored tačnosti, takođe uzimaju u obzir i faktore poput brzine izvršavanja modela zbog praktičnih zahteva.
@@ -109,29 +110,37 @@
 	
 	\subsection{Arhitekture modela za prpoznavanje teksta na slici}
 	
-	\begin{figure}[h]
+	\begin{figure}[H]
 		\centering
-		\includegraphics[width=\textwidth]{assets/text-recognition-model-architertures.png}
+		\includegraphics[width=\textwidth]{assets/text-recognition-model-architectures.png}
 		\caption{Arhitekture modela za prepoznavanje teksta sa scene}
-		\label{fig:arhitekture-tr-modela}
+		\label{fig:tr-model-architectures}
 	\end{figure}
 	
-	Modeli zasnovani na CNN-RNN \cite{shi2015endtoend} prvo koriste CNN za ekstrakciju karakteristika. Karakteristike se zatim preoblikuju u sekvencu koju BiLSTM modeluje uz pomoć CTC gubitka kako bi generisao predikciju (Slika 2(a)). Odlikuju se efikasnošću i ostaju izbor za neke komercijalne proizvode za prepoznavanje teksta sa scene. Međutim, preoblikovanje karakteristika u sekvencu je osetljivo na deformacije teksta, što ograničava efikasnost takvih modela.
+	Modeli zasnovani na CNN-RNN \cite{shi2015endtoend} prvo koriste CNN za ekstrakciju karakteristika. Karakteristike se zatim preoblikuju u sekvencu koju BiLSTM modeluje uz pomoć CTC gubitka kako bi generisao predikciju (Slika \ref{fig:tr-model-architectures}(a)). Odlikuju se efikasnošću i ostaju izbor za neke komercijalne proizvode za prepoznavanje teksta sa scene. Međutim, preoblikovanje karakteristika u sekvencu je osetljivo na deformacije teksta, što ograničava efikasnost takvih modela.
 	
-	Kasnije su pristupi zasnovani na auto-regresivnim metodama kodera-dekodera postale popularne \cite{sheng2019nrtr, li2019show, zheng2023cdistnet}. Ove metode transformišu prepoznavanje u iterativni proces dekodiranja (Slika 2(b)). Kao rezultat, postignuta je poboljšana tačnost jer je uzeta u obzir kontekstualna informacija. Međutim, brzina izvođenja je spora zbog transkripcije karakter po karakter. Ovaj postupak je dodatno proširen na softversku strukturu zasnovanu na viziji i jeziku \cite{yu2020accuratescenetextrecognition, fang2021readlikehumansautonomous}, gde je jezičko znanje uključeno (Slika 2(c)) i sprovedena je paralelna predikcija. Ipak, ovaj postupak često zahteva model sa velikim kapacitetom ili složenu paradigmu prepoznavanja kako bi se osigurala tačnost prepoznavanja, što ograničava njegovu efikasnost.
+	Kasnije su pristupi zasnovani na auto-regresivnim metodama kodera-dekodera postale popularne \cite{sheng2019nrtr, li2019show, zheng2023cdistnet}. Ove metode transformišu prepoznavanje u iterativni proces dekodiranja (Slika \ref{fig:tr-model-architectures}(b)). Kao rezultat, postignuta je poboljšana tačnost jer je uzeta u obzir kontekstualna informacija. Međutim, brzina izvođenja je spora zbog transkripcije karakter po karakter. Ovaj postupak je dodatno proširen na softversku strukturu zasnovanu na viziji i jeziku \cite{yu2020accuratescenetextrecognition, fang2021readlikehumansautonomous}, gde je jezičko znanje uključeno (Slika \ref{fig:tr-model-architectures}(c)) i sprovedena je paralelna predikcija. Ipak, ovaj postupak često zahteva model sa velikim kapacitetom ili složenu paradigmu prepoznavanja kako bi se osigurala tačnost prepoznavanja, što ograničava njegovu efikasnost.
 	
 	U poslednje vreme, naglasak je na razvoju pojednostavljenih arhitektura kako bi se dobilo na brzini izvršavanja. Na primer, korišćenje složene paradigme obuke, ali jednostavnog modela za izvršavanje. Rešenje zasnovano na CRNN-RNN ponovo je pregledano u sledećem radu: \cite{Hu_Cai_Hou_Yi_Lin_2020}. Koristi mehanizam pažnje i grafovsku neuronsku mrežu za agregaciju sekvencijalnih karakteristika koje odgovaraju istom karakteru. Pri izvršavanju, deo za modelovanje zasnovan na mehanizmu pažnje je odbačen kako bi se uskladila tačnost i brzina.
 	
-	Nedavni uspeh transformera za obradu slike \cite{dosovitskiy2021imageworth16x16words, liu2021swintransformerhierarchicalvision}, inspirisao je nastanak jedinstvenog vizuelnog modela za prepoznavanje teskta na sceni(SVTR) \cite{du2022svtrscenetextrecognition}. SVTR najpre razlaže tekst slike na male 2D isečke koji se nazvaju komponente karaktera, od kojih svaka komponenta može sadržati samo deo karaktera. Tokenizacija slike po isečcima praćena mehanizmom samopažnje se primenjuje da bi se uhvatile indicije prepoznavanja teksta među komponentama karaktera. Za ovu svrhu je razvijena prilagođena arhitektura za tekst, čija osnovna struktura sadrži progresivno smanjujuću visinu mape karakteristika u tri faze i uključujue operacije mešanja, spajanja i/ili kombinovanja. Osmišljeni su lokalni i globalni blokovi mešanja koji se rekurzivno primenjuju u svakoj fazi, zajedno sa operacijom spajanja ili kombinovanja, stičući tako afinitete na nivou lokalnih komponenti koje predstavljaju karakteristike slične potezima karaktera i dugoročne zavisnosti između različitih karaktera. Dakle, osnovna struktura ekstraktuje karakteristike komponenti na različitim rastojanjima i na više skala, formirajući višeslojnu percepciju karakteristika karaktera. Kao rezultat, prepoznavanje teksta se postiže jednostavnom linearnom predikcijom. U celom procesu koristi se samo jedan vizuelni model (Slika 2(d)).
+	Nedavni uspeh transformera za obradu slike \cite{dosovitskiy2021imageworth16x16words, liu2021swintransformerhierarchicalvision}, inspirisao je nastanak jedinstvenog vizuelnog modela za prepoznavanje teskta na sceni(SVTR) \cite{du2022svtrscenetextrecognition}. SVTR najpre razlaže tekst slike na male 2D isečke koji se nazvaju komponente karaktera, od kojih svaka komponenta može sadržati samo deo karaktera. Tokenizacija slike po isečcima praćena mehanizmom samopažnje se primenjuje da bi se uhvatile indicije prepoznavanja teksta među komponentama karaktera. Za ovu svrhu je razvijena prilagođena arhitektura za tekst, čija osnovna struktura sadrži progresivno smanjujuću visinu mape karakteristika u tri faze i uključujue operacije mešanja, spajanja i/ili kombinovanja. Osmišljeni su lokalni i globalni blokovi mešanja koji se rekurzivno primenjuju u svakoj fazi, zajedno sa operacijom spajanja ili kombinovanja, stičući tako afinitete na nivou lokalnih komponenti koje predstavljaju karakteristike slične potezima karaktera i dugoročne zavisnosti između različitih karaktera. Dakle, osnovna struktura ekstraktuje karakteristike komponenti na različitim rastojanjima i na više skala, formirajući višeslojnu percepciju karakteristika karaktera. Kao rezultat, prepoznavanje teksta se postiže jednostavnom linearnom predikcijom. U celom procesu koristi se samo jedan vizuelni model (Slika \ref{fig:tr-model-architectures}(d)).
 
 	\subsection{Korišćenje Jedinstvenog Vizuelnog Modela za Prepoznavanje Teksta na Sceni}
 	
 	Tradicionalni modeli za prepoznavanje teksta obično uključuju dve odvojene komponente: vizuelni model za izdvajanje karakteristika sa slike i sekvencijalni model za dekodiranje izdvojenih karakteristika u tekst. Jedinstveni vizuelni model za prepoznavanje teksta na sceni(SVTR) eliminiše potrebu za sekvencijalnim modelom u potpunosti, čineći ga jednostavnijim i efikasnijim.
 	
 	Uklanjanjem komponente sekvencijalnog modeliranja, SVTR postiže konkurentnu preciznost na zadacima prepoznavanja teksta, pružajući veću efikasnost u poređenju sa tradicionalnim metodama.
-	\cite{du2022svtr}
-	itd...
 	
+	\subsubsection{Arhiterktura}
+
+	Pregled SVTR modela je prikazan na (Slika \ref{fig:svtr-architecture}) i predstavlja tro-faznu mrežu sa progresivno smanjujućom visinom, namenjenu za prepoznavanje teksta. Slika teksta veličine H×W×3, prvo se transformiše u \(\dfrac{H}{4} \times \dfrac{W}{4}\) isečaka dimenzije \(D_0\) koristeći progresivno preklapajuće ugrađivanje isečaka. Isečci predstavljaju karakterne(znakovne) komponente, od kojih svaka odgovara delu tekstualnog karaktera na slici. Zatim se izvode tri faze, od kojih se svaka sastoji od niza blokova za mešanje praćenih operacijom spajanja ili kombinovanja, na različitim skalama za ekstrakciju karakteristika. Osmišljeni su lokalni i globalni blokovi za mešanje za ekstrakciju lokalnih obrazaca nalik potezima i hvatanje međukomponentne zavisnosti. Pomoću osnovne strukture se karakterizuju komponentne karakteristike i zavisnosti na različitim udaljenostima i na više skala, predstavljene kao C veličine \(1 \times \dfrac{W}{4} \times D_3\), koje percipira karakteristike znakova na više nivoa granularnosti. Na kraju procesa, model istovremeno predviđa sve znakove sa ulazne slike i primenjuje postupak uklanjanja duplikata kako bi se eliminisali eventualno pogrešno ponovljeni karakteri koje je model predvideo, a koji nisu stvarno prisutni na originalnoj slici. Rezultat ovog procesa je konačan niz prepoznatih znakova.
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{assets/svtr-architecture.png}
+		\caption{Arhitektura SVTR-a: Mreža koja kroz tri faze progresivno smanjuje visinu mape karakteristika. U svakoj fazi se izvodi niz blokova za mešanje, nakon čega sledi operacija spajanja ili kombinovanja. Na kraju se prepoznavanje vrši linearnim predviđanjem.}
+		\label{fig:svtr-architecture}
+	\end{figure}
 	\newpage
 	
 	\section{Primene}
