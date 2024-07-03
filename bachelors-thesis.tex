@@ -16,6 +16,7 @@
 ]{biblatex}
 \addbibresource{citation.bib}
 \usepackage{amsmath}
+\usepackage{amsfonts}
 \usepackage{float}
 
 \hypersetup{
@@ -113,7 +114,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/text-recognition-model-architectures.png}
-		\caption{Arhitekture modela za prepoznavanje teksta sa scene}
+		\caption{Arhitekture modela za prepoznavanje teksta sa scene. (a) Modeli zasnovani na CNN-RNN. (b) Modeli kodiranja-dekodiranja. (c) Vizuelno-jezički modeli. (d) SVTR, koji prepoznaje tekst scene sa jedinstvenim vizuelnim modelom i odlikuje se efikasnošću, tačnošću i višejezičnom svestranošću.}
 		\label{fig:tr-model-architectures}
 	\end{figure}
 	
@@ -141,6 +142,18 @@
 		\caption{Arhitektura SVTR-a: Mreža koja kroz tri faze progresivno smanjuje visinu mape karakteristika. U svakoj fazi se izvodi niz blokova za mešanje, nakon čega sledi operacija spajanja ili kombinovanja. Na kraju se prepoznavanje vrši linearnim predviđanjem.}
 		\label{fig:svtr-architecture}
 	\end{figure}
+	
+	\subsubsection{Progresivno preklapajuće ugrađivanje isečaka}
+	
+	Pvri korak u obradi slike teksta je njeno razlaganje na manje delove koje nazivamo isečcima. Dobijanje karakterističnih isečaka koji predstavljaju komponente znakova znači prelazak iz \(X \in \mathbb{R}^{H \times W \times D_0}\) u \(CC_0 \in \mathbb{R}^{\dfrac{H}{4} \times \dfrac{W}{4} \times D_0}\). Postoje dva uobičajena načina da se ovo uradi — korišćenje \(4 \times 4\) mreže za podelu slike i linearna transformacija svakog dela(Slika \ref{fig:linear-projection-in-ViT}(a)) i korišćenje \(7 \times 7\) konvolucionog filtera sa korakom 4. Autori SVTRa su izabrali alternativni metod. Oni koriste dva manja konvoluciona filtera \(3 \times 3\) jedan za drugim sa korakom 2, kao što je prikazano na (Slika \ref{fig:linear-projection-in-ViT}(b)). Takođe koriste tehniku zvanu normalizacija serije da bi održali brojeve pod kontrolom. Ovaj novi metod zahteva nešto više računarske snage, ali je bolji u kombinovanju karakteristika iz slike.
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{assets/linear-projection-in-ViT.png}
+		\caption{(a) Linearna projekcija u ViT \cite{dosovitskiy2021imageworth16x16words}. (b) SVTR progresivno preklapajuće ugrađivanje isečaka.}
+		\label{fig:linear-projection-in-ViT}
+	\end{figure}
+	
 	\newpage
 	
 	\section{Primene}
