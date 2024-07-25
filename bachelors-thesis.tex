@@ -174,6 +174,16 @@
 	U poslednjoj fazi, operacija spajanja se zamenjuje operacijom kombinovanja. Prvo se dimenzija visine svede na 1, a zatim se primenjuje potpuno povezani sloj, nelinearna aktivacija i dropout. Na taj način, komponente karaktera se dodatno kompresuju u sekvencu karakteristika, gde je svaki element predstavljen karakteristikom dužine \(D_3\). U poređenju sa operacijom spajanja, operacija kombinovanja može da izbegne primenu konvolucije na slojevima čija je veličina veoma mala u jednoj dimenziji, npr. ukoliko je dimenzija visine 2.
 	
 	Sa kombinovanim karakteristikama, implementirano je prepoznavanje teksta koristeći jednostavne paralelne linearne predikcije. Konkretno, koristi se linearni klasifikator sa N čvorova. On generiše transkripcijsku sekvencu veličine \(\dfrac{W}{4}\), gde idealno, komponente istog karaktera bivaju transkribovane kao duplikati karaktera, a komponente ne-teksta se transkribuju u prazan simbol. Sekvenca se automatski kondenzuje u konačni rezultat. U implementaciji, N je postavljen na 37 za engleski jezik i 6625 za kineski jezik.
+	
+	\subsubsection{Analiza Vizualizacije}
+		\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{assets/visualization-of-svtr-attention-maps.png}
+		\caption{Vizualizacija SVTR mapi pažnje}
+		\label{fig:visualization-of-svtr-attention-maps}
+	\end{figure}
+	
+	Svaka mapa se može objasniti kao da ima različitu ulogu u celokupnom prepoznavanju. Ilustracija devet primera mapa je prikazana na (Slici \ref{fig:visualization-of-svtr-attention-maps}). Prvi red prikazuje tri mape koje se fokusiraju na deo karaktera ``B'', sa naglaskom na njegovu levu stranu, donji deo i srednji deo, redom. Te tri mape ukazuju na to da različiti regioni karaktera doprinose njegovom prepoznavanju. Drugi red prikazuje tri mape koje se fokusiraju na različite karaktere, tj. ``B'', ``L'' i ``S''. SVTR takođe može da nauči karakteristike karaktera posmatrajući karakter kao celinu. Treći red prikazuje tri mape koje istovremeno aktiviraju više karaktera, što implicira da su zavisnosti među različitim karakterima uspešno uhvaćene. Ova tri reda zajedno otkrivaju da prepoznavač hvata tragove na nivou dela karaktera, celog karaktera i više karaktera, u skladu sa tvrdnjom da SVTR percipira višeslojne karakteristike komponenti karaktera, potvrđujući efikasnost SVTR-a.
 	\newpage
 	
 	\section{Primene}
