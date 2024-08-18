@@ -23,8 +23,8 @@
 	colorlinks,
 	citecolor=black,
 	filecolor=black,
-	linkcolor=black,
-	urlcolor=black
+	linkcolor=blue,
+	urlcolor=blue
 }
 
 \renewcommand{\contentsname}{Sadržaj}
@@ -155,10 +155,8 @@
 	\end{figure}
 	
 	\subsubsection{Blok mešanja}
-	
 	S obzirom na to da se dva karaktera mogu blago razlikovati važno je posmatrati male delove koji čine karaktere. Prepoznavanje teksta se u velikoj meri oslanja na ekstrakciji karakteristika na nivou komponenti karaktera. Međutim, postojeće studije uglavnom koriste niz karakteristika za predstavljanje teksta na slici. Svaka karakteristika odgovara deliću regiona slike, koji je često nerazumljiv, posebno za nepravilan tekst — što nije optimalno za opisivanje karaktera. Nedavni napredak u vizuelnim transformatorima uvodi 2D reprezentaciju karakteristika, ali njeno korišćenje u kontekstu prepoznavanja teksta je još uvek u fazi istraživanja. Autori SVTRa sugerišu da su dve vrste karakteristika važne za prepoznavanje teksta. Prva su lokalni obrasci, kao što su mali detalji koji čine karakter, poput poteza. Oni pokazuju kako su različiti delovi karaktera međusobno povezani i stvaraju se morfološke karakteristike i korelacije između različitih delova karaktera. Druga su međukarakterne zavisnosti, koje se odnose na to kako su različiti karakteri povezani jedni s drugima, ili kako se tekst odnosi na netekstualne delove slike. Da bi uhvatili ove karakteristike, autori su kreirali dva posebna bloka mešanja. Ovi blokovi koriste tehniku zvanu samopažnja, koja pomaže modelu da se fokusira na važne delove slike. Koristeći dva različita područja fokusa koja mehanizam samopažnje razmatra, ovi blokovi mogu uhvatiti i male detalje i širu sliku o tome kako su karakteri međusobno povezani.
 	
-%	\setcounter{secnumdepth}{5}
 	\paragraph{Globalno mešanje}
 	Kao što se vidi na (Slici \ref{fig:linear-projection-in-ViT}(a)), globalno mešanje procenjuje zavisnost među svim komponentama karaktera. S obzirom da su tekstualni i ne-tekstualni sadržaj dva glavna elementa na slici, takvo generalno mešanje može uspostaviti dugoročnu zavisnost među komponentama različitih karaktera. Pored toga, ono je takođe sposobno da oslabi uticaj ne-tekstualnih komponenti, istovremeno pojačavajući važnost tekstualnih komponenti. Matematički, za komponente karaktera \(CC_{i-1}\) iz prethodne faze, prvo se vrši njihovo preoblikovanje u niz karakteristika. Pri uvođenju u blok mešanja, primenjuje se normalizacija sloja, a zatim se koristi multi-head samopažnja za modelovanje zavisnosti. Nakon toga, sekvencijalno se primenjuju normalizacija sloja i MLP za fuziju karakteristika.  Zajedno sa prečicama, formira se blok globalnog mešanja.
 	
@@ -235,7 +233,49 @@
 	\newpage
 	
 	\section{Prikupljanje i rad sa podacima}
+	U ovom poglavlju biće objašnjene metode prikupljanja podataka, izazovi sa kojima se istraživači susreću tokom ovog procesa, kao i značaj obrade i pripreme podataka za dalji rad na razvoju sistema za prepoznavanje teksta sa registarskih tablica.
+	
+	\subsection{Uvod u prikupljanje podataka}
+	Osnovu za razvoj sistema za automatsko prepoznavanje teksta sa tablica čini kvalitetan i obiman skup podataka. Prikupljanje ovih podataka predstavlja jedan od ključnih koraka u procesu razvoja takvog sistema, jer direktno utiče na uspešnost i preciznost modela za prepoznavanje. Zbog toga je neophodno posvetiti posebnu pažnju metodama i tehnikama koje se koriste za prikupljanje podataka, kao i izazovima koji mogu nastati u ovom procesu.
+	
+	Prikupljanje podataka podrazumeva sakupljanje slika registarskih tablica iz različitih izvora, koje će se koristiti za treniranje, validaciju i testiranje modela. Kvalitet prikupljenih podataka, njihova reprezentativnost i raznovrsnost igraju ključnu ulogu u postizanju visokih performansi sistema za prepoznavanje teksta. Osim toga, treba uzeti u obzir i pravne aspekte i zaštitu privatnosti, jer rad sa podacima koji sadrže informacije o vozilima može biti podložan strogoj regulativi.
+	
+	\subsection{Specifičnosti prikupljanja podataka u kontekstu prepoznavanja teksta sa registarskih tablica}
+	\subsubsection{Varijabilnost registarskih tablica}
+	\paragraph{Raznolikost dizajna}
+	Registarske tablice variraju od zemlje do zemlje, pa čak i unutar iste države, u pogledu boje, fonta, veličine slova, rasporeda karaktera i prisustva simbola ili grbova. Ova raznolikost zahteva prikupljanje podataka koji obuhvataju širok spektar različitih tablica kako bi model bio sposoban da prepozna sve varijante.
+	
+	\paragraph{Fizičko stanje tablica}
+	Tokom vremena, registarske tablice mogu postati oštećene, izbledele ili prljave, što može otežati prepoznavanje teksta. Prikupljanje slika sa različitim stepenima oštećenja tablica je ključno za treniranje modela koji može da se nosi sa takvim izazovima.
+	
+	\subsubsection{Promenljivi uslovi snimanja}
+	\paragraph{Različiti uslovi osvetljenja}
+	Snimanje registarskih tablica može se odvijati u različitim vremenskim uslovima i periodima dana, što rezultira varijacijama u osvetljenju. Sakupljanje podataka u različitim svetlosnim uslovima (npr. jaka sunčeva svetlost, senke, noćno snimanje) omogućava modelu da se prilagodi tim promenama.
+	
+	Snimanje noću predstavlja poseban izazov zbog nedostatka prirodnog svetla. Kamere koje nemaju odgovarajuće noćne režime snimanja ili infracrveno osvetljenje mogu proizvesti slike lošeg kvaliteta sa dosta šuma. Dodatno, farovi vozila mogu uzrokovati probleme sa kontrastom i zaslepljivanjem, što dodatno otežava prepoznavanje tablica.
+	
+	\paragraph{Različiti uglovi snimanja}
+	U zavisnosti od položaja kamere, registarske tablice mogu biti snimljene pod različitim uglovima, što može izazvati probleme sa perspektivnim izobličenjem. Kada kamera nije postavljena direktno ispred tablice, već pod određenim uglom, karakteri na tablici mogu izgledati iskrivljeno ili izduženo. Ovo posebno dolazi do izražaja u slučajevima kada kamere moraju biti montirane na nepristupačnim mestima, poput visokih stubova ili nadstrešnica, gde se tablice snimaju pod oštrim uglovima u odnosu na horizontalnu osu vozila.
+	
+	\paragraph{Kretanje vozila}
+	Snimanje registarskih tablica vozila koja se kreću predstavlja izazov zbog potencijalnog zamagljenja slika. Kada se vozilo kreće, kamera mora da zabeleži sliku u vrlo kratkom vremenskom intervalu kako bi se izbeglo zamagljenje. koje može otežati prepoznavanje karaktera na tablici.
+	
 	\subsection{Upoznavanje sa podacima}
+	Za razvoj sistema za automatsko prepoznavanje teksta sa registarskih tablica, postoji nekoliko baza podataka koje sadrže slike tablica iz različitih zemalja. Ove baze podataka pružaju širok spektar slika sa različitim tipovima registarskih tablica, različitih kvaliteta i uslova snimanja, što ih čini korisnim za treniranje i evaluaciju modela za prepoznavanje teksta. Neki od najpoznatijih javno dostupnih skupova podataka uključuju:
+		
+	\paragraph{OpenALPR dataset}
+	Baza podataka koja sadrži slike registarskih tablica iz različitih zemalja, koje se često koriste za treniranje i testiranje sistema za prepoznavanje teksta. Ovaj dataset obuhvata tablice sa različitim fontovima, bojama i rasporedima karaktera.
+	
+	\paragraph{\href{https://github.com/detectRecog/CCPD}{CCPD (Chinese City Parking Dataset)}}
+	Skup podataka koji se fokusira na kineske registarske tablice, ali može biti koristan kao referenca za treniranje modela sa slikama koje obuhvataju različite uslove osvetljenja i uglove snimanja.
+	
+	\paragraph{\href{https://datasetninja.com/car-license-plate}{Car License Plate Dataset}}
+	Baza podataka sa oko 400 slika vozila i registarskih tablica, koja pokriva različite scenarije, uključujući vozila u pokretu, snimke iz različitih perspektiva, i različite vremenske uslove. \newline
+	
+	Međutim, iako ovi skupovi podataka mogu biti korisni za razvoj generalnih sistema za prepoznavanje teksta sa registarskih tablica, oni su ograničeni u pogledu specifičnosti dizajna i karakteristika registarskih tablica koje se koriste u Srbiji.
+	
+	S obzirom na to da sam se fokusirao na razvoj rešenja za prepoznavanje teksta sa srpskih registarskih tablica, kao i da imam pristup skupu od oko 17000 slika uglavnom Srpskih tablica sa ulaza ispred rampi, odlučio sam da se oslonim prvenstveno na ove specifične podatke. Ovaj pristup omogućava treniranje modela koji je prilagođen karakteristikama srpskih tablica, kao što su specifičan font, raspored karaktera i prisustvo nacionalnih simbola. Dodatno, slike snimljene na ulazima ispred rampi pružaju realne scenarije sa kojima će se model susretati u stvarnim aplikacijama, što dodatno povećava relevantnost i pouzdanost razvijenog rešenja.
+	
 	\subsection{Augmentacija podataka}
 	\subsection{Razvrstavanje i čišćenje podataka}
 	\subsection{Pravljenje sintetičkog data seta}
