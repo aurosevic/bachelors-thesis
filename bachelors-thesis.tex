@@ -18,6 +18,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{float}
+\usepackage{todonotes}
 
 \hypersetup{
 	colorlinks,
@@ -277,10 +278,35 @@
 	S obzirom na to da sam se fokusirao na razvoj rešenja za prepoznavanje teksta sa srpskih registarskih tablica, kao i da imam pristup skupu od oko 17000 slika uglavnom Srpskih tablica sa ulaza ispred rampi, odlučio sam da se oslonim prvenstveno na ove specifične podatke. Ovaj pristup omogućava treniranje modela koji je prilagođen karakteristikama srpskih tablica, kao što su specifičan font, raspored karaktera i prisustvo nacionalnih simbola. Dodatno, slike snimljene na ulazima ispred rampi pružaju realne scenarije sa kojima će se model susretati u stvarnim aplikacijama, što dodatno povećava relevantnost i pouzdanost razvijenog rešenja.
 	
 	\subsection{Augmentacija podataka}
+	Kako bi se povećala raznovrsnost skupa podataka i model bolje prilagodio različitim uslovima snimanja, često se primenjuje tehnika augmentacije podataka. Augmentacija podrazumeva generisanje novih slika iz postojećih putem različitih transformacija, kao što su rotacija, promena osvetljenja, skaliranje, i dodavanje šuma. Ove transformacije omogućavaju simulaciju različitih realnih uslova, poput snimanja pod različitim uglovima, promena u osvetljenju, ili prisustva šuma na slici. Na ovaj način se model obučava na većem broju različitih scenarija, što doprinosi njegovoj otpornosti na varijacije u podacima.
+	
+	\subsection{Anotacija podataka}
+	Anotacija predstavlja označavanje delova slike koji sadrže ključne regije, u ovom slučaju registarske tablice i tekst koji je ispisan na tablicama. Anotacija podataka je proces u kojem se ručno ili poluautomatski označavaju tačne lokacije i sadržaj registarskih tablica na svakoj slici. U ovoj fazi se koristi softver za anotaciju, koji omogućava obeležavanje granica tablica i unos odgovarajućeg teksta. Kvalitetna anotacija je veoma bitna jer direktno utiče na uspešnost treniranja modela. Greške u anotaciji, poput netačnih ili nepotpunih oznaka, mogu dovesti do smanjenja tačnosti modela i takav tip greške se kasnije vrlo teško pronalazi.
+	
 	\subsection{Razvrstavanje i čišćenje podataka}
-	\subsection{Pravljenje sintetičkog data seta}
+	Nakon prikupljanja, sledi faza čišćenja podataka, koja podrazumeva identifikaciju i uklanjanje nekvalitetnih ili irelevantnih slika. Na primer, slike koje su previše zamagljene, oštećene, ili ne sadrže jasno vidljive registarske tablice, moraju biti uklonjenje iz skupa podataka. Ova faza obezbeđuje da model bude treniran na kvalitetnim i relevantnim podacima, što utiče na njegovu tačnost i robusnost.
+	
+	\todo[inline]{Razmisli o reorganizaciji poglavlja}
+	Na kraju, pripremljeni podaci se dele u grupe za treniranje, validaciju i test. Grupa podataka za treniranje se koristi za obučavanje modela, grupa podataka za validaciju korisna je za podešavanje hiperparametara i evaluaciju performansi tokom treniranja, dok se test grupa podataka koristi za konačnu procenu modela nakon treniranja. Pravilna podela podataka je ključna za izbegavanje \todo{english}overfitting-a i osiguranje da model može dobro da generalizuje na novim, neviđenim podacima.
+	
+	\subsection{Kreiranje sintetičkog skupa podataka}
+	\todo[inline]{Ovaj pasus treba da ide pre augmentacije i onda da nakon njega usledi prica o augmentaciji, jer i sintetički podaci prolaze proces augmentacije}
+	\todo[inline]{Priloži sintetičke slike(tablica bez teksta -> tablica sa tekstom) i način kako one nastaju: inicijalno se ukloni tekst sa nekoliko pravih tablica na koje se kasnije doda generisani tekst po pravilima za Srpske tablice. Takođe priloži i kod za generisanje teksta?}
+	Kreiranje sintetičkog skupa podataka pomaže uećanju inicijalnog skupa i posebno je od značaja kada je dostupnost realnih podataka ograničena.
+	
+	\subsubsection{Prednosti sintetičkih podataka}
+	Sintetički skup podataka omogućavaju stvaranje velike količine podataka bez potrebe za obimnim prikupljanjem i anotacijom realnih slika, što može biti vremenski i finansijski zahtevno. Sintetički podaci omogućavaju preciznu kontrolu nad svim aspektima slike, uključujući osvetljenje, ugao snimanja, pozadinu, i stil registarskih tablica(izbor fonta, veličine, boje i pozicije teksta, i slično). Ovo omogućava modelu da se obučava na širokom spektru varijacija, čime se povećava njegova robusnost i otpornost na različite uslove snimanja.
+	
+	Sintetički data setovi takođe omogućavaju simulaciju retkih ili ekstremnih slučajeva, kao što su tablice sa specifičnim oštećenjima, delimično zaklonjene tablice, ili tablice snimljene u nepovoljnim vremenskim uslovima. Kreiranjem ovakvih slika, model može biti pripremljen za situacije koje se možda neće često pojavljivati u realnim podacima, ali su ipak važne za sveobuhvatnu tačnost sistema.
+	
 	\subsubsection{Generisanje pozadina tablica}
+	Za generisanje pozadina tablica, odlučio sam da koristim slike stvarnih registarskih tablica kako bih postigao visok nivo autentičnosti. Prvo sam odabrao nekoliko slika pravih tablica, snimljenih u različitim uslovima, kako bih obezbedio raznovrsnost u teksturi, boji i detaljima. Zatim sam pažljivo obrisao sve karaktere sa tih slika, zadržavajući osnovnu strukturu i karakteristike tablice netaknute. Za uklanjanje karaktera sa slika koristio sam GIMP alat. Na ovaj način imao sam čiste pozadine koje izgledaju prirodno i verodostojno.
+	
 	\subsubsection{Generisanje teskta na tablicama}
+	Nakon generisanja pozadina tablica, koristio sam repozitorijum \href{https://github.com/Belval/TextRecognitionDataGenerator}{TextRecognitionDataGenerator}, koji sam modifikovao kako bih mogao da na tačno određenim mestima i pod odgovarajućim uglovima dodajem tekst na tablice. Prethodno sam generisao tekst u skladu sa pravilima za izradu registarskih tablica u Republici Srbiji, vodeći računa da kontekst bude validan. Ova prilagođena verzija alata omogućila mi je da kreiram sintetičke tablice koje znatno podsećaju na stvarne srpske tablice.
+	
+	\subsubsection{Integracija sintetičkih podataka sa realnim podacima}
+	Kada se kreira sintetički skup podataka, bitno je pažljivo integrisati ga sa realnim podacima kako bi se postigao optimalan balans između realističnosti i varijabilnosti. Sintetički podaci mogu se koristiti kao dodatak realnim podacima, čime se povećava veličina i raznovrsnost skupa podataka za treniranje. Kombinovanjem sintetičkih i realnih podataka, model može naučiti kako da prepoznaje tekst sa registarskih tablica u različitim scenarijima, dok istovremeno ostaje veran stvarnim uslovima koje će susretati u praksi.
 	\newpage
 	
 	\section{Implementacija}
