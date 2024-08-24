@@ -19,6 +19,7 @@
 \usepackage{amsfonts}
 \usepackage{float}
 \usepackage{todonotes}
+\usepackage{url}
 
 \hypersetup{
 	colorlinks,
@@ -30,9 +31,8 @@
 
 \renewcommand{\contentsname}{Sadržaj}
 
-\title{Automatsko prepoznavanje teksta sa tablica \todo{vozila, ne nuzno automobila}automobila koristeći Jedinstveni Vizuelni Model za Prepoznavanje Teksta na Sceni}
+\title{Automatsko prepoznavanje teksta sa tablica \todo[color=green!40]{vozila, ne nuzno automobila?}automobila koristeći Jedinstveni Vizuelni Model za Prepoznavanje Teksta na Sceni}
 \date{}
-%\author{Student: {\normalfont Andrija Urošević} \\ \newline Mentor: {\normalfont dr Nemanja Ilić}}
 
 \begin{document}
 	\emergencystretch 3em
@@ -62,7 +62,7 @@
 	
 	\section*{Predgovor}
 	\addcontentsline{toc}{section}{Predgovor}
-	Prostor za predgovor.
+	\todo[color=green!40]{Prostor za predgovor.}
 	\newpage
 	
 	\tableofcontents
@@ -155,7 +155,7 @@
 		\label{fig:linear-projection-in-ViT}
 	\end{figure}
 	
-	\subsubsection{Blok \todo{pronađi prikladnijureč od mešanje}mešanja}
+	\subsubsection{Blok \todo[color=green!40]{pronađi prikladniji termin od 'mešanje'}mešanja}
 	S obzirom na to da se dva karaktera mogu blago razlikovati važno je posmatrati male delove koji čine karaktere. Prepoznavanje teksta se u velikoj meri oslanja na ekstrakciji karakteristika na nivou komponenti karaktera. Međutim, postojeće studije uglavnom koriste niz karakteristika za predstavljanje teksta na slici. Svaka karakteristika odgovara deliću regiona slike, koji je često nerazumljiv, posebno za nepravilan tekst — što nije optimalno za opisivanje karaktera. Nedavni napredak u vizuelnim transformatorima uvodi 2D reprezentaciju karakteristika, ali njeno korišćenje u kontekstu prepoznavanja teksta je još uvek u fazi istraživanja. Autori SVTRa sugerišu da su dve vrste karakteristika važne za prepoznavanje teksta. Prva su lokalni obrasci, kao što su mali detalji koji čine karakter, poput poteza. Oni pokazuju kako su različiti delovi karaktera međusobno povezani i stvaraju se morfološke karakteristike i korelacije između različitih delova karaktera. Druga su međukarakterne zavisnosti, koje se odnose na to kako su različiti karakteri povezani jedni s drugima, ili kako se tekst odnosi na netekstualne delove slike. Da bi uhvatili ove karakteristike, autori su kreirali dva posebna bloka mešanja. Ovi blokovi koriste tehniku zvanu samopažnja, koja pomaže modelu da se fokusira na važne delove slike. Koristeći dva različita područja fokusa koja mehanizam samopažnje razmatra, ovi blokovi mogu uhvatiti i male detalje i širu sliku o tome kako su karakteri međusobno povezani.
 	
 	\paragraph{Globalno mešanje}
@@ -228,9 +228,6 @@
 	ALPR može imati ključnu ulogu u automatizovanoj kontroli saobraćaja, pružajući brojne prednosti za hitne službe i javni prevoz. Ova tehnologija može značajno poboljšati brzinu reakcije hitnih službi, kao što su ambulante, vatrogasci i policija, omogućavajući im brži dolazak na lice mesta. ALPR može prepoznati vozila hitnih službi i automatski otvoriti posebne saobraćajne trake ili raskrsnice, čime se smanjuje vreme potrebno za prolazak kroz gust saobraćaj. Ova funkcionalnost može biti od vitalnog značaja u situacijama kada je svaka sekunda važna, čime se potencijalno spašavaju životi.
 	
 	U kontekstu javnog prevoza, ALPR može pratiti i optimizovati rute autobusa i drugih prevoznih sredstava, čime se povećava tačnost i efikasnost servisa za obaveštavanje putnika o lokaciji i vremenu dolaska. Ova tehnologija omogućava prikupljanje podataka o saobraćajnim tokovima, što može pomoći u analizi i unapređenju rasporeda vožnje, čime se poboljšava iskustvo putnika.
-	
-	\subsection{Kreiranje personalizovanih reklama}
-	ALPR može značajno unaprediti marketing i oglašavanje kroz kreiranje personalizovanih reklama usmerenih na vozače. Na primer, kada vozač prolazi pored bilborda, sistem može automatski prepoznati registarsku tablicu i prikazati reklamu koja odgovara njegovom vozilu ili prethodnim posetama određenim lokacijama. Ovo može uključivati promocije za slične brendove automobila, dodatnu opremu ili usluge vezane za automobil, čime se povećava verovatnoća da će vozač obratiti pažnju na oglas i reagovati na njega.
 	\newpage
 	
 	\section{Prikupljanje i rad sa podacima}
@@ -271,8 +268,8 @@
 	\subsection{Upoznavanje sa podacima}
 	Za razvoj sistema za automatsko prepoznavanje teksta sa registarskih tablica, postoji nekoliko baza podataka koje sadrže slike tablica iz različitih zemalja. Ove baze podataka pružaju širok spektar slika sa različitim tipovima registarskih tablica, različitih kvaliteta i uslova snimanja, što ih čini korisnim za treniranje i evaluaciju modela za prepoznavanje teksta. Neki od najpoznatijih javno dostupnih skupova podataka uključuju:
 		
-	\paragraph{OpenALPR dataset}
-	Baza podataka koja sadrži slike registarskih tablica iz različitih zemalja, koje se često koriste za treniranje i testiranje sistema za prepoznavanje teksta. Ovaj dataset obuhvata tablice sa različitim fontovima, bojama i rasporedima karaktera.
+	\paragraph{\todo[color=green!40]{Probaj da pronadjes link}OpenALPR dataset}
+	Baza podataka koja sadrži slike registarskih tablica iz različitih zemalja, koje se često koriste za treniranje i testiranje sistema za prepoznavanje teksta. Ovaj skup podataka obuhvata tablice sa različitim fontovima, bojama i rasporedima karaktera.
 	
 	\paragraph{\href{https://github.com/detectRecog/CCPD}{CCPD (Chinese City Parking Dataset)}}
 	Skup podataka koji se fokusira na kineske registarske tablice, ali može biti koristan kao referenca za treniranje modela sa slikama koje obuhvataju različite uslove osvetljenja i uglove snimanja.
@@ -287,7 +284,7 @@
 	\subsection{Razvrstavanje i čišćenje podataka}
 	Nakon prikupljanja, sledi faza čišćenja podataka, koja podrazumeva identifikaciju i uklanjanje nekvalitetnih ili irelevantnih slika. Na primer, slike koje su previše zamagljene, oštećene, ili ne sadrže jasno vidljive registarske tablice, moraju biti uklonjenje iz skupa podataka. Ova faza obezbeđuje da model bude treniran na kvalitetnim i relevantnim podacima, što utiče na njegovu tačnost i robusnost.
 	
-	Na kraju, pripremljeni podaci se dele u grupe za treniranje, validaciju i test. Grupa podataka za treniranje se koristi za obučavanje modela, grupa podataka za validaciju korisna je za podešavanje hiperparametara i evaluaciju performansi tokom treniranja, dok se test grupa podataka koristi za konačnu procenu modela nakon treniranja. Pravilna podela podataka je ključna za izbegavanje \todo{english}overfitting-a i osiguranje da model može dobro da generalizuje na novim, neviđenim podacima.
+	Na kraju, pripremljeni podaci se dele u grupe za treniranje, validaciju i test. Grupa podataka za treniranje se koristi za obučavanje modela, grupa podataka za validaciju korisna je za podešavanje hiperparametara i evaluaciju performansi tokom treniranja, dok se test grupa podataka koristi za konačnu procenu modela nakon treniranja. Pravilna podela podataka je ključna za izbegavanje \todo[color=green!40]{da li je prekomerna prilagođenost dobar termin za overfitting?}prekomerne prilagođenosti i osiguranje da model može dobro da generalizuje na novim, neviđenim podacima.
 	
 	\subsection{Anotacija podataka}
 	Anotacija predstavlja označavanje delova slike koji sadrže ključne regije, u ovom slučaju registarske tablice i tekst koji je ispisan na tablicama. Anotacija podataka je proces u kojem se ručno ili poluautomatski označavaju tačne lokacije i sadržaj registarskih tablica na svakoj slici. U ovoj fazi se koristi softver za anotaciju, koji omogućava obeležavanje granica tablica i unos odgovarajućeg teksta. Kvalitetna anotacija je veoma bitna jer direktno utiče na uspešnost treniranja modela. Greške u anotaciji, poput netačnih ili nepotpunih oznaka, mogu dovesti do smanjenja tačnosti modela i takav tip greške se kasnije vrlo teško pronalazi.
@@ -298,7 +295,7 @@
 	\subsubsection{Prednosti sintetičkih podataka}
 	Sintetički skup podataka omogućavaju stvaranje velike količine podataka bez potrebe za obimnim prikupljanjem i anotacijom realnih slika, što može biti vremenski i finansijski zahtevno. Sintetički podaci omogućavaju preciznu kontrolu nad svim aspektima slike, uključujući osvetljenje, ugao snimanja, pozadinu, i stil registarskih tablica(izbor fonta, veličine, boje i pozicije teksta, i slično). Ovo omogućava modelu da se obučava na širokom spektru varijacija, čime se povećava njegova robusnost i otpornost na različite uslove snimanja.
 	
-	Sintetički data setovi takođe omogućavaju simulaciju retkih ili ekstremnih slučajeva, kao što su tablice sa specifičnim oštećenjima, delimično zaklonjene tablice, ili tablice snimljene u nepovoljnim vremenskim uslovima. Kreiranjem ovakvih slika, model može biti pripremljen za situacije koje se možda neće često pojavljivati u realnim podacima, ali su ipak važne za sveobuhvatnu tačnost sistema.
+	Sintetički skupovi podataka takođe omogućavaju simulaciju retkih ili ekstremnih slučajeva, kao što su tablice sa specifičnim oštećenjima, delimično zaklonjene tablice, ili tablice snimljene u nepovoljnim vremenskim uslovima. Kreiranjem ovakvih slika, model može biti pripremljen za situacije koje se možda neće često pojavljivati u realnim podacima, ali su ipak važne za sveobuhvatnu tačnost sistema.
 	
 	\subsubsection{Generisanje pozadina tablica}
 	\begin{figure}[H]
@@ -324,12 +321,27 @@
 	
 	\subsection{Augmentacija podataka}
 	Kako bi se povećala raznovrsnost skupa podataka i model bolje prilagodio različitim uslovima snimanja, često se primenjuje tehnika augmentacije podataka. Augmentacija podrazumeva generisanje novih slika iz postojećih putem različitih transformacija, kao što su rotacija, promena osvetljenja, skaliranje, i dodavanje šuma. Ove transformacije omogućavaju simulaciju različitih realnih uslova, poput snimanja pod različitim uglovima, promena u osvetljenju, ili prisustva šuma na slici. Na ovaj način se model obučava na većem broju različitih scenarija, što doprinosi njegovoj otpornosti na varijacije u podacima.
+	
+	\subsection{Podela podataka}
+	Prilikom treniranja modela dostupni skup podataka je potrebno podeliti u tri distinktivna podskupa: trening skup, validacioni skup i test skup. Ovakva podala podataka, gde se jedan podatak, u ovom slučaju slika, nalazi isključivo samo u jednom od tri skupa je fundamentala za razvoj, evaluaciju i verifikaciju modela.
+	
+	Trening skup čini najveći deo inicijalnog skupa podataka(obično od 60-80\%), koristi se za obučavanje modela. Koristeći podatke iz trening skupa model uči obrasce, relacije i karakteristike koje su svojstvene problemu koji se rešava.
+	
+	Validacioni skup je manji i obično oko 10-20\% inicijalnog skupa podataka. Služi za finu kalibraciju modela i sprečavanje prekomerne prilagođenosti modela trening skupu tokom treninga. Koristi se i za procenu performanci modela tokom faze obuke i za podešavanje hiperparametara.
+	
+	Test skup je finalni podskup koji čini oko 10-20\% inicijalnih podataka i koristi se za nezavisnu evaluaciju konačnog modela. Ovaj skup ostaje nekorišćen do završetka treninga i kalibracije, čime se obezbeđuje objektivna procena generalizacijske sposobnosti modela na novim, prethodno neviđenim podacima.
+	
+	Ovakva metodologija podele podataka omogućava razvoj robusnih modela koji imaju veću pouzdanost i praktičnu primenljivost u realnim scenarijima.
+	
+	\subsection{Opis korišćenog skupa podataka}
+	Skup realnih podataka koje sam koristio za proces treniranja modela sadržao je 5.838 slika pravih srpskih tablica, uglavnom registrovanih u Beogradu. Sve slike su pažljivo označene i višestruko proverene kako bi se izbeglo propuštanje nepravilno označenih podataka, što bi dovelo do loših rezultata prilikom treninga modela. Uzevši u obzir mali broj dostupnih slika za trening, augmentacijom i pravljenjem sintetičkih podataka povećao sam skup podataka sa 5.838 na 124.838 slika. Prilikom augmentacije i pravljenja sintetičkih podataka inicijalni skup sam obogatio sa slikama različitih scenarija vremenskih i dnevnih uslova, kao i različitim uglovima slikanja kamere. Pored toga što doprinosi varijabilnosti uslova osvetljenja i kvantitetu podataka, dodavanje sintetičkog skupa unosi i novi kontekst teksta na tablicama, gde sam u sintetičkom skupu napravio primere tablica koje su mogle biti registrovane u ostalim dozvoljenim gradovima u Srbiji pored Beograda \todo[color=green!40]{Da li ovaj izvor postaljam u citate formatu ili kao hypeprlink?}\cite{superRegistracija}. Dobra strana rada sa sintetičkim podacima jeste i to što nisam imao ručnu fazu označavanja podataka.
 	\newpage
 	
 	\section{Implementacija}
 	\subsection{Treniranje modela prepoznavanja teksta}
 	\subsection{Komponente sistema}
 	\subsubsection{Detektor tablica}
+	\todo[color=green!40, inline]{Prikaži slike pre i nekon detekcije tablica.}
 	\subsubsection{Detektor teksta}
 	\subsubsection{Prepoznavanje teksta}
 	\subsection{Tehnologije}
@@ -339,9 +351,11 @@
 	\newpage
 	
 	\section{Rezultati}
+	\todo[color=green!40, inline]{Dodaj raznovrsne primere slika tablica i rezultate modela za citanje. Uključi primere tablica koji izgledaju dobro, kao i primere koji su jedva čitljivi ili objektivno nečitljivi.}
 	\newpage
 	
 	\section{Buduća poboljšanja}
+	\todo[color=green!40, inline]{Dodavanje skupa tablica iz ostalih zemalja. Jer iako model prilično dobro prepoznaje tekst sa tablica iz država koje nije video, bilo bi dobro dodati takve podatke u trening skup, jer države često imaju svoj specifičan font ili specifične karaktere koje model nije video prilikom treninga sa srpskim tablicama.}
 	\newpage
 	
 	\section{Zaključak}
