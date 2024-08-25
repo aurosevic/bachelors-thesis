@@ -314,6 +314,7 @@
 		\caption{Primeri sintetičkog skupa podataka}
 		\label{fig:synthetic-license-plates}
 	\end{figure}
+	
 	Nakon generisanja pozadina tablica, koristio sam repozitorijum \href{https://github.com/Belval/TextRecognitionDataGenerator}{TextRecognitionDataGenerator}, koji sam modifikovao kako bih mogao da na tačno određenim mestima i pod odgovarajućim uglovima dodajem tekst na generisane pozadine tablica. Prethodno sam generisao tekst u skladu sa pravilima za izradu registarskih tablica u Republici Srbiji, vodeći računa da kontekst bude validan. Ovako prilagođena verzija alata uz korišćenje specijalno izrađenog fonta omogućila mi je da kreiram sintetički skup tablica koje podsećaju na stvarne srpske tablice (Slika \ref{fig:synthetic-license-plates}).
 	
 	\subsubsection{Integracija sintetičkih podataka sa realnim podacima}
@@ -339,6 +340,50 @@
 	
 	\section{Implementacija}
 	\subsection{Treniranje modela prepoznavanja teksta}
+	Uzevši u obzir da sam imao pristup malom broju podataka čak i nakon odrađene augmentacije i dodavanja sintetičkog skupa, tokom treniranja neke od parametara sam ekperimentalnim pristupom podesio na sledeće vrednosti:
+	\begin{itemize}
+		\item Broj epoha: 50; Iako je broj epoha postavljen na 50, zbog malog broja dostupnih podataka model bi najčešće konvergirao u trenutku od druge do pete epohe.
+		\item Korak za testiranje nad validacionim skupom: 200; Na svakih 200 završenih \todo[color=green!40]{Da li je ovo dobar termin za batch?}grupa podataka prilikom treninga pokreće se evaluacija nad validacionim skupom podataka.
+		\item \todo[color=green!40]{Da li je stopa učenja pogodan termin za learning rate?}Stopa učenja: Koristio sam \todo[color=green!40]{Originalni naziv: cosine}kosinusnu stopu učenja sa početnom vrednošću postavljenom na 0.0005.
+		\item Veličina ulazne slike: širina 320px, visina 48px i 3 kanala boja(RGB).
+	\end{itemize}
+
+	Model za prepoznavanje teksta sam trenirao na KDE Neon Linux mašini sa sledećim specifikacijama:
+	\begin{itemize}
+		\item GPU: NVIDIA GeForce RTX 4080, 16GB VRAM
+		\item CPU: 12th Gen Intel i7-12700KF
+		\item RAM: 32GB
+	\end{itemize}
+
+	\subsubsection{Treniranje koristeći samo \todo[color=green!40]{Da li je 'izvornih' bolji izbor reči?}realne podatke}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{assets/train-code.png}
+		\caption{Proces treniranja modela za detekciju teksta nad realnim podacima}
+		\label{fig:train-code}
+	\end{figure}
+	
+	Imajući u vidu da sam za treniranje modela imao samo 5.838 realnih slika tablica automobila registrovanih uglavnom u Beogradu i koje su bile označene i proverene, trening je trajao vrlo krakto. Model je konvergirao za nekoliko minuta i dostigao tačnost od 100\% na trening setu i 99.7\% na validacionom setu, koji je pomogao u usmeravanju treninga (Slika \ref{fig:train-code}).\newline
+		
+	Dostupni skup realnih podataka sam podelio u sledeće podskupove:
+	\begin{itemize}
+		\item Trening skup je činilo 70\% podataka, što je 4.086 slika
+		\item Validacioni skup je činilo 15\% podataka, što je 875 slika
+		\item Test skup je činilo 15\% podataka, što je 875 slika
+	\end{itemize}
+
+	Uzevši u obzir veoma visoku tačnost na trening i validacioinm podacima, najbitnija provera koja validira da li je model dobro istreniran ili je došlo do prekomerne prilagođenosti, jeste provera nad test skupom podataka. Uspešnost na nezavisnom testu nad skupom testnih podataka koje model nije mogao da vidi ni u jednom trenutku prilikom treniranja iznosi 100\%, što ukazuje na to da model nije imao problem sa prekomernom prilagođenosti podataka prilikom treniranja.
+	
+	\todo[color=green!40, inline]{Odradi evaluaciju nad testnim podacima iz sintetičkog skupa kao i spojenih sitnetičkih i realnih skupova podataka.}
+	
+	Pored visoke tračnosti, model takođe ima i visok stepen sigurnosti prilikom predikcije, sa prosečnom sigurnošću od 99,91\% za svaku predikciju koju je izvršio na testnom skupu podataka.
+	
+	Međutim, obzirom na to da skup realnih podataka nije bio ni kontekstualno dovoljno raznovrstan, niti kvantitativno dovoljno veliki, treniranje nastavljam sa sintetičkim podacima.
+	
+	\subsection{Treniranje koristeći samo sintetičke podatke}
+	Pre nego što odradim treniranje na spojenim skupovima realnih i sintetičkih podataka, želeo sam da proverim tačnost modela u scenariju u kojem nisam imao pristup realnim podacima tokom treninga, već sam morao da koristim isključivo sintetičke podatke.
+	
+	\todo[color=green!40, inline]{Dodaj grafove kako raste acc, a opada loss. Dodaj sve vrste loss-a na isti graf i opisi ih. Ovo odradi za svaki od tri pokrenuta treninga: real data, synthetic data, real + synthetic data. Takodje prikazi evaluaciju sva tri modela nad sva tri tipa eval podataka. Prikazi i screenshot-ove terminala prilikom treninga.}
 	\subsection{Komponente sistema}
 	\subsubsection{Detektor tablica}
 	\todo[color=green!40, inline]{Prikaži slike pre i nekon detekcije tablica.}
@@ -356,6 +401,7 @@
 	
 	\section{Buduća poboljšanja}
 	\todo[color=green!40, inline]{Dodavanje skupa tablica iz ostalih zemalja. Jer iako model prilično dobro prepoznaje tekst sa tablica iz država koje nije video, bilo bi dobro dodati takve podatke u trening skup, jer države često imaju svoj specifičan font ili specifične karaktere koje model nije video prilikom treninga sa srpskim tablicama.}
+	\todo[color=green!40, inline]{Prikazati kako se model ponaša nad ekstremno lošim podacima ili nad podacima koje nije video do sada. Npr kod podataka koje nije video, može lako doći do pogrešnog prepoznavanja karaktera O i 0 ili I i 1 i sl. Slike se nalaze na: /home/andrija/Pictures/OpenParking/Old/quick\_test/}
 	\newpage
 	
 	\section{Zaključak}
