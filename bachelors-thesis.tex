@@ -381,8 +381,15 @@
 		\caption{Proces treniranja modela za detekciju teksta na realnim podacima}
 		\label{fig:train-code-real-data}
 	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{assets/real-data-metrics.png}
+		\caption{Metrike u toku treniranja modela sa realnim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela f) Gubitak u toku obučavanja modela.}
+		\label{fig:real-data-metrics}
+	\end{figure}
 	
-	Imajući u vidu da sam za treniranje modela imao samo 5.838 realnih slika tablica automobila registrovanih uglavnom u Beogradu i koje su bile označene i proverene, trening je trajao samo par minuta. Model je konvergirao za nekoliko minuta i dostigao tačnost od 100\% na trening skupu i 99.77\% na validacionom skupu, koji je pomogao u usmeravanju treninga (Slika \ref{fig:train-code-real-data}).\newline
+	Imajući u vidu da sam za treniranje modela imao samo 5.838 realnih slika tablica automobila registrovanih uglavnom u Beogradu i koje su bile označene i proverene, trening je trajao samo par minuta. Model je konvergirao za nekoliko minuta i dostigao tačnost od 100\% (Slika \ref{fig:real-data-metrics}(a)) na trening skupu i 99.77\% (Slika \ref{fig:real-data-metrics}(b)) na validacionom skupu, koji je pomogao u usmeravanju treninga (Slika \ref{fig:train-code-real-data}).\newline
 	
 	Dostupni skup realnih podataka sam podelio u sledeće podskupove:
 	\begin{itemize}
@@ -390,13 +397,6 @@
 		\item Validacioni skup je činilo 15\% podataka, što je 875 slika
 		\item Test skup je činilo 15\% podataka, što je 875 slika
 	\end{itemize}
-
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{assets/real-data-metrics.png}
-		\caption{Metrike u toku treniranja modela sa realnim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela f) Gubitak u toku obučavanja modela}
-		\label{fig:real-data-metrics}
-	\end{figure}
 	
 	Uzevši u obzir veoma visoku tačnost na trening i validacioinm podacima, najbitnija provera koja validira da li je model dobro istreniran ili je došlo do prekomerne prilagođenosti, jeste provera nad test skupom podataka. Uspešnost na nezavisnom testu nad skupom testnih podataka koje model nije mogao da vidi ni u jednom trenutku prilikom treniranja iznosi 100\%, što ukazuje na to da model nije imao problem sa prekomernom prilagođenosti podataka prilikom treniranja.
 	
@@ -413,8 +413,15 @@
 		\caption{Krajnja faza procesa treniranja modela za detekciju teksta na sintetičkim podacima}
 		\label{fig:train-code-synthetic-data}
 	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{assets/synthetic-data-metrics.png}
+		\caption{Metrike u toku treniranja modela sa sintetičkim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela f) Gubitak u toku obučavanja modela.}
+		\label{fig:synthetic-data-metrics}
+	\end{figure}
 	
-	Sintetički podaci su značajno povećali količinu i kontenstualnu raznovrsnost podataka. Iako sam sintetičkih podataka imao dosta više, trning je i ponovo trajao relativno kratko. Model je konvergirao za 10-ak minuta i dostigao tačnost od 100\% na trening skupu i najveću tačnost od 99.95\% na validacionom skupu dostigao za 15-ak minuta treniranja (Slika \ref{fig:train-code-synthetic-data}).\newline
+	Sintetički podaci su značajno povećali količinu i kontenstualnu raznovrsnost podataka. Iako sam sintetičkih podataka imao dosta više, trning je i ponovo trajao relativno kratko. Model je konvergirao za 10-ak minuta i dostigao tačnost od 100\% (Slika \ref{fig:synthetic-data-metrics}(a)) na trening skupu i najveću tačnost od 99.95\% (Slika \ref{fig:synthetic-data-metrics}(b)) na validacionom skupu dostigao za 15-ak minuta treniranja (Slika \ref{fig:train-code-synthetic-data}).\newline
 	
 	Skup sintetičkih podataka sam podelio u sledeće podskupove:
 	\begin{itemize}
@@ -422,13 +429,6 @@
 		\item Validacioni skup je činilo 15\% podataka, što je 17.850 slika
 		\item Test skup je činilo 15\% podataka, što je 17.850 slika
 	\end{itemize}
-
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{assets/synthetic-data-metrics.png}
-		\caption{Metrike u toku treniranja modela sa sintetičkim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela f) Gubitak u toku obučavanja modela}
-		\label{fig:synthetic-data-metrics}
-	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
@@ -450,22 +450,22 @@
 		\caption{Krajnja faza procesa treniranja modela za detekciju teksta na spojenom skupu realnih i sintetičkih podataka}
 		\label{fig:train-code-real-and-synthetic-data}
 	\end{figure}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{assets/real-and-synthetic-data-metrics.png}
+		\caption{Metrike u toku treniranja modela sa realnim i sintetičkim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela f) Gubitak u toku obučavanja modela.}
+		\label{fig:real-and-synthetic-data-metrics}
+	\end{figure}
 	
-	Trening na spojenom skupu ralnih i sintetičkih podataka je trajao oko 30 minuta. Model je dostigao tačnost od 100\% na trening skupu i 99.97\% na validacionom skupu.\newline
+	Trening na spojenom skupu ralnih i sintetičkih podataka je trajao oko 30 minuta. Model je dostigao tačnost od 100\% (Slika \ref{fig:real-and-synthetic-data-metrics}(a)) na trening skupu i 99.97\% (Slika \ref{fig:real-and-synthetic-data-metrics}(b)) na validacionom skupu podataka (Slika \ref{fig:train-code-real-and-synthetic-data}).\newline
 	
-	Agregirani skup realnih i sintetičkih podataka sam podelio u sledeće podskupove:
+	Kombinovani skup realnih i sintetičkih podataka sam podelio u sledeće podskupove:
 	\begin{itemize}
 		\item Trening skup je činilo 70\% podataka, što je 87.386 slika, od kojih je 4.086 realnih i 83.300 sintetičkih slika
 		\item Validacioni skup je činilo 15\% podataka, što je 18.725 slika, od kojih je 875 realnih i 17.850 sintetičkih slika
 		\item Test skup je činilo 15\% podataka, što je 18.725 slika, od kojih je 875 realnih i 17.850 sintetičkih slika
 	\end{itemize}
-
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\textwidth]{assets/real-and-synthetic-data-metrics.png}
-		\caption{Metrike u toku treniranja modela sa realnim i sintetičkim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela f) Gubitak u toku obučavanja modela}
-		\label{fig:real-and-synthetic-data-metrics}
-	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
@@ -474,101 +474,41 @@
 		\label{fig:bad-predictions-real-and-synthetic-data-model}
 	\end{figure}
 	
-	Na nezavisnom testnom skupu podataka model je pogrešno prediktovao samo 2 od 18.725 slika, beležeći tačnost od 99.98\% na nezavisnom skupu podataka. Slike tablica koje nisu dobro prediktovane nalaze se na Slici \ref{fig:bad-predictions-real-and-synthetic-data-model}. Model koji je treniran na \todo[color=green!40]{Koristi umesto reči agregiran}kombinovanom skupu realnih i sintetičkih podataka je imao problem sa predikcijom na slici tablice koja je pomoćnim trakama koje prelaze preko teksta zakačena za automobil. Ovaj primer ilustruje korišćenje softvera u realnim uslovima, gde osoba koja kreira sintetički skup podataka ne može uvek da predvidi sve moguće scenarije koji se mogu desiti u praksi. To dodatno naglašava važnost pravih podataka i objašnjava zašto svi koji razvijaju ozbiljne modele teže ka potrazi za pravim podacima. Ovaj model, kako i model treniran samo na sintetičkim podacima takođe pokazuje porblem sa izrarito malim razlikama u boji između teksta i pozadine, ali u manjoj meri. Takvo pogrešno čitanje može se smatrati prihvatljivim, s obzirom na to da je veoma teško pročitati šta zaprao piše na takvoj slici.
+	Na nezavisnom testnom skupu podataka model je pogrešno prediktovao samo 2 od 18.725 slika, beležeći tačnost od 99.98\% na nezavisnom skupu podataka. Slike tablica koje nisu dobro prediktovane nalaze se na Slici \ref{fig:bad-predictions-real-and-synthetic-data-model}. Model koji je treniran na kombinovanom skupu realnih i sintetičkih podataka je imao problem sa predikcijom na slici tablice koja je pomoćnim trakama koje prelaze preko teksta zakačena za automobil. Ovaj primer ilustruje korišćenje softvera u realnim uslovima, gde osoba koja kreira sintetički skup podataka ne može uvek da predvidi sve moguće scenarije koji se mogu desiti u praksi. To dodatno naglašava važnost pravih podataka i objašnjava zašto svi koji razvijaju ozbiljne modele teže ka potrazi za pravim podacima. Ovaj model, kako i model treniran samo na sintetičkim podacima takođe pokazuje porblem sa izrarito malim razlikama u boji između teksta i pozadine, ali u manjoj meri. Takvo pogrešno čitanje može se smatrati prihvatljivim, s obzirom na to da je veoma teško pročitati šta zaprao piše na takvoj slici.
 	
 	Kombinovanjem realnih i sintetičkih podataka za vreme treninga, stepen sigurnosti modela prilikom predikcije je povećan u odnosu na model treniran samo nad sintetičkim podacima. Presečnna sigurnost modela je 99,32\% na testnom skupu podataka. Sigurnost je i dalje nešto manja u odnosu na model treniran koristeći isključivo realne podatke, što ukazuje na važnost korišćenja realnih podataka prilikom treniranja modela.
 	
-	\todo[color=green!40, inline]{Dodaj grafove kako raste acc, a opada loss. Dodaj sve vrste loss-a na isti graf i opisi ih. Ovo odradi za svaki od tri pokrenuta treninga: real data, synthetic data, real + synthetic data.}
-	
 	\subsubsection{Uporedna analiza tačnosti modela na sva tri testna seta}
 	
-	\begin{table}[h]
+	\begin{table}[H]
 		\centering
-		\caption{Complex Table with Multirow and Multicolumn}
-		\begin{tabular}{|c|c|c|c|} % Define the table with 4 columns
-			\hline
-			\multirow{2}{*}{\textbf{Multirow}} & \multicolumn{3}{c|}{\textbf{Multicolumn}} \\ % Multirow and multicolumn header
-			\cline{2-4} % Draw a line under the header
-			& Subcolumn 1 & Subcolumn 2 & Subcolumn 3 \\ % Subcolumns under the parent columns
-			\hline
-			Row 1 Data & Data 1 & Data 2 & Data 3 \\ % First row of data
-			\hline
-			Row 2 Data & Data 4 & Data 5 & Data 6 \\ % Second row of data
-			\hline
-			\multirow{2}{*}{Row 3} & Data 7 & Data 8 & Data 9 \\ % Multirow in the body
-			\cline{2-4} % Draw a line under the multirow
-			& Data 10 & Data 11 & Data 12 \\ % Second part of the multirow
-			\hline
-		\end{tabular}
-		\label{tab:complex_table}
+		\includegraphics[width=\textwidth]{assets/comparative-analysis-on-test-set.png}
+		\caption{Uploredna analiza tačnosti tri obučena modela na zasebnim testnim skupovima}
+		\label{fig:comparative-analysis-on-test-set}
 	\end{table}
+
+	Nakon treniranja tri modela na opisanim skupovima podataka, uporedio sam njihovu tačnost i sigurnost prilikom predikcije na svim testnim skupovima (Tabela \ref{fig:comparative-analysis-on-test-set}).
 	
-	\begin{table}[h]
-		\centering
-		\small
-		\begin{tabular}{|p{4cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|} % Five columns
-			\hline
-			\multirow{3}{*}{\diagbox[width=4.5cm]{trening skup}{test skup podataka}} & \multicolumn{2}{c|}{realni} & \multicolumn{2}{c|}{sintetički} & \multicolumn{2}{c|}{realni i sintetički} \\ % First column spans two rows, three parent columns with two sub-columns each
-			\cline{2-7} % Draw a line under the header
-			& Tačnost & Sigurnost & Tačnost & Sigurnost & Tačnost & Sigurnost \\ % Subcolumns under the parent columns
-			\hline
-			Realni & Data 1 & Data 2 & Data 3 & Data 4 & Data 1 & Data 2 \\ % First row of data
-			\hline
-			Sintetički & Data 5 & Data 6 & Data 7 & Data 8 & Data 1 & Data 2 \\ % Second row of data
-			\hline
-			Realni i sintetički & Data 9 & Data 10 & Data 11 & Data 12 & Data 1 & Data 2 \\ % Third row of data
-			\hline
-		\end{tabular}
-		\caption{Sample Table with Multirow and Multicolumn}
-		\label{tab:sample_table}
-	\end{table}
+	Model koji je treniran i testiran na realnim podacima postigao je najveću tačnost i sigurnost, što je očekivano s obzirom na to da su trening i testni skup sadržavali vrlo malo slika tablica izdatih isključivo na teritoriji Beograda. Ipak, iako ovaj model ima najbolju tačnost na realnim testnim podacima, njegova tačnost na ostalim testnim skupovima je značajno lošija u odnosu na ostale modele. Zbog toga, model koji je treniran samo na realnim podacima nije najbolji izbor među tri ponuđena modela.
 	
-	real on real
-	Average confidence: 0.9991172904163566
-	Accuracy: 1.0 | Number of samples: 877
+	Najlošiju tačnost i sigurnost imao je model treniran na realnim, a testiran na sintetičkim podacima. Vrlo sličan, ali nešto bolji rezultat ostvario je isti model na testnom skupu kombinovanih realnih i sintetičkih podataka. Razlog za ovo je što je model tokom treninga na prvim dvema pozicijama video samo "BG" niz karaktera, dok su testni skupovi sadržali tablice iz svih opština Srbije koje imaju pravo da izdaju registarske tablice. Dodatno, korišćeni font za generisanje sintetičkih podataka je ručno napravljen i možda nije idealno replicirao originalni font, što je moglo uticati na tačnost.
 	
-	real on synthetic
-	Average confidence: 0.9938431577154903
-	Accuracy: 0.9770868347338936 | Number of samples: 17850
-	
-	real on rean \& synthetic
-	Average confidence: 0.9940901494588906
-	Accuracy: 0.9781064772787953 | Number of samples: 18727
-	
-	------
-	synthetic on real
-	Average confidence: 0.992518988955116
-	Accuracy: 0.9942987457240593 | Number of samples: 877
-	
-	synthetic on synthetic
-	Average confidence: 0.987312236643639
-	Accuracy: 0.9997198879551821 | Number of samples: 17850
-	
-	synthetic on real \& synthetic
-	Average confidence: 0.987556072910909
-	Accuracy: 0.9994126128050409 | Number of samples: 18727
-	
-	------
-	r\&s on real
-	Average confidence: 0.999347075768996
-	Accuracy: 0.9988597491448119 | Number of samples: 877
-	
-	r\&s on synthetic
-	Average confidence: 0.9929956148218374
-	Accuracy: 0.9999439775910364 | Number of samples: 17850
-	
-	r\&s on real \& synthetic
-	Average confidence: 0.9932930586863463
-	Accuracy: 0.9998932023281892 | Number of samples: 18727
-	
-	\todo[color=green!40, inline]{Odradi evaluaciju nad testnim podacima iz sintetičkog skupa kao i spojenih sitnetičkih i realnih skupova podataka.}
-	
-	\todo[color=green!40, inline]{Dodaj raznovrsne primere slika tablica i rezultate modela za citanje. Uključi primere tablica koji izgledaju dobro, kao i primere koji su jedva čitljivi ili objektivno nečitljivi.}
+	Iako nema apsolutno najveću tačnost i sigurnost, najbolji model za korišćenje u realnim uslovima je onaj treniran na realnim i sintetičkim podacima. Razlika u odnosu na model sa najvećom tačnošću je samo 0,02\%, što se može smatrati zanemarljivom. Ovaj model je imao najraznovrsniji i najobimniji trening skup, što mu uz odlične rezultate na validacionim i testnim skupovima daje prednost u izboru.
 	\newpage
 	
 	\section{Buduća poboljšanja}
-	\todo[color=green!40, inline]{Dodavanje skupa tablica iz ostalih zemalja. Jer iako model prilično dobro prepoznaje tekst sa tablica iz država koje nije video, bilo bi dobro dodati takve podatke u trening skup, jer države često imaju svoj specifičan font ili specifične karaktere koje model nije video prilikom treninga sa srpskim tablicama.}
-	\todo[color=green!40, inline]{Prikazati kako se model ponaša nad ekstremno lošim podacima ili nad podacima koje nije video do sada. Npr kod podataka koje nije video, može lako doći do pogrešnog prepoznavanja karaktera O i 0 ili I i 1 i sl. Slike se nalaze na: /home/andrija/Pictures/OpenParking/Old/quick\_test/}
+	Iako model koji sam trenirao pokazuje odlične performanse za čitanje teksta sa tablica izdatih na teritoriji Republike Srbije, nije očekivano da će idealno raditi na tablicama vozila iz drugih država zbog razlika u dizajnu, fontovima i karakterima. Svaka zemlja ima svoje specifične standarde kada je reč o izgledu registarskih tablica, što uključuje različite boje, oblike i stilove fonta. Na primer, tablice iz nekih drugih zemalja mogu koristiti karaktere koji se razlikuju od onih na srpskim tablicama, što može dovesti do problema u prepoznavanju.
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{assets/good-and-bad-predictions.png}
+		\caption{Primeri slika stranih tablica. a) Primeri dobro pročitanih slika stranih tablica. b) Primeri loše pročitanih slika stranih tablica sa naznačenim greškama prilikom predikcije.}
+		\label{fig:good-and-bad-predictions}
+	\end{figure}
+	
+	Iako model prilično dobro prepoznaje tekst sa tablica iz država koje nije video, bilo bi korisno dodati takve podatke u trening skup. Različite države često imaju specifične fontove ili karaktere koje model nije imao priliku da vidi tokom treniranja sa srpskim tablicama. To može dovesti do grešaka, posebno kada se radi o sličnim karakterima, kao što su "O" i "0" (Slika \ref{fig:good-and-bad-predictions} (b)) ili "I" i "1". U takvim slučajevima, model može lako napraviti pogrešna prepoznavanja, što može uticati na ukupnu tačnost i pouzdanost.
+	
+	Zbog ovih razlika, važno je obogatiti trening skup dodatnim podacima iz različitih zemalja kako bi model poboljšao performanse na stranim tablicama. Uključivanje raznovrsnih podataka može pomoći u smanjenju grešaka i povećanju preciznosti prepoznavanja, čime bi se postigla veća efikasnost u stvarnim uslovima.
 	\newpage
 	
 	\section{Zaključak}
