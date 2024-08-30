@@ -342,6 +342,20 @@
 	\newpage
 	
 	\section{Implementacija}
+	
+	\subsection{Komponente sistema}
+	\subsubsection{Detektor tablica}
+	\todo[color=green!40, inline]{Prikaži slike pre i nekon detekcije tablica.}
+	\subsubsection{Detektor teksta}
+	\subsubsection{Prepoznavanje teksta}
+	\subsection{Tehnologije}
+	\subsubsection{PaddlePaddle}
+	\subsubsection{Docker}
+	\subsubsection{FastAPI}
+	\newpage
+	
+	\section{Rezultati}
+	
 	\subsection{Treniranje modela prepoznavanja teksta}
 	Uzevši u obzir da sam imao pristup malom broju podataka čak i nakon odrađene augmentacije i dodavanja sintetičkog skupa, tokom treniranja neke od parametara sam ekperimentalnim pristupom podesio na sledeće vrednosti:
 	\begin{itemize}
@@ -350,14 +364,14 @@
 		\item \todo[color=green!40]{Da li je stopa učenja pogodan termin za learning rate?}Stopa učenja: Koristio sam \todo[color=green!40]{Originalni naziv: cosine}kosinusnu stopu učenja sa početnom vrednošću postavljenom na 0.0005.
 		\item Veličina ulazne slike: širina 320px, visina 48px i 3 kanala boja(RGB).
 	\end{itemize}
-
+	
 	Model za prepoznavanje teksta sam trenirao na KDE Neon Linux mašini sa sledećim specifikacijama:
 	\begin{itemize}
 		\item GPU: NVIDIA GeForce RTX 4080, 16GB VRAM
 		\item CPU: 12th Gen Intel i7-12700KF
 		\item RAM: 32GB
 	\end{itemize}
-
+	
 	\subsubsection{Treniranje koristeći samo \todo[color=green!40]{Da li je 'izvornih' bolji izbor reči?}realne podatke}
 	\begin{figure}[H]
 		\centering
@@ -367,7 +381,7 @@
 	\end{figure}
 	
 	Imajući u vidu da sam za treniranje modela imao samo 5.838 realnih slika tablica automobila registrovanih uglavnom u Beogradu i koje su bile označene i proverene, trening je trajao samo par minuta. Model je konvergirao za nekoliko minuta i dostigao tačnost od 100\% na trening skupu i 99.77\% na validacionom skupu, koji je pomogao u usmeravanju treninga (Slika \ref{fig:train-code-real-data}).\newline
-		
+	
 	Dostupni skup realnih podataka sam podelio u sledeće podskupove:
 	\begin{itemize}
 		\item Trening skup je činilo 70\% podataka, što je 4.086 slika
@@ -375,6 +389,13 @@
 		\item Test skup je činilo 15\% podataka, što je 875 slika
 	\end{itemize}
 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\textwidth]{assets/real-data-metrics.png}
+		\caption{Metrike u toku treniranja modela sa realnim podacima}
+		\label{fig:real-data-metrics}
+	\end{figure}
+	
 	Uzevši u obzir veoma visoku tačnost na trening i validacioinm podacima, najbitnija provera koja validira da li je model dobro istreniran ili je došlo do prekomerne prilagođenosti, jeste provera nad test skupom podataka. Uspešnost na nezavisnom testu nad skupom testnih podataka koje model nije mogao da vidi ni u jednom trenutku prilikom treniranja iznosi 100\%, što ukazuje na to da model nije imao problem sa prekomernom prilagođenosti podataka prilikom treniranja.
 	
 	Pored visoke tračnosti, model takođe ima i visok stepen sigurnosti prilikom predikcije, sa prosečnom sigurnošću od 99,91\% za svaku predikciju koju je izvršio na testnom skupu podataka.
@@ -402,11 +423,18 @@
 
 	\begin{figure}[H]
 		\centering
+		\includegraphics[width=\textwidth]{assets/synthetic-data-metrics.png}
+		\caption{Metrike u toku treniranja modela sa sintetičkim podacima}
+		\label{fig:synthetic-data-metrics}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
 		\includegraphics[width=\textwidth]{assets/bad-predictions-synthetic-data-model.png}
 		\caption{Primeri slika tablica koje je model treniran samo sa sintetičkim podacima pogrešno prediktovao}
 		\label{fig:bad-predictions-synthetic-data-model}
 	\end{figure}
-
+	
 	Na nezavisnom testnom skupu podataka model je pogrešno prediktovao samo 5 od 17.850 slika, beležeći tačnost od 99.97\% na nezavisnom skupu podataka. Slike tablica koje nisu dobro prediktovane nalaze se na Slici \ref{fig:bad-predictions-synthetic-data-model}. Jasno se vidi da je zajednička karakteristika prve četiri slike to što se nalaze na tamnim pozadinama sa tekstom čija boja nije lako separabilna od boje pozadine. Poslednja prikazana slika tablice na Slici \ref{fig:bad-predictions-synthetic-data-model} ima veću razliku u boji između teksta i pozadine, a razlog zbog kojeg je bila neuspešna jeste grb sa tablice koji se našao direktno iza prve cifre, pa je model prvu cifru 6 prepozano kao \$.
 	
 	Ovaj model, u odnosu na model treniran na realnim slikama, ima manji ali i dalje visok stepen sigurnosti prilikom predikcije. Presečnna sigurnost modela treniranog na sintetičkom skupu podataka je 98,73\% na testnom sintetičkom skupu podataka.
@@ -420,7 +448,7 @@
 		\caption{Krajnja faza procesa treniranja modela za detekciju teksta na spojenom skupu realnih i sintetičkih podataka}
 		\label{fig:train-code-real-and-synthetic-data}
 	\end{figure}
-
+	
 	Trening na spojenom skupu ralnih i sintetičkih podataka je trajao oko 30 minuta. Model je dostigao tačnost od 100\% na trening skupu i 99.97\% na validacionom skupu.\newline
 	
 	Agregirani skup realnih i sintetičkih podataka sam podelio u sledeće podskupove:
@@ -432,11 +460,18 @@
 
 	\begin{figure}[H]
 		\centering
+		\includegraphics[width=\textwidth]{assets/real-and-synthetic-data-metrics.png}
+		\caption{Metrike u toku treniranja modela sa realnim i sintetičkim podacima}
+		\label{fig:real-and-synthetic-data-metrics}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
 		\includegraphics[width=\textwidth]{assets/bad-predictions-real-and-synthetic-data-model.png}
 		\caption{Primeri slika tablica koje je model treniran na realnih i sintetičkim podacima pogrešno prediktovao}
 		\label{fig:bad-predictions-real-and-synthetic-data-model}
 	\end{figure}
-
+	
 	Na nezavisnom testnom skupu podataka model je pogrešno prediktovao samo 2 od 18.725 slika, beležeći tačnost od 99.98\% na nezavisnom skupu podataka. Slike tablica koje nisu dobro prediktovane nalaze se na Slici \ref{fig:bad-predictions-real-and-synthetic-data-model}. Model koji je treniran na \todo[color=green!40]{Koristi umesto reči agregiran}kombinovanom skupu realnih i sintetičkih podataka je imao problem sa predikcijom na slici tablice koja je pomoćnim trakama koje prelaze preko teksta zakačena za automobil. Ovaj primer ilustruje korišćenje softvera u realnim uslovima, gde osoba koja kreira sintetički skup podataka ne može uvek da predvidi sve moguće scenarije koji se mogu desiti u praksi. To dodatno naglašava važnost pravih podataka i objašnjava zašto svi koji razvijaju ozbiljne modele teže ka potrazi za pravim podacima. Ovaj model, kako i model treniran samo na sintetičkim podacima takođe pokazuje porblem sa izrarito malim razlikama u boji između teksta i pozadine, ali u manjoj meri. Takvo pogrešno čitanje može se smatrati prihvatljivim, s obzirom na to da je veoma teško pročitati šta zaprao piše na takvoj slici.
 	
 	Kombinovanjem realnih i sintetičkih podataka za vreme treninga, stepen sigurnosti modela prilikom predikcije je povećan u odnosu na model treniran samo nad sintetičkim podacima. Presečnna sigurnost modela je 99,32\% na testnom skupu podataka. Sigurnost je i dalje nešto manja u odnosu na model treniran koristeći isključivo realne podatke, što ukazuje na važnost korišćenja realnih podataka prilikom treniranja modela.
@@ -526,25 +561,6 @@
 	
 	\todo[color=green!40, inline]{Odradi evaluaciju nad testnim podacima iz sintetičkog skupa kao i spojenih sitnetičkih i realnih skupova podataka.}
 	
-	\subsection{Važnost treniranja modela sa podacima sličnim onima koji će biti korišćeni}
-	Treniranje modela sa podacima koji su slični onima koji će se koristiti u stvarnom svetu je neophodno kako bi postigli visoke performanse i tačnosti. Kada se model trenira na relevantnim i reprezentativnim podacima, on može bolje da razume obrasce i karakteristike koje će se pojaviti u novim, nepoznatim podacima.
-	
-	Ako su podaci korišćeni za treniranje značajno različiti od onih koji se koriste u praksi, model može imati problema sa generalizacijom, što može dovesti do loših predikcija. Stoga je važno osigurati da skup podataka za treniranje obuhvata raznovrsne i realistične primere koji odražavaju stvarne uslove rada.
-	
-	Model opšte namene za prepoznavanje teksta koji sam koristio kao startni model za treniranje na slikama tablica ima neprihvatljivo lošu tačnost za produkcione uslove. Tačnost startnog modela na realnim podacima je 87.68\%, na sintetičkim 88.38\% i na kombinovanim skupu ralnih i sintetičkih podataka 88.35\%. Preimetno je da se startni model prilikom evaluacije konzistentno ponaša na sva tri skupa podataka sa kojima sam trenirao model, što je dodatni pokazatelj da prilikom treniranja modela za prepoznavanje teksta na tablicama nije došlo do prekomerne prilagođenosti podacima, već je startni model naučio da prepoznaje novi tip podataka.
-	
-	\subsection{Komponente sistema}
-	\subsubsection{Detektor tablica}
-	\todo[color=green!40, inline]{Prikaži slike pre i nekon detekcije tablica.}
-	\subsubsection{Detektor teksta}
-	\subsubsection{Prepoznavanje teksta}
-	\subsection{Tehnologije}
-	\subsubsection{PaddlePaddle}
-	\subsubsection{Docker}
-	\subsubsection{FastAPI}
-	\newpage
-	
-	\section{Rezultati}
 	\todo[color=green!40, inline]{Dodaj raznovrsne primere slika tablica i rezultate modela za citanje. Uključi primere tablica koji izgledaju dobro, kao i primere koji su jedva čitljivi ili objektivno nečitljivi.}
 	\newpage
 	
@@ -554,6 +570,13 @@
 	\newpage
 	
 	\section{Zaključak}
+	
+	\subsection{Važnost treniranja modela sa podacima sličnim onima koji će biti korišćeni}
+	Treniranje modela sa podacima koji su slični onima koji će se koristiti u stvarnim uslovima je neophodno za postizanje visoke tačnosti modela. Kada se model \todo[color=green!40]{Da li je lepše koristiti termin ]obučava}trenira na relevantnim i reprezentativnim podacima, bolje može da prepozna obrasce i karakteristike koje će se pojaviti u novim, nepoznatim podacima.
+	
+	Ako su podaci korišćeni za treniranje značajno različiti od onih koji se koriste u praksi, model može imati problem sa generalizacijom, što može dovesti do loših predikcija. Stoga je važno osigurati da skup podataka za treniranje obuhvata raznovrsne i realistične primere koji odražavaju stvarne uslove rada.
+	
+	Model opšte namene za prepoznavanje teksta, koji sam koristio kao startni model za treniranje na slikama tablica, ima neprihvatljivo lošu tačnost za produkcione uslove. Tačnost startnog modela na realnim podacima je 87.68\%, na sintetičkim 88.38\% i na kombinovanim skupu ralnih i sintetičkih podataka 88.35\%. Primetno je da se startni model prilikom evaluacije konzistentno ponaša na sva tri skupa podataka sa kojima sam trenirao model, što je dodatni pokazatelj da prilikom treniranja modela za prepoznavanje teksta na tablicama nije došlo do prekomerne prilagođenosti podacima, već je startni model naučio da prepoznaje novi tip podataka.
 	\newpage
 	
 	\printbibliography
