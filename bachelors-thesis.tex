@@ -371,8 +371,10 @@
 		\item CPU: 12th Gen Intel i7-12700KF
 		\item RAM: 32GB
 	\end{itemize}
+
+	Za evaluaciju i praćenje treniranja modela koristio sam CTCConnectionist Temporal Classification), NRTR(Non-Recurrent Text Recognition) i sumarni gubitak te dve funkcije. CTC gubitak se koristi u primerima gde je usklađenost između ulaznih i izlaznih sekvenci nepoznata. Ulazne sekvence u ovom slučaju predstavljaju slike koje sadrže tekst, a izlazne sekvence predstavljaju niz karaktera koji je zapisan na slici. CTC omogućava modelu da generiše sekvencu verovatnoća za svaki karakter i predstavlja dobar pristup za različite dužine ulaznih i izlaznih sekvenci. Funkcija gubitka izračunava verovatnoću ispravne sekvence sabiranjem svih mogućih usklađenja, što omogućava modelu da uči iz neusklađenih podataka \cite{inproceedings, ctcLoss}. NRTR gubitak je dizajniran za nerekurentne modele, posebno za modele bazirane na transformer arhitekturi. Efikasan je za duge sekvence, jer ima sposobnost paralelnog procesiranja \cite{hu2020gtcguidedtrainingctc}.
 	
-	\subsubsection{Treniranje koristeći samo \todo[color=green!40]{Da li je 'izvornih' bolji izbor reči?}realne podatke}
+	\subsubsection{Treniranje koristeći samo realne podatke}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/train-code-real-data.png}
@@ -392,7 +394,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/real-data-metrics.png}
-		\caption{Metrike u toku treniranja modela sa realnim podacima}
+		\caption{Metrike u toku treniranja modela sa realnim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela f) Gubitak u toku obučavanja modela}
 		\label{fig:real-data-metrics}
 	\end{figure}
 	
@@ -424,7 +426,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/synthetic-data-metrics.png}
-		\caption{Metrike u toku treniranja modela sa sintetičkim podacima}
+		\caption{Metrike u toku treniranja modela sa sintetičkim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela f) Gubitak u toku obučavanja modela}
 		\label{fig:synthetic-data-metrics}
 	\end{figure}
 	
@@ -461,7 +463,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/real-and-synthetic-data-metrics.png}
-		\caption{Metrike u toku treniranja modela sa realnim i sintetičkim podacima}
+		\caption{Metrike u toku treniranja modela sa realnim i sintetičkim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela f) Gubitak u toku obučavanja modela}
 		\label{fig:real-and-synthetic-data-metrics}
 	\end{figure}
 	
