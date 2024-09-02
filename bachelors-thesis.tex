@@ -338,20 +338,53 @@
 	Ovakva metodologija podele podataka omogućava razvoj robusnih modela koji imaju veću pouzdanost i praktičnu primenljivost u realnim scenarijima.
 	
 	\subsection{Opis korišćenog skupa podataka}
-	Skup realnih podataka koje sam koristio za proces treniranja modela sadržao je 5.838 slika pravih srpskih tablica, uglavnom registrovanih u Beogradu. Sve slike su pažljivo označene i višestruko proverene kako bi se izbeglo propuštanje nepravilno označenih podataka, što bi dovelo do loših rezultata prilikom treninga modela. Uzevši u obzir mali broj dostupnih slika za trening, augmentacijom i pravljenjem sintetičkih podataka povećao sam skup podataka sa 5.838 na 124.838 slika. Prilikom augmentacije i pravljenja sintetičkih podataka inicijalni skup sam obogatio sa slikama različitih scenarija vremenskih i dnevnih uslova, kao i različitim uglovima slikanja kamere. Pored toga što doprinosi varijabilnosti uslova osvetljenja i kvantitetu podataka, dodavanje sintetičkog skupa unosi i novi kontekst teksta na tablicama, gde sam u sintetičkom skupu napravio primere tablica koje su mogle biti registrovane u ostalim dozvoljenim gradovima u Srbiji pored Beograda \todo[color=green!40]{Da li ovaj izvor postaljam u citate formatu ili kao hypeprlink?}\cite{superRegistracija}. Dobra strana rada sa sintetičkim podacima jeste i to što nisam imao ručnu fazu označavanja podataka.
+	Skup realnih podataka koje sam koristio za proces treniranja modela sadržao je 5.838 slika pravih srpskih tablica, uglavnom registrovanih u Beogradu. Sve slike su pažljivo označene i višestruko proverene kako bi se izbeglo propuštanje nepravilno označenih podataka, što bi dovelo do loših rezultata prilikom treninga modela. Uzevši u obzir mali broj dostupnih slika za trening, augmentacijom i pravljenjem sintetičkih podataka povećao sam skup podataka sa 5.838 na 124.838 slika. Prilikom augmentacije i pravljenja sintetičkih podataka inicijalni skup sam obogatio sa slikama različitih scenarija vremenskih i dnevnih uslova, kao i različitim uglovima slikanja kamere. Pored toga što doprinosi varijabilnosti uslova osvetljenja i kvantitetu podataka, dodavanje sintetičkog skupa unosi i novi kontekst teksta na tablicama, gde sam u sintetičkom skupu napravio primere tablica koje su mogle biti registrovane u \href{https://www.super-registracija-vozila.rs/registarske-oznake-u-srbiji}{ostalim dozvoljenim gradovima} u Srbiji pored Beograda. Dobra strana rada sa sintetičkim podacima jeste i to što nisam imao ručnu fazu označavanja podataka.
 	\newpage
 	
-	\section{Implementacija}
+	\section{Implementacija}	
+	Kako bih sa veoma velikom sigurnošću mogao da radim prepoznavanje teksta sa tablica automobila, napravio sam servis za automatizovano prepoznavanje teksta sa tablica ulaznih slika koristeći modele za detekciju tablica i teksta sa scene. Ovaj pristup omogućava preciznije i pouzdanije rezultate, jer se oslanja na kombinaciju različitih modela koji su specijalizovani za različite aspekte prepoznavanja regija od važnosti.
 	
 	\subsection{Komponente sistema}
+	Ono što se pokazalo kao zanimljiv izazov u ovom procesu je to što nije bilo dovoljno koristiti samo model za detekciju tablica. Mnoge registarske tablice imaju dodatne elemente, poput reklama ili natpisa na okvirima, koji mogu ometati proces prepoznavanja teksta. Da bi se postigla visoka tačnost u čitanju registarskih oznaka, bilo je neophodno razviti metodologiju koja će eliminisati ove neželjene informacije pre nego što se pređe na prepoznavanje registarskih oznaka.
+	
+	S druge strane, korišćenje modela isključivo za detekciju teksta nije prihvatljivo kao robusno rešenje. Na slikama na kojima se nalaze registarske tablice često se može naći i drugi tekst koji ne predstavlja tablicu, kao što su natpisi, reklame, ime brenda automobila ili drugi elementi iz okruženja. Ako bi se oslonio isključivo na model za detekciju teksta, postojala bi dosta velika verovatnoća da će model pogrešno identifikovati ili obraditi neželjene informacije, što bi moglo dovesti do netačnih rezultata.
+	
+	Zbog toga je servis dizajniran tako da prvo detektuje tablice na ulaznim slikama, a zatim koristi model za prepoznavanje teksta isključivo unutar detektovanih oblasti tablica. Na ovaj način mogu efektivno da izbacim tekst koji je ispisan po okvirima ili značajno fontom u odnosu na glavni tekst koji se nalazi duž tablice.
+	
 	\subsubsection{Detektor tablica}
+	Model koji sam koristio za detekciju tablica je \href{https://huggingface.co/nickmuchi/yolos-small-finetuned-license-plate-detection}{YOLOS vizuelni transformer} \cite{fang2021looksequencerethinkingtransformer} inicijalno treniran na ImageNet skupu podataka i fino podešen kroz 200 epoha na skupu od \href{https://universe.roboflow.com/objectdetection-jhgr1/license-plates-recognition/dataset/2}{5200 slika tablica}.
+	
+	\todo[color=green!40, inline]{Dodaj informaciju o prosecnom vremenu izvrsavanja.}
 	\todo[color=green!40, inline]{Prikaži slike pre i nekon detekcije tablica.}
 	\subsubsection{Detektor teksta}
 	\subsubsection{Prepoznavanje teksta}
-	\subsection{Tehnologije}
+	\subsection{Metodologije razvoja servisa i korišćene tehnologije}
 	\subsubsection{PaddlePaddle}
-	\subsubsection{Docker}
-	\subsubsection{FastAPI}
+	\href{https://github.com/PaddlePaddle}{PaddlePaddle} je open-source framework za duboko učenje koji je razvijen od strane Baidu-a. Jedan je od najpopularnijih projekata na GitHub-u koji se bave mašinskim učenjem, a PaddlePaddleOCR deo je trenutno i najpopularniji repozitorijum na temu optičkog prepoznavanja karaktera.
+	
+	PaddlePaddleOCR projekat pruža veliki broj implementiranih modela iz aktuelnih radova koji se bave prepoznavanjem teksta sa slika. Ovi modeli pokrivaju širok spektar OCR zadataka, uključujući prepoznavanje teksta na različitim jezicima, analizu strukture dokumenata, prepoznavanje formula i tabela, kao i druge specijalizovane primene.
+	
+	Pored implementacije najnaprednijih OCR modela, Paddle pruža i alate za anotaciju podataka, generisanje sintetičkih slika za trening, kao i optimizaciju i ubrzanje modela za efikasnu primenu na različitim platformama - od servera do mobilnih uređaja i ugrađenih sistema.
+	
+	Kao početnu tačku za implementaciju prepoznavanja teksta sa tablica automobila sam koristio njihovu impelemtaciju SVTR modela.
+	
+	\subsubsection{Upravljanje pristupom servisu}
+	Kako bi prepoznavanje tablica moglo da se koristi kao servisna aplikacija, koristio sam \href{https://www.uvicorn.org/}{Uvicorn} i \href{https://fastapi.tiangolo.com/}{FastAPI} za izradu web servisa i otvorio rutu za pristup servisu. FastAPI je moderan i brz web framework za pravljenje API-ja u Python programskom jeziku i omogućava lako definisanje ruta i automatsku validaciju podataka. Njegova sposobnost da generiše interaktivnu dokumentaciju putem Swagger-a čini ga izuzetno korisnim za razvoj i testiranje API-ja.
+	
+	Uvicorn je performantni ASGI server koji podržava asinhrono rukovanje zahtevima. Njegova integracija sa FastAPI-jem omogućava efikasno upravljanje višestrukim pozivima i događajima, što je ključno za aplikacije koje zahtevaju brze i responzivne interakcije sa korisnicima. 
+	
+	Za pristup servisu za prepoznavanje teksta sa tablica sam otvorio rutu pod nazivom \textbf{"/do\_lpr"}, koja prihvata sliku kao ulaz. Izlaz iz ove rute su isečena slika tablice sa inicijalne slike i pročitani tekst sa tablice. Na ovaj način korisnici treba samo da pošalju sliku na kojoj se nalazi registarka tablica i za tu sliku će dobiti relevantne informacije.
+	
+	Korišćenje FastAPI-ja i Uvicorn-a mi je olakšalo i pravljenje dokumentacije, jer pruža automatski generisanu Swagger dokumentaciju na osnonvu ispisanog koda.
+	
+	\subsubsection{Distribuiranje i skaliranje}
+	Servis koji sam napravvio sam odlučio da upakujem i distribuiram pomoću Docker-a. \href{https://www.docker.com/}{Docker} je platforma za kontejnerizaciju aplikacija koja omogućava lako kreiranje, distribuiranje i pokretanje aplikacija u izolovanom okruženju, poznatom kao kontejner.
+	
+	Jedan od glavnih razloga za korišćenje Docker-a je obezbeđivanje konzistentnog okruženja za rad aplikacije. Docker kontejneri garantuju da će aplikacija raditi isto na različitim mašinama, čime se eliminišu problemi sa zavisnostima i razlikama u okruženju. Zahvaljujući Docker-u, mogu biti siguran prilikom razvoja da će aplikacija funkcionisati bez obzira na to gde se pokreće, što značajno olakšava proces implementacije.
+	
+	Osim toga, Docker omogućava lako skaliranje i prenosivost aplikacija. Kontejneri su jednostavni za prenos između različitih platformi, što olakšava distribuciju i implementaciju servisa. Takođe, Docker pruža alate za efikasno upravljanje životnim ciklusom aplikacije, uključujući kreiranje, pokretanje, zaustavljanje i brisanje kontejnera.
+	
+	Docker, kao rešenje, omogućava isporuku robusnog, skalabilnog i lako upotrebljivog rešenja.
 	\newpage
 	
 	\section{Rezultati}
@@ -372,7 +405,7 @@
 		\item RAM: 32GB
 	\end{itemize}
 
-	Za evaluaciju i praćenje treniranja modela koristio sam CTCConnectionist Temporal Classification), NRTR(Non-Recurrent Text Recognition) i sumarni gubitak te dve funkcije. CTC gubitak se koristi u primerima gde je usklađenost između ulaznih i izlaznih sekvenci nepoznata. Ulazne sekvence u ovom slučaju predstavljaju slike koje sadrže tekst, a izlazne sekvence predstavljaju niz karaktera koji je zapisan na slici. CTC omogućava modelu da generiše sekvencu verovatnoća za svaki karakter i predstavlja dobar pristup za različite dužine ulaznih i izlaznih sekvenci. Funkcija gubitka izračunava verovatnoću ispravne sekvence sabiranjem svih mogućih usklađenja, što omogućava modelu da uči iz neusklađenih podataka \cite{inproceedings, ctcLoss}. NRTR gubitak je dizajniran za nerekurentne modele, posebno za modele bazirane na transformer arhitekturi. Efikasan je za duge sekvence, jer ima sposobnost paralelnog procesiranja \cite{hu2020gtcguidedtrainingctc}.
+	Za evaluaciju i praćenje treniranja modela koristio sam CTC(Connectionist Temporal Classification), NRTR(Non-Recurrent Text Recognition) i sumarni gubitak te dve funkcije. \href{https://paperswithcode.com/method/ctc-loss}{CTC gubitak} se koristi u primerima gde je usklađenost između ulaznih i izlaznih sekvenci nepoznata. Ulazne sekvence u ovom slučaju predstavljaju slike koje sadrže tekst, a izlazne sekvence predstavljaju niz karaktera koji je zapisan na slici. CTC omogućava modelu da generiše sekvencu verovatnoća za svaki karakter i predstavlja dobar pristup za različite dužine ulaznih i izlaznih sekvenci. Funkcija gubitka izračunava verovatnoću ispravne sekvence sabiranjem svih mogućih usklađenja, što omogućava modelu da uči iz neusklađenih podataka \cite{inproceedings}. NRTR gubitak je dizajniran za nerekurentne modele, posebno za modele bazirane na transformer arhitekturi. Efikasan je za duge sekvence, jer ima sposobnost paralelnog procesiranja \cite{hu2020gtcguidedtrainingctc}.
 	
 	\subsubsection{Treniranje koristeći samo realne podatke}
 	\begin{figure}[H]
@@ -509,6 +542,10 @@
 	Iako model prilično dobro prepoznaje tekst sa tablica iz država koje nije video, bilo bi korisno dodati takve podatke u trening skup. Različite države često imaju specifične fontove ili karaktere koje model nije imao priliku da vidi tokom treniranja sa srpskim tablicama. To može dovesti do grešaka, posebno kada se radi o sličnim karakterima, kao što su "O" i "0" (Slika \ref{fig:good-and-bad-predictions} (b)) ili "I" i "1". U takvim slučajevima, model može lako napraviti pogrešna prepoznavanja, što može uticati na ukupnu tačnost i pouzdanost.
 	
 	Zbog ovih razlika, važno je obogatiti trening skup dodatnim podacima iz različitih zemalja kako bi model poboljšao performanse na stranim tablicama. Uključivanje raznovrsnih podataka može pomoći u smanjenju grešaka i povećanju preciznosti prepoznavanja, čime bi se postigla veća efikasnost u stvarnim uslovima.
+	
+	\todo[color=green!40, inline]{Ukoliko na ulaznoj slici postoji više tablica, trenutno nije obrađeno procesiranje svih tablica, već se bira jedna nasumično izabrana tablica. U poboljšanoj verziji sistem za prepoznavanje tablica bi trebao da vrati rezultat prepoznavanja teksta sa tablica kao niz rezultata čitanja, kao i koordinate za svaku pronađenu tablicu na ulaznoj slici. Za performantna čitanja bi mogla da postoji još jedna ruta koja bi od svih pronašenih tablica čitala samo jedno, i to naverovatnije onu koja ima najveću površinu na slici ili najveću sigurnost iz modela za detekciju tablica, ili kombinacija te dve logike ukoliko je razlika u sigurnosti veoma mala za prvih n kandidata za izbor "prave" tablice.}
+	
+	\todo{Ubrzanje sistema - Kako bi dobili na ubrzanju sistema za automatsko prepoznavanje teksta sa tablica automobila, jedan od koraka bi bio uklanjanje modela za detekciju teksta. Model za detekciju teksta je imao ulogu da nakon detekcije tablica na slici finije pronadje regiju u kojoj se nalazi samo tekst od interesa prilikom obrade tablice. Taj korak bi mogao biti izbegnut kada bi odradili retreniranje modela za detekciju tablica tako da od inicijalno raca regiju relativno usko oko teksta od interesa bez teksta koji se moze naci na okvirima tablica. Takodje koriscenje modela za segmentaciju instance umesto detekcije objekta ce dati znatno poboljsanje u detekciji regije koju zauzima iskljucivo registarska tablica bez pozadine.}
 	\newpage
 	
 	\section{Zaključak}
