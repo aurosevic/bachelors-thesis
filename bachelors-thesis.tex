@@ -344,7 +344,7 @@
 	\section{Implementacija}	
 	Kako bih sa veoma velikom sigurnošću mogao da radim prepoznavanje teksta sa tablica automobila, napravio sam servis za automatizovano prepoznavanje teksta sa tablica ulaznih slika koristeći modele za detekciju tablica i teksta sa scene. Ovaj pristup omogućava preciznije i pouzdanije rezultate, jer se oslanja na kombinaciju različitih modela koji su specijalizovani za različite aspekte prepoznavanja regija od važnosti.
 	
-	\subsection{Komponente sistema}
+	\subsection{Dodatne komponente sistema}
 	Ono što se pokazalo kao zanimljiv izazov u ovom procesu je to što nije bilo dovoljno koristiti samo model za detekciju tablica. Mnoge registarske tablice imaju dodatne elemente, poput reklama ili natpisa na okvirima, koji mogu ometati proces prepoznavanja teksta. Da bi se postigla visoka tačnost u čitanju registarskih oznaka, bilo je neophodno razviti metodologiju koja će eliminisati ove neželjene informacije pre nego što se pređe na prepoznavanje registarskih oznaka.
 	
 	S druge strane, korišćenje modela isključivo za detekciju teksta nije prihvatljivo kao robusno rešenje. Na slikama na kojima se nalaze registarske tablice često se može naći i drugi tekst koji ne predstavlja tablicu, kao što su natpisi, reklame, ime brenda automobila ili drugi elementi iz okruženja. Ako bi se oslonio isključivo na model za detekciju teksta, postojala bi dosta velika verovatnoća da će model pogrešno identifikovati ili obraditi neželjene informacije, što bi moglo dovesti do netačnih rezultata.
@@ -354,11 +354,23 @@
 	\subsubsection{Detektor tablica}
 	Model koji sam koristio za detekciju tablica je \href{https://huggingface.co/nickmuchi/yolos-small-finetuned-license-plate-detection}{YOLOS vizuelni transformer} \cite{fang2021looksequencerethinkingtransformer} inicijalno treniran na ImageNet skupu podataka i fino podešen kroz 200 epoha na skupu od \href{https://universe.roboflow.com/objectdetection-jhgr1/license-plates-recognition/dataset/2}{5200 slika tablica}.
 	
+	Ovaj model je razvijen kako bi poboljšao efikasnost i preciznost detekcije objekata koristeći transformere umesto tradicionalnih konvolucionih mreža.
+	
+	YOLOS se oslanja na arhitekturu vizuelnog transformera koja omogućava modelu da obrađuje slike kao nizove vizuelnih tokova. Sa tim pristupom model može da uoči dugoročne zavisnosti i kompleksne obrasce u slikama, što poboljšava tačnost detekcije objekata.
+	
+	Ono što izdvaja YOLOS je jednostavnost dizajna modela, koja omogućava postizanje visokih performansi u detekciji objekata uz relativno manji broj slojeva i parametara u poređenju sa drugim transformator modelima.
+	
 	\todo[color=green!40, inline]{Dodaj informaciju o prosecnom vremenu izvrsavanja.}
 	\todo[color=green!40, inline]{Prikaži slike pre i nekon detekcije tablica.}
 	\subsubsection{Detektor teksta}
-	\subsubsection{Prepoznavanje teksta}
-	\subsection{Metodologije razvoja servisa i korišćene tehnologije}
+	Za detekciju teksta na sceni sam koristio \href{https://github.com/clovaai/CRAFT-pytorch?tab=readme-ov-file}{CRAFT} model koji je osmišljen da poboljša prepoznavanje i lokalizaciju teksta u složenim slikama koristeći dve glavne komponente: Svest o oblasti i klasifikaciju karaktera.
+	
+	Deo modela zadužen za svest o oblasti se fokusira na identifikaciju i precizno lokalizovanje područja na slici gde se mogu nalaziti karakteri, omogućavajući modelu da prepozna različite oblike i orijentacije teksta. Dok deo vezan za klasifikaciju karaktera koristi karakteristične informacije za klasifikaciju prepoznatih regija i precizno identifikuje pojedinačne karaktere \cite{baek2019characterregionawarenesstext}.
+	
+	\todo[color=green!40, inline]{Dodaj informaciju o prosecnom vremenu izvrsavanja.}
+	\todo[color=green!40, inline]{Prikaži slike pre i nekon detekcije teksta.}
+	
+	\subsection{Metodologije i tehonologije korišćene u razvoju servisa}
 	\subsubsection{PaddlePaddle}
 	\href{https://github.com/PaddlePaddle}{PaddlePaddle} je open-source framework za duboko učenje koji je razvijen od strane Baidu-a. Jedan je od najpopularnijih projekata na GitHub-u koji se bave mašinskim učenjem, a PaddlePaddleOCR deo je trenutno i najpopularniji repozitorijum na temu optičkog prepoznavanja karaktera.
 	
@@ -373,7 +385,7 @@
 	
 	Uvicorn je performantni ASGI server koji podržava asinhrono rukovanje zahtevima. Njegova integracija sa FastAPI-jem omogućava efikasno upravljanje višestrukim pozivima i događajima, što je ključno za aplikacije koje zahtevaju brze i responzivne interakcije sa korisnicima. 
 	
-	Za pristup servisu za prepoznavanje teksta sa tablica sam otvorio rutu pod nazivom \textbf{"/do\_lpr"}, koja prihvata sliku kao ulaz. Izlaz iz ove rute su isečena slika tablice sa inicijalne slike i pročitani tekst sa tablice. Na ovaj način korisnici treba samo da pošalju sliku na kojoj se nalazi registarka tablica i za tu sliku će dobiti relevantne informacije.
+	Za pristup servisu za prepoznavanje teksta sa tablica sam otvorio rutu pod nazivom "/do\_lpr", koja prihvata sliku kao ulaz. Izlaz iz ove rute su isečena slika tablice sa inicijalne slike i pročitani tekst sa tablice. Na ovaj način korisnici treba samo da pošalju sliku na kojoj se nalazi registarka tablica i za tu sliku će dobiti relevantne informacije.
 	
 	Korišćenje FastAPI-ja i Uvicorn-a mi je olakšalo i pravljenje dokumentacije, jer pruža automatski generisanu Swagger dokumentaciju na osnonvu ispisanog koda.
 	
@@ -394,7 +406,7 @@
 	\begin{itemize}
 		\item Broj epoha: 50; Iako je broj epoha postavljen na 50, zbog malog broja dostupnih podataka model bi najčešće konvergirao u trenutku od druge do pete epohe.
 		\item Korak za testiranje nad validacionim skupom: 200; Na svakih 200 završenih \todo[color=green!40]{Da li je ovo dobar termin za batch?}grupa podataka prilikom treninga pokreće se evaluacija nad validacionim skupom podataka.
-		\item \todo[color=green!40]{Da li je stopa učenja pogodan termin za learning rate?}Stopa učenja: Koristio sam \todo[color=green!40]{Originalni naziv: cosine}kosinusnu stopu učenja sa početnom vrednošću postavljenom na 0.0005.
+		\item Stopa učenja: Koristio sam kosinusnu stopu učenja sa početnom vrednošću postavljenom na 0.0005.
 		\item Veličina ulazne slike: širina 320px, visina 48px i 3 kanala boja(RGB).
 	\end{itemize}
 	
@@ -545,7 +557,7 @@
 	
 	\todo[color=green!40, inline]{Ukoliko na ulaznoj slici postoji više tablica, trenutno nije obrađeno procesiranje svih tablica, već se bira jedna nasumično izabrana tablica. U poboljšanoj verziji sistem za prepoznavanje tablica bi trebao da vrati rezultat prepoznavanja teksta sa tablica kao niz rezultata čitanja, kao i koordinate za svaku pronađenu tablicu na ulaznoj slici. Za performantna čitanja bi mogla da postoji još jedna ruta koja bi od svih pronašenih tablica čitala samo jedno, i to naverovatnije onu koja ima najveću površinu na slici ili najveću sigurnost iz modela za detekciju tablica, ili kombinacija te dve logike ukoliko je razlika u sigurnosti veoma mala za prvih n kandidata za izbor "prave" tablice.}
 	
-	\todo{Ubrzanje sistema - Kako bi dobili na ubrzanju sistema za automatsko prepoznavanje teksta sa tablica automobila, jedan od koraka bi bio uklanjanje modela za detekciju teksta. Model za detekciju teksta je imao ulogu da nakon detekcije tablica na slici finije pronadje regiju u kojoj se nalazi samo tekst od interesa prilikom obrade tablice. Taj korak bi mogao biti izbegnut kada bi odradili retreniranje modela za detekciju tablica tako da od inicijalno raca regiju relativno usko oko teksta od interesa bez teksta koji se moze naci na okvirima tablica. Takodje koriscenje modela za segmentaciju instance umesto detekcije objekta ce dati znatno poboljsanje u detekciji regije koju zauzima iskljucivo registarska tablica bez pozadine.}
+	\todo[color=green!40, inline]{Ubrzanje sistema - Kako bi dobili na ubrzanju sistema za automatsko prepoznavanje teksta sa tablica automobila, jedan od koraka bi bio uklanjanje modela za detekciju teksta. Model za detekciju teksta je imao ulogu da nakon detekcije tablica na slici finije pronadje regiju u kojoj se nalazi samo tekst od interesa prilikom obrade tablice. Taj korak bi mogao biti izbegnut kada bi odradili retreniranje modela za detekciju tablica tako da od inicijalno raca regiju relativno usko oko teksta od interesa bez teksta koji se moze naci na okvirima tablica. Takodje koriscenje modela za segmentaciju instance umesto detekcije objekta ce dati znatno poboljsanje u detekciji regije koju zauzima iskljucivo registarska tablica bez pozadine.}
 	\newpage
 	
 	\section{Zaključak}
