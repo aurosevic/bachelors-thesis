@@ -19,10 +19,6 @@
 \usepackage{amsfonts}
 \usepackage{float}
 \usepackage{todonotes}
-\usepackage{url}
-\usepackage{multirow}
-\usepackage{makecell}
-\usepackage{diagbox}
 
 \hypersetup{
 	colorlinks,
@@ -48,7 +44,6 @@
 			\textbf{Student:}
 			Andrija Urošević
 			\par
-%			\hspace{0.7cm}
 			\bigskip
 			\textbf{Mentor:}
 			dr Nemanja Ilić
@@ -58,13 +53,14 @@
 		{\large Računarski fakultet,\par}
 		{\large Univerzitet Union\par}
 		\bigskip
-		\date{Avgust 2024}
+		\date{Septembar 2024}
 	\end{titlepage}
 	
 	\pagenumbering{roman}
 	
 	\section*{Predgovor}
 	\addcontentsline{toc}{section}{Predgovor}
+	\noindent
 	\todo[color=green!40]{Prostor za predgovor.}
 	\newpage
 	
@@ -77,6 +73,17 @@
 	\addcontentsline{toc}{section}{Sažetak}
 	\noindent
 	Automatsko prepoznavanje teksta sa registarskih tablica automobila od izuzetne je važnositi za savremene sisteme nadzora saobraćaja, praćenje vozila i obezbeđenje sigurnosti na putevima. Identifikacija registarskih tablica ima različite primene, uključujući praćenje ukradenih vozila, naplatu putarine, sigurnosne provere i nadzor saobraćaja. U proteklim decenijama, napredak u oblasti obrade slike i mašinskog učenja omogućio je razvoj efikasnih sistema za automatsko prepoznavanje teksta sa tablica vozila. Primena dubokih neuronskih mreža i algoritama dubokog učenja omogućila je visoku tačnost prepoznavanja teksta, čak i u složenim scenama i različitim uslovima snimanja. Ovaj rad istražuje metode i tehnike za automatsko prepoznavanje teksta sa tablica automobila, sa ciljem razvoja sistema koji može precizno identifikovati registarske tablice u realnom vremenu. Eksperimentalni rezultati prikazuju performanse sistema u stvarnim uslovima i ukazuju na mogućnosti za primenu u različitim oblastima, uključujući nadzor saobraćaja, bezbednosne provere i identifikaciju vozila.
+	\newpage
+	
+	\section*{Rečnik stručnih pojmova}
+	\addcontentsline{toc}{section}{Rečnik stručnih pojmova}
+	\noindent
+	\begin{tabular}{l@{\hspace{40pt}}l}
+		\textbf{Overfitting} & \textit{Prekomerna prilagođenost} \\
+		\textbf{Batch} & \textit{Grupa podataka} \\
+		\textbf{Learning rate} & \textit{Stopa učenja} \\
+		\textbf{Base model} & \textit{Inicijalni model} \\
+	\end{tabular}
 	\newpage
 	
 	\section{Uvod}
@@ -269,10 +276,10 @@
 	Snimanje registarskih tablica vozila koja se kreću predstavlja izazov zbog potencijalnog zamagljenja slika. Kada se vozilo kreće, kamera mora da zabeleži sliku u vrlo kratkom vremenskom intervalu kako bi se izbeglo zamagljenje. koje može otežati prepoznavanje karaktera na tablici.
 	
 	\subsection{Upoznavanje sa podacima}
-	Za razvoj sistema za automatsko prepoznavanje teksta sa registarskih tablica, postoji nekoliko baza podataka koje sadrže slike tablica iz različitih zemalja. Ove baze podataka pružaju širok spektar slika sa različitim tipovima registarskih tablica, različitih kvaliteta i uslova snimanja, što ih čini korisnim za treniranje i evaluaciju modela za prepoznavanje teksta. Neki od najpoznatijih javno dostupnih skupova podataka uključuju:
+	Za razvoj sistema za automatsko prepoznavanje teksta sa registarskih tablica, postoji nekoliko javno dostupnih baza podataka koje sadrže slike tablica iz različitih zemalja. Ove baze podataka pružaju širok spektar slika sa različitim tipovima registarskih tablica, različitih kvaliteta i uslova snimanja, što ih čini korisnim za treniranje i evaluaciju modela za prepoznavanje teksta. Neki od najpoznatijih javno dostupnih skupova podataka uključuju:
 		
-	\paragraph{\todo[color=green!40]{Probaj da pronadjes link}OpenALPR dataset}
-	Baza podataka koja sadrži slike registarskih tablica iz različitih zemalja, koje se često koriste za treniranje i testiranje sistema za prepoznavanje teksta. Ovaj skup podataka obuhvata tablice sa različitim fontovima, bojama i rasporedima karaktera.
+	\paragraph{\href{https://github.com/raysonlaroca/ufpr-alpr-dataset}{UFPR-ALPR}}
+	Baza podataka koja sadrži 4.500 slika registarskih tablica iz različitih zemalja. Ovaj skup podataka obuhvata tablice sa različitim fontovima, bojama i rasporedima karaktera.
 	
 	\paragraph{\href{https://github.com/detectRecog/CCPD}{CCPD (Chinese City Parking Dataset)}}
 	Skup podataka koji se fokusira na kineske registarske tablice, ali može biti koristan kao referenca za treniranje modela sa slikama koje obuhvataju različite uslove osvetljenja i uglove snimanja.
@@ -287,7 +294,7 @@
 	\subsection{Razvrstavanje i čišćenje podataka}
 	Nakon prikupljanja, sledi faza čišćenja podataka, koja podrazumeva identifikaciju i uklanjanje nekvalitetnih ili irelevantnih slika. Na primer, slike koje su previše zamagljene, oštećene, ili ne sadrže jasno vidljive registarske tablice, moraju biti uklonjenje iz skupa podataka. Ova faza obezbeđuje da model bude treniran na kvalitetnim i relevantnim podacima, što utiče na njegovu tačnost i robusnost.
 	
-	Na kraju, pripremljeni podaci se dele u grupe za treniranje, validaciju i test. Grupa podataka za treniranje se koristi za obučavanje modela, grupa podataka za validaciju korisna je za podešavanje hiperparametara i evaluaciju performansi tokom treniranja, dok se test grupa podataka koristi za konačnu procenu modela nakon treniranja. Pravilna podela podataka je ključna za izbegavanje \todo[color=green!40]{da li je prekomerna prilagođenost dobar termin za overfitting?}prekomerne prilagođenosti i osiguranje da model može dobro da generalizuje na novim, neviđenim podacima.
+	Na kraju, pripremljeni podaci se dele u grupe za treniranje, validaciju i test. Grupa podataka za treniranje se koristi za obučavanje modela, grupa podataka za validaciju korisna je za podešavanje hiperparametara i evaluaciju performansi tokom treniranja, dok se test grupa podataka koristi za konačnu procenu modela nakon treniranja. Pravilna podela podataka je ključna za izbegavanje prekomerne prilagođenosti i osiguranje da model može dobro da generalizuje na novim, neviđenim podacima.
 	
 	\subsection{Anotacija podataka}
 	Anotacija predstavlja označavanje delova slike koji sadrže ključne regije, u ovom slučaju registarske tablice i tekst koji je ispisan na tablicama. Anotacija podataka je proces u kojem se ručno ili poluautomatski označavaju tačne lokacije i sadržaj registarskih tablica na svakoj slici. U ovoj fazi se koristi softver za anotaciju, koji omogućava obeležavanje granica tablica i unos odgovarajućeg teksta. Kvalitetna anotacija je veoma bitna jer direktno utiče na uspešnost treniranja modela. Greške u anotaciji, poput netačnih ili nepotpunih oznaka, mogu dovesti do smanjenja tačnosti modela i takav tip greške se kasnije vrlo teško pronalazi.
@@ -345,7 +352,7 @@
 	Kako bih sa veoma velikom sigurnošću mogao da radim prepoznavanje teksta sa tablica automobila, napravio sam servis za automatizovano prepoznavanje teksta sa tablica ulaznih slika koristeći modele za detekciju tablica i teksta sa scene. Ovaj pristup omogućava preciznije i pouzdanije rezultate, jer se oslanja na kombinaciju različitih modela koji su specijalizovani za različite aspekte prepoznavanja regija od važnosti.
 	
 	\subsection{Dodatne komponente sistema}
-	Ono što se pokazalo kao zanimljiv izazov u ovom procesu je to što nije bilo dovoljno koristiti samo model za detekciju tablica. Mnoge registarske tablice imaju dodatne elemente, poput reklama ili natpisa na okvirima, koji mogu ometati proces prepoznavanja teksta. Da bi se postigla visoka tačnost u čitanju registarskih oznaka, bilo je neophodno razviti metodologiju koja će eliminisati ove neželjene informacije pre nego što se pređe na prepoznavanje registarskih oznaka.
+	Ono što se pokazalo kao zanimljiv izazov u ovom procesu je to što nije bilo dovoljno koristiti samo model za detekciju tablica. Mnoge registarske tablice imaju dodatne elemente, poput reklama ili natpisa na okvirima, koji mogu ometati proces prepoznavanja teksta. Da bi se postigla visoka tačnost u prepoznavanju teksta sa registarskih oznaka, bilo je neophodno razviti metodologiju koja će eliminisati takve neželjene informacije pre nego što se pređe na prepoznavanje teksta sa registarskih oznaka.
 	
 	S druge strane, korišćenje modela isključivo za detekciju teksta nije prihvatljivo kao robusno rešenje. Na slikama na kojima se nalaze registarske tablice često se može naći i drugi tekst koji ne predstavlja tablicu, kao što su natpisi, reklame, ime brenda automobila ili drugi elementi iz okruženja. Ako bi se oslonio isključivo na model za detekciju teksta, postojala bi dosta velika verovatnoća da će model pogrešno identifikovati ili obraditi neželjene informacije, što bi moglo dovesti do netačnih rezultata.
 	
@@ -360,15 +367,10 @@
 	
 	Ono što izdvaja YOLOS je jednostavnost dizajna modela, koja omogućava postizanje visokih performansi u detekciji objekata uz relativno manji broj slojeva i parametara u poređenju sa drugim transformator modelima.
 	
-	\todo[color=green!40, inline]{Dodaj informaciju o prosecnom vremenu izvrsavanja.}
-	\todo[color=green!40, inline]{Prikaži slike pre i nekon detekcije tablica.}
 	\subsubsection{Detektor teksta}
 	Za detekciju teksta na sceni sam koristio \href{https://github.com/clovaai/CRAFT-pytorch?tab=readme-ov-file}{CRAFT} model koji je osmišljen da poboljša prepoznavanje i lokalizaciju teksta u složenim slikama koristeći dve glavne komponente: Svest o oblasti i klasifikaciju karaktera.
 	
 	Deo modela zadužen za svest o oblasti se fokusira na identifikaciju i precizno lokalizovanje područja na slici gde se mogu nalaziti karakteri, omogućavajući modelu da prepozna različite oblike i orijentacije teksta. Dok deo vezan za klasifikaciju karaktera koristi karakteristične informacije za klasifikaciju prepoznatih regija i precizno identifikuje pojedinačne karaktere \cite{baek2019characterregionawarenesstext}.
-	
-	\todo[color=green!40, inline]{Dodaj informaciju o prosecnom vremenu izvrsavanja.}
-	\todo[color=green!40, inline]{Prikaži slike pre i nekon detekcije teksta.}
 	
 	\subsection{Metodologije i tehonologije korišćene u razvoju servisa}
 	\subsubsection{PaddlePaddle}
@@ -385,7 +387,7 @@
 	
 	Uvicorn je performantni ASGI server koji podržava asinhrono rukovanje zahtevima. Njegova integracija sa FastAPI-jem omogućava efikasno upravljanje višestrukim pozivima i događajima, što je ključno za aplikacije koje zahtevaju brze i responzivne interakcije sa korisnicima. 
 	
-	Za pristup servisu za prepoznavanje teksta sa tablica sam otvorio rutu pod nazivom "/do\_lpr", koja prihvata sliku kao ulaz. Izlaz iz ove rute su isečena slika tablice sa inicijalne slike i pročitani tekst sa tablice. Na ovaj način korisnici treba samo da pošalju sliku na kojoj se nalazi registarka tablica i za tu sliku će dobiti relevantne informacije.
+	Za pristup servisu za prepoznavanje teksta sa tablica sam otvorio rutu pod nazivom \enquote{/do\_lpr}, koja prihvata sliku kao ulaz. Izlaz iz ove rute su isečena slika tablice sa inicijalne slike i pročitani tekst sa tablice. Na ovaj način korisnici treba samo da pošalju sliku na kojoj se nalazi registarka tablica i za tu sliku će dobiti relevantne informacije.
 	
 	Korišćenje FastAPI-ja i Uvicorn-a mi je olakšalo i pravljenje dokumentacije, jer pruža automatski generisanu Swagger dokumentaciju na osnonvu ispisanog koda.
 	
@@ -405,7 +407,7 @@
 	Uzevši u obzir da sam imao pristup malom broju podataka čak i nakon odrađene augmentacije i dodavanja sintetičkog skupa, tokom treniranja neke od parametara sam ekperimentalnim pristupom podesio na sledeće vrednosti:
 	\begin{itemize}
 		\item Broj epoha: 50; Iako je broj epoha postavljen na 50, zbog malog broja dostupnih podataka model bi najčešće konvergirao u trenutku od druge do pete epohe.
-		\item Korak za testiranje nad validacionim skupom: 200; Na svakih 200 završenih \todo[color=green!40]{Da li je ovo dobar termin za batch?}grupa podataka prilikom treninga pokreće se evaluacija nad validacionim skupom podataka.
+		\item Korak za testiranje nad validacionim skupom: 200; Na svakih 200 završenih grupa podataka prilikom treninga pokreće se evaluacija nad validacionim skupom podataka.
 		\item Stopa učenja: Koristio sam kosinusnu stopu učenja sa početnom vrednošću postavljenom na 0.0005.
 		\item Veličina ulazne slike: širina 320px, visina 48px i 3 kanala boja(RGB).
 	\end{itemize}
@@ -519,7 +521,7 @@
 		\label{fig:bad-predictions-real-and-synthetic-data-model}
 	\end{figure}
 	
-	Na nezavisnom testnom skupu podataka model je pogrešno prediktovao samo 2 od 18.725 slika, beležeći tačnost od 99.98\% na nezavisnom skupu podataka. Slike tablica koje nisu dobro prediktovane nalaze se na Slici \ref{fig:bad-predictions-real-and-synthetic-data-model}. Model koji je treniran na kombinovanom skupu realnih i sintetičkih podataka je imao problem sa predikcijom na slici tablice koja je pomoćnim trakama koje prelaze preko teksta zakačena za automobil. Ovaj primer ilustruje korišćenje softvera u realnim uslovima, gde osoba koja kreira sintetički skup podataka ne može uvek da predvidi sve moguće scenarije koji se mogu desiti u praksi. To dodatno naglašava važnost pravih podataka i objašnjava zašto svi koji razvijaju ozbiljne modele teže ka potrazi za pravim podacima. Ovaj model, kako i model treniran samo na sintetičkim podacima takođe pokazuje porblem sa izrarito malim razlikama u boji između teksta i pozadine, ali u manjoj meri. Takvo pogrešno čitanje može se smatrati prihvatljivim, s obzirom na to da je veoma teško pročitati šta zaprao piše na takvoj slici.
+	Na nezavisnom testnom skupu podataka model je pogrešno prediktovao samo 2 od 18.725 slika, beležeći tačnost od 99.98\% na nezavisnom skupu podataka. Slike tablica koje nisu dobro prediktovane nalaze se na Slici \ref{fig:bad-predictions-real-and-synthetic-data-model}. Model koji je treniran na kombinovanom skupu realnih i sintetičkih podataka je imao problem sa predikcijom na slici tablice koja je pomoćnim trakama koje prelaze preko teksta zakačena za automobil. Ovaj primer ilustruje korišćenje softvera u realnim uslovima, gde osoba koja kreira sintetički skup podataka ne može uvek da predvidi sve moguće scenarije koji se mogu desiti u praksi. To dodatno naglašava važnost pravih podataka i objašnjava zašto svi koji razvijaju ozbiljne modele teže ka potrazi za pravim podacima. Ovaj model, kako i model treniran samo na sintetičkim podacima takođe pokazuje porblem sa izrarito malim razlikama u boji između teksta i pozadine, ali u manjoj meri. Takvo pogrešno prepoznavanje teksta može se smatrati prihvatljivim, s obzirom na to da je veoma teško pročitati šta zaprao piše na takvoj slici.
 	
 	Kombinovanjem realnih i sintetičkih podataka za vreme treninga, stepen sigurnosti modela prilikom predikcije je povećan u odnosu na model treniran samo nad sintetičkim podacima. Presečnna sigurnost modela je 99,32\% na testnom skupu podataka. Sigurnost je i dalje nešto manja u odnosu na model treniran koristeći isključivo realne podatke, što ukazuje na važnost korišćenja realnih podataka prilikom treniranja modela.
 	
@@ -536,34 +538,46 @@
 	
 	Model koji je treniran i testiran na realnim podacima postigao je najveću tačnost i sigurnost, što je očekivano s obzirom na to da su trening i testni skup sadržavali vrlo malo slika tablica izdatih isključivo na teritoriji Beograda. Ipak, iako ovaj model ima najbolju tačnost na realnim testnim podacima, njegova tačnost na ostalim testnim skupovima je značajno lošija u odnosu na ostale modele. Zbog toga, model koji je treniran samo na realnim podacima nije najbolji izbor među tri ponuđena modela.
 	
-	Najlošiju tačnost i sigurnost imao je model treniran na realnim, a testiran na sintetičkim podacima. Vrlo sličan, ali nešto bolji rezultat ostvario je isti model na testnom skupu kombinovanih realnih i sintetičkih podataka. Razlog za ovo je što je model tokom treninga na prvim dvema pozicijama video samo "BG" niz karaktera, dok su testni skupovi sadržali tablice iz svih opština Srbije koje imaju pravo da izdaju registarske tablice. Dodatno, korišćeni font za generisanje sintetičkih podataka je ručno napravljen i možda nije idealno replicirao originalni font, što je moglo uticati na tačnost.
+	Najlošiju tačnost i sigurnost imao je model treniran na realnim, a testiran na sintetičkim podacima. Vrlo sličan, ali nešto bolji rezultat ostvario je isti model na testnom skupu kombinovanih realnih i sintetičkih podataka. Razlog za ovo je što je model tokom treninga na prvim dvema pozicijama video samo \enquote{BG} niz karaktera, dok su testni skupovi sadržali tablice iz svih opština Srbije koje imaju pravo da izdaju registarske tablice. Dodatno, korišćeni font za generisanje sintetičkih podataka je ručno napravljen i možda nije idealno replicirao originalni font, što je moglo uticati na tačnost.
 	
 	Iako nema apsolutno najveću tačnost i sigurnost, najbolji model za korišćenje u realnim uslovima je onaj treniran na realnim i sintetičkim podacima. Razlika u odnosu na model sa najvećom tačnošću je samo 0,02\%, što se može smatrati zanemarljivom. Ovaj model je imao najraznovrsniji i najobimniji trening skup, što mu uz odlične rezultate na validacionim i testnim skupovima daje prednost u izboru.
 	\newpage
 	
 	\section{Buduća poboljšanja}
-	Iako model koji sam trenirao pokazuje odlične performanse za čitanje teksta sa tablica izdatih na teritoriji Republike Srbije, nije očekivano da će idealno raditi na tablicama vozila iz drugih država zbog razlika u dizajnu, fontovima i karakterima. Svaka zemlja ima svoje specifične standarde kada je reč o izgledu registarskih tablica, što uključuje različite boje, oblike i stilove fonta. Na primer, tablice iz nekih drugih zemalja mogu koristiti karaktere koji se razlikuju od onih na srpskim tablicama, što može dovesti do problema u prepoznavanju.
+	
+	\subsection{Dodatna diverzifikacija skupa podataka}
+	Iako model koji sam trenirao pokazuje odlične performanse prepoznavanja teksta sa tablica automobila izdatih na teritoriji Republike Srbije, nije očekivano da će idealno raditi na tablicama vozila iz drugih država zbog razlika u dizajnu, fontovima i karakterima. Svaka zemlja ima svoje specifične standarde kada je reč o izgledu registarskih tablica, što uključuje različite boje, oblike i stilove fonta. Na primer, tablice iz nekih drugih zemalja mogu koristiti karaktere koji se razlikuju od onih na srpskim tablicama, što može dovesti do problema u prepoznavanju.
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/good-and-bad-predictions.png}
-		\caption{Primeri slika stranih tablica. a) Primeri dobro pročitanih slika stranih tablica. b) Primeri loše pročitanih slika stranih tablica sa naznačenim greškama prilikom predikcije.}
+		\caption{Primeri slika stranih tablica. a) Primeri dobro prepoznatog teksta sa slika stranih tablica. b) Primeri loše prepoznatog teksta sa slika stranih tablica sa naznačenim greškama prilikom predikcije.}
 		\label{fig:good-and-bad-predictions}
 	\end{figure}
 	
-	Iako model prilično dobro prepoznaje tekst sa tablica iz država koje nije video, bilo bi korisno dodati takve podatke u trening skup. Različite države često imaju specifične fontove ili karaktere koje model nije imao priliku da vidi tokom treniranja sa srpskim tablicama. To može dovesti do grešaka, posebno kada se radi o sličnim karakterima, kao što su "O" i "0" (Slika \ref{fig:good-and-bad-predictions} (b)) ili "I" i "1". U takvim slučajevima, model može lako napraviti pogrešna prepoznavanja, što može uticati na ukupnu tačnost i pouzdanost.
+	Bez obzira na to što model prilično dobro prepoznaje tekst sa tablica iz država koje nije video, bilo bi korisno dodati takve podatke u trening skup. Različite države često imaju specifične fontove ili karaktere koje model nije imao priliku da vidi tokom treniranja sa srpskim tablicama. To može dovesti do grešaka, posebno kada se radi o sličnim karakterima, kao što su \enquote{O} i \enquote{0} (Slika \ref{fig:good-and-bad-predictions} (b)) ili \enquote{I} i \enquote{1}. U takvim slučajevima, model može lako napraviti pogrešna prepoznavanja, što može uticati na ukupnu tačnost i pouzdanost.
 	
 	Zbog ovih razlika, važno je obogatiti trening skup dodatnim podacima iz različitih zemalja kako bi model poboljšao performanse na stranim tablicama. Uključivanje raznovrsnih podataka može pomoći u smanjenju grešaka i povećanju preciznosti prepoznavanja, čime bi se postigla veća efikasnost u stvarnim uslovima.
 	
-	\todo[color=green!40, inline]{Ukoliko na ulaznoj slici postoji više tablica, trenutno nije obrađeno procesiranje svih tablica, već se bira jedna nasumično izabrana tablica. U poboljšanoj verziji sistem za prepoznavanje tablica bi trebao da vrati rezultat prepoznavanja teksta sa tablica kao niz rezultata čitanja, kao i koordinate za svaku pronađenu tablicu na ulaznoj slici. Za performantna čitanja bi mogla da postoji još jedna ruta koja bi od svih pronašenih tablica čitala samo jedno, i to naverovatnije onu koja ima najveću površinu na slici ili najveću sigurnost iz modela za detekciju tablica, ili kombinacija te dve logike ukoliko je razlika u sigurnosti veoma mala za prvih n kandidata za izbor "prave" tablice.}
+	\subsection{Prepoznavanje teksta na više tablica sa iste slike}
 	
-	\todo[color=green!40, inline]{Ubrzanje sistema - Kako bi dobili na ubrzanju sistema za automatsko prepoznavanje teksta sa tablica automobila, jedan od koraka bi bio uklanjanje modela za detekciju teksta. Model za detekciju teksta je imao ulogu da nakon detekcije tablica na slici finije pronadje regiju u kojoj se nalazi samo tekst od interesa prilikom obrade tablice. Taj korak bi mogao biti izbegnut kada bi odradili retreniranje modela za detekciju tablica tako da od inicijalno raca regiju relativno usko oko teksta od interesa bez teksta koji se moze naci na okvirima tablica. Takodje koriscenje modela za segmentaciju instance umesto detekcije objekta ce dati znatno poboljsanje u detekciji regije koju zauzima iskljucivo registarska tablica bez pozadine.}
+	Trenutna verzija sistema za automatsko prepoznavanje teksta sa tablica automobila podržava pronalaženje i prepoznavanje teksta sa tačno jedne, najveće, tablice sa slike. Ovakvo ponašanje sistema nije idealno u slučajevima kada želimo da sa jedne slike dobijemo informacije o svim registarskim tablicama. Primer takvog sistema bi bio sistem za nadzor parking zona koji se može koristiti za automatsku naplatu parkinga ukoliko korisnik poveže svoj parking nalog sa konkretnim tablicama, ili za pronalaženje lokacije parkiranog automobila.
+	
+	Verzija sistema koja bi radila prepoznavanje teksta sa svih tablica na slici treba da vrati niz rezultata prepoznavanja teksta, gde bi svaki element niza pored slike isečka tablice i prepoznatog teksta imao i informaciju o tačnoj poziciji tablice na slici. Tačna pozicija tablice bi bila korisna za detekciju tačnog mesta na kojem se korisnik parkirao.
+	
+	\subsection{Ubrzanje rada sistema}
+	
+	Trenutna verzija sistema za automatsko prepoznavanje teksta sa tablica automobila obrađuje jednu ulaznu sliku u proseku oko 1000ms. Iako trenutno vreme izvršavanja nije previše dugo, kako bi sistem bio performantniji i bio u stanju da prihvati više upita potrebno je skratiti vreme izvršavanja izbacivanjem komponenti koje nisu neophodne za rad.
+	
+	Jedan od koraka ka ubrzanju sistema jeste uklanjanje modela za detekciju teksta. Trenutno, model za detekciju teksta ima ulogu da nakon detekcije tablica sa slike finije pronađe regiju u kojoj se nalazi samo tekst od interesa prilikom obrade tablice. Taj korak bi mogao biti izbegnut kada bi odradili dodatno dotreniravanje modela za detekciju tablica tako da model za detekciju tablica inicijalno vraća regiju relativno usko oko teksta od interesa bez teksta koji se može naći na okvirima tablica. Pored toga, korišćenje modela za segmentaciju instance umesto detekcije objekta dovodi do znatno efikasnije detekcije regije koju zauzima samo registarska tablica, bez okvira i pozadine koji se mogu obuhvatiti pravougaonom detekcijom objekta.
+	
+	Drugi korak bi bio korišćenje manjeg inicijalnog modela umesto modela predviđenog da radi na serveru. U tom slučaju performanse u preciznosti prepoznavanja teksta sa tablica automobila bi opale u nekoj meri, ali bi pad preciznosti bio veoma mali i merljiv tek nad značajno velikim skupom podataka. S druge strane, ubrzanje rada modela bi bilo značajno.
 	\newpage
 	
 	\section{Zaključak}
 	
 	\subsection{Važnost treniranja modela sa podacima sličnim onima koji će biti korišćeni}
-	Treniranje modela sa podacima koji su slični onima koji će se koristiti u stvarnim uslovima je neophodno za postizanje visoke tačnosti modela. Kada se model \todo[color=green!40]{Da li je lepše koristiti termin ]obučava}trenira na relevantnim i reprezentativnim podacima, bolje može da prepozna obrasce i karakteristike koje će se pojaviti u novim, nepoznatim podacima.
+	Treniranje modela sa podacima koji su slični onima koji će se koristiti u stvarnim uslovima je neophodno za postizanje visoke tačnosti modela. Kada se model trenira na relevantnim i reprezentativnim podacima, bolje može da prepozna obrasce i karakteristike koje će se pojaviti u novim, nepoznatim podacima.
 	
 	Ako su podaci korišćeni za treniranje značajno različiti od onih koji se koriste u praksi, model može imati problem sa generalizacijom, što može dovesti do loših predikcija. Stoga je važno osigurati da skup podataka za treniranje obuhvata raznovrsne i realistične primere koji odražavaju stvarne uslove rada.
 	
