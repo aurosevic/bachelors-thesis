@@ -120,7 +120,7 @@
 	\section{Primene}
 	Sistem za automatsko prepoznavanje teksta sa tablica vozila (eng. Automatic License Plate Recognition - ALPR) predstavlja inovativnu tehnologiju koja se sve više integriše u različite aspekte svakodnevnog života i upravljanja saobraćajem. Ova tehnologija omogućava brzo i precizno očitavanje registarskih oznaka vozila, što otvara brojne mogućnosti primene u različitim sektorima. Korišćenjem ALPR sistema, moguće je unaprediti efikasnost naplate putarina, automatski pratiti i locirati ukradena vozila, kao i optimizovati procese parkiranja i upravljanja kolonom vozila.
 	
-	Pored toga, ALPR može biti od značaja u poboljšanju bezbednosti saobraćaja, omogućavajući automatsku kontrolu saobraćajnih prekršaja i identifikaciju vozila koja su uključena u kriminalne aktivnosti. U kontekstu pametnih gradova, ova tehnologija može doprineti održivijem urbanom razvoju kroz efikasnije upravljanje saobraćajem i smanjenje zagađenja. S obzirom na sve ove prednosti, implementacija sistema za automatsko prepoznavanje registarskih tablica postaje ne samo korisna, već i neophodna za modernizaciju i unapređenje infrastrukture i usluga u urbanim sredinama. U ovom radu biće razmotrene različite primene ALPR sistema, kao i potencijalni izazovi i rešenja u njegovoj implementaciji.
+	Pored toga, ALPR može biti od značaja u poboljšanju bezbednosti saobraćaja, omogućavajući automatsku kontrolu saobraćajnih prekršaja i identifikaciju vozila koja su uključena u kriminalne aktivnosti. U kontekstu pametnih gradova, ova tehnologija može doprineti održivijem urbanom razvoju kroz efikasnije upravljanje saobraćajem i smanjenje zagađenja. S obzirom na sve ove prednosti, implementacija sistema za automatsko prepoznavanje registarskih tablica postaje ne samo korisna, već i neophodna za modernizaciju i unapređenje infrastrukture i usluga u urbanim sredinama. U ovom radu biće razmotrene različite primene ALPR sistema, kao i potencijalni izazovi i rešenja u njegovoj implementaciji \cite{perplexityUpitZaPrimene}.
 	
 	\subsection{Automatska naplata parkiranja}
 	ALPR predstavlja značajan napredak u sistemima za naplatu parkiranja, omogućavajući bržu, efikasniju i korisniku prijatniju uslugu. Ova tehnologija omogućava automatsko očitavanje registarskih oznaka vozila prilikom ulaska i izlaska sa parking prostora, čime se eliminiše potreba za fizičkim karticama ili novčanim transakcijama na licu mesta.
@@ -186,7 +186,7 @@
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/license-plate-samples.png}
-		\caption{Primeri tablica iz skupa realnih podataka. Svi priloženi primeri tablica su svesno oštećeni kako bi se sačuvala anonimnost i privatnost osoba čije tablice su prikazane.}
+		\caption{Primeri tablica iz skupa stvarnih podataka. Svi priloženi primeri tablica su svesno oštećeni kako bi se sačuvala anonimnost i privatnost osoba čije tablice su prikazane.}
 		\label{fig:license-plate-samples}
 	\end{figure}
 	
@@ -201,18 +201,18 @@
 	\subsection{Upoznavanje sa podacima}
 	Za razvoj sistema za automatsko prepoznavanje teksta sa registarskih tablica, postoji nekoliko javno dostupnih baza podataka koje sadrže slike tablica iz različitih zemalja. Ove baze podataka pružaju širok spektar slika sa različitim tipovima registarskih tablica, različitih kvaliteta i uslova snimanja, što ih čini korisnim za obučavanje i evaluaciju modela za prepoznavanje teksta. Neki od najpoznatijih javno dostupnih skupova podataka uključuju:
 	
-	\paragraph{\href{https://github.com/raysonlaroca/ufpr-alpr-dataset}{UFPR-ALPR}}
+	\paragraph{\href{https://github.com/raysonlaroca/ufpr-alpr-dataset}{UFPR-ALPR}} \cite{UFPRALPRDataset}
 	Baza podataka koja sadrži 4.500 slika registarskih tablica iz različitih zemalja. Ovaj skup podataka obuhvata tablice sa različitim fontovima, bojama i rasporedima karaktera.
 	
-	\paragraph{\href{https://github.com/detectRecog/CCPD}{CCPD (Chinese City Parking Dataset)}}
+	\paragraph{\href{https://github.com/detectRecog/CCPD}{CCPD (Chinese City Parking Dataset)}} \cite{CCPD}
 	Skup podataka koji se fokusira na kineske registarske tablice, ali može biti koristan kao referenca za obučavanje modela sa slikama koje obuhvataju različite uslove osvetljenja i uglove snimanja.
 	
-	\paragraph{\href{https://datasetninja.com/car-license-plate}{Car License Plate Dataset}}
+	\paragraph{\href{https://datasetninja.com/car-license-plate}{Car License Plate Dataset}} \cite{DatasetNinja}
 	Baza podataka sa oko 400 slika vozila i registarskih tablica, koja pokriva različite scenarije, uključujući vozila u pokretu, snimke iz različitih perspektiva, i različite vremenske uslove. \newline
 	
 	Međutim, iako ovi skupovi podataka mogu biti korisni za razvoj generalnih sistema za prepoznavanje teksta sa registarskih tablica, oni su ograničeni u pogledu specifičnosti dizajna i karakteristika registarskih tablica koje se koriste u Srbiji.
 	
-	S obzirom na to da je fokus ovog rada prepoznavanje teksta sa registarskih tablica vozila registrovanih u Republici Srbiji, korišćen je specifičan lokalizovan skup od približno 17.000 slika, većinom tablica vozila snimljenih ispred rampi, koji je autoru rada bio dostupan. Ovaj pristup omogućava obučavanje modela koji je prilagođen karakteristikama srpskih tablica, kao što su specifičan font, raspored karaktera i prisustvo nacionalnih simbola. Dodatno, slike snimljene na ulazima ispred rampi pružaju realne scenarije sa kojima će se model susretati u stvarnim aplikacijama, što dodatno povećava relevantnost i pouzdanost razvijenog rešenja.
+	S obzirom na to da je fokus ovog rada prepoznavanje teksta sa registarskih tablica vozila registrovanih u Republici Srbiji, korišćen je specifičan lokalizovan skup od približno 17.000 slika, većinom tablica vozila snimljenih ispred rampi, koji je autoru rada bio dostupan. Ovaj pristup omogućava obučavanje modela koji je prilagođen karakteristikama srpskih tablica, kao što su specifičan font, raspored karaktera i prisustvo nacionalnih simbola. Dodatno, slike snimljene na ulazima ispred rampi pružaju stvarne scenarije sa kojima će se model susretati u stvarnim aplikacijama, što dodatno povećava relevantnost i pouzdanost razvijenog rešenja.
 	
 	\subsection{Razvrstavanje i čišćenje podataka}
 	Nakon prikupljanja, sledi faza čišćenja podataka, koja podrazumeva identifikaciju i uklanjanje nekvalitetnih ili irelevantnih slika. Na primer, slike koje su previše zamagljene, oštećene, ili ne sadrže jasno vidljive registarske tablice, moraju biti uklonjenje iz skupa podataka. Ova faza obezbeđuje da model bude obučavan na kvalitetnim i relevantnim podacima, što utiče na njegovu tačnost i robusnost.
@@ -223,12 +223,12 @@
 	Anotacija predstavlja označavanje delova slike koji sadrže ključne regije, u ovom slučaju registarske tablice i tekst koji je ispisan na tablicama. Anotacija podataka je proces u kojem se ručno ili poluautomatski označavaju tačne lokacije i sadržaj registarskih tablica na svakoj slici. U ovoj fazi se koristi softver za anotaciju, koji omogućava obeležavanje granica tablica i unos odgovarajućeg teksta. Kvalitetna anotacija je veoma bitna jer direktno utiče na uspešnost obučavanja modela. Greške u anotaciji, poput netačnih ili nepotpunih oznaka, mogu dovesti do smanjenja tačnosti modela i takav tip greške se kasnije vrlo teško pronalazi.
 	
 	\subsection{Kreiranje sintetičkog skupa podataka}
-	Kreiranje sintetičkog skupa podataka pomaže uvećanju inicijalnog skupa i posebno je od značaja kada je dostupnost realnih podataka ograničena.
+	Kreiranje sintetičkog skupa podataka pomaže uvećanju inicijalnog skupa i posebno je od značaja kada je dostupnost stvarnih podataka ograničena.
 	
 	\subsubsection{Prednosti sintetičkih podataka}
-	Sintetički skupovi podataka omogućavaju stvaranje velike količine podataka bez potrebe za obimnim prikupljanjem i anotacijom realnih slika, što može biti vremenski i finansijski zahtevno. Sintetički podaci omogućavaju preciznu kontrolu nad svim aspektima slike, uključujući osvetljenje, ugao snimanja, pozadinu, i stil registarskih tablica (izbor fonta, veličine, boje i pozicije teksta, i slično). Ovo omogućava modelu da se obučava na širokom spektru varijacija, čime se povećava njegova robusnost i otpornost na različite uslove snimanja.
+	Sintetički skupovi podataka omogućavaju stvaranje velike količine podataka bez potrebe za obimnim prikupljanjem i anotacijom stvarnih slika, što može biti vremenski i finansijski zahtevno. Sintetički podaci omogućavaju preciznu kontrolu nad svim aspektima slike, uključujući osvetljenje, ugao snimanja, pozadinu, i stil registarskih tablica (izbor fonta, veličine, boje i pozicije teksta, i slično). Ovo omogućava modelu da se obučava na širokom spektru varijacija, čime se povećava njegova robusnost i otpornost na različite uslove snimanja.
 	
-	Sintetički skupovi podataka takođe omogućavaju simulaciju retkih ili ekstremnih slučajeva, kao što su tablice sa specifičnim oštećenjima, delimično zaklonjene tablice, ili tablice snimljene u nepovoljnim vremenskim uslovima. Kreiranjem ovakvih slika, model može biti pripremljen za situacije koje se možda neće često pojavljivati u realnim uslovima, ali su ipak važne za sveobuhvatnu tačnost sistema.
+	Sintetički skupovi podataka takođe omogućavaju simulaciju retkih ili ekstremnih slučajeva, kao što su tablice sa specifičnim oštećenjima, delimično zaklonjene tablice, ili tablice snimljene u nepovoljnim vremenskim uslovima. Kreiranjem ovakvih slika, model može biti pripremljen za situacije koje se možda neće često pojavljivati u stvarnim uslovima, ali su ipak važne za sveobuhvatnu tačnost sistema.
 	
 	\subsubsection{Generisanje pozadina tablica}
 	
@@ -252,11 +252,11 @@
 		\label{fig:synthetic-license-plates}
 	\end{figure}
 	
-	\subsubsection{Integracija sintetičkih podataka sa realnim podacima}
-	Kada se kreira sintetički skup podataka, bitno je integrisati ga sa realnim podacima tako da bude postignut optimalan balans između realističnosti i varijabilnosti. Sintetički podaci mogu se koristiti kao dodatak realnim podacima, čime se povećava veličina i raznovrsnost skupa podataka za obučavanje. Kombinovanjem sintetičkih i realnih podataka, model može naučiti kako da prepoznaje tekst sa registarskih tablica u različitim scenarijima, dok istovremeno ostaje veran stvarnim uslovima koje će susretati u praksi.
+	\subsubsection{Integracija sintetičkih podataka sa stvarnim podacima}
+	Kada se kreira sintetički skup podataka, bitno je integrisati ga sa stvarnim podacima tako da bude postignut optimalan balans između realističnosti i varijabilnosti. Sintetički podaci mogu se koristiti kao dodatak stvarnim podacima, čime se povećava veličina i raznovrsnost skupa podataka za obučavanje. Kombinovanjem sintetičkih i stvarnih podataka, model može naučiti kako da prepoznaje tekst sa registarskih tablica u različitim scenarijima, dok istovremeno ostaje veran stvarnim uslovima koje će susretati u praksi.
 	
 	\subsection{Augmentacija podataka}
-	Kako bi se povećala raznovrsnost skupa podataka i model bolje prilagodio različitim uslovima snimanja, često se primenjuje tehnika augmentacije podataka. Augmentacija podrazumeva generisanje novih slika od postojećih putem različitih transformacija, kao što su rotacija, promena osvetljenja, skaliranje, i dodavanje šuma. Ove transformacije omogućavaju simulaciju različitih realnih uslova, poput snimanja pod različitim uglovima, promena u osvetljenju, ili prisustva šuma na slici. Na ovaj način se model obučava na većem broju različitih scenarija, što doprinosi njegovoj otpornosti na varijacije u podacima.
+	Kako bi se povećala raznovrsnost skupa podataka i model bolje prilagodio različitim uslovima snimanja, često se primenjuje tehnika augmentacije podataka. Augmentacija podrazumeva generisanje novih slika od postojećih putem različitih transformacija, kao što su rotacija, promena osvetljenja, skaliranje, i dodavanje šuma. Ove transformacije omogućavaju simulaciju različitih stvarnih uslova, poput snimanja pod različitim uglovima, promena u osvetljenju, ili prisustva šuma na slici. Na ovaj način se model obučava na većem broju različitih scenarija, što doprinosi njegovoj otpornosti na varijacije u podacima.
 	
 	\subsection{Podela podataka}
 	Prilikom obučavanja modela dostupni skup podataka je potrebno podeliti u tri distinktivna podskupa: trening skup, validacioni skup i test skup. Ovakva podala podataka, gde se jedan podatak, u ovom slučaju slika, nalazi isključivo samo u jednom od tri skupa je fundamentalna za razvoj, evaluaciju i verifikaciju modela.
@@ -267,10 +267,10 @@
 	
 	Test skup je finalni podskup koji čini oko 10-20\% inicijalnih podataka i koristi se za nezavisnu evaluaciju konačnog modela. Ovaj skup ostaje nekorišćen do završetka obučavanja i kalibracije, čime se obezbeđuje objektivna procena generalizacijske sposobnosti modela na novim, prethodno neviđenim podacima.
 	
-	Ovakva metodologija podele podataka omogućava razvoj robusnih modela koji imaju veću pouzdanost i praktičnu primenljivost u realnim scenarijima.
+	Ovakva metodologija podele podataka omogućava razvoj robusnih modela koji imaju veću pouzdanost i praktičnu primenljivost u stvarnim scenarijima.
 	
 	\subsection{Opis korišćenog skupa podataka}
-	Skup realnih podataka koji je korišćen za proces obučavanja modela sadržao je 5.838 slika stvarnih srpskih tablica, uglavnom registrovanih u Beogradu. Sve slike su pažljivo označene i višestruko proverene kako bi se izbeglo propuštanje nepravilno označenih podataka, što bi dovelo do loših rezultata prilikom obučavanja modela. Uzevši u obzir mali broj dostupnih slika za obučavanje, augmentacijom i pravljenjem sintetičkih podataka povećan je skup podataka sa 5.838 na 124.838 slika. Prilikom augmentacije i pravljenja sintetičkih podataka inicijalni skup je obogaćen sa slikama različitih scenarija vremenskih i dnevnih uslova, kao i različitim uglovima slikanja kamere. Pored toga što doprinosi varijabilnosti uslova osvetljenja i kvantitetu podataka, dodavanje sintetičkog skupa unosi i novi kontekst teksta na tablicama, gde su u sintetičkom skupu napravljeni primeri tablica koje su mogle biti registrovane u \href{https://www.super-registracija-vozila.rs/registarske-oznake-u-srbiji}{ostalim dozvoljenim} \cite{srbRegistracija} gradovima u Srbiji pored Beograda. Dobra strana rada sa sintetičkim podacima jeste i to što što ne zahtevaju ručno označavanje podataka.
+	Skup stvarnih podataka koji je korišćen za proces obučavanja modela sadržao je 5.838 slika stvarnih srpskih tablica, uglavnom registrovanih u Beogradu. Sve slike su pažljivo označene i višestruko proverene kako bi se izbeglo propuštanje nepravilno označenih podataka, što bi dovelo do loših rezultata prilikom obučavanja modela. Uzevši u obzir mali broj dostupnih slika za obučavanje, augmentacijom i pravljenjem sintetičkih podataka povećan je skup podataka sa 5.838 na 124.838 slika. Prilikom augmentacije i pravljenja sintetičkih podataka inicijalni skup je obogaćen sa slikama različitih scenarija vremenskih i dnevnih uslova, kao i različitim uglovima slikanja kamere. Pored toga što doprinosi varijabilnosti uslova osvetljenja i kvantitetu podataka, dodavanje sintetičkog skupa unosi i novi kontekst teksta na tablicama, gde su u sintetičkom skupu napravljeni primeri tablica koje su mogle biti registrovane u \href{https://www.super-registracija-vozila.rs/registarske-oznake-u-srbiji}{ostalim dozvoljenim} \cite{srbRegistracija} gradovima u Srbiji pored Beograda. Dobra strana rada sa sintetičkim podacima jeste i to što što ne zahtevaju ručno označavanje podataka.
 	\newpage
 	
 	\section{Prepoznavanje teksta}
@@ -393,16 +393,16 @@
 	Zbog toga je servis dizajniran tako da prvo detektuje tablice na ulaznim slikama, a zatim koristi model za prepoznavanje teksta isključivo unutar detektovanih oblasti tablica. Na ovaj način se može efektivno izbaciti tekst koji je ispisan po okvirima i obično značajno manji veličinom u odnosu na glavni tekst koji se nalazi duž tablice.
 	
 	\subsubsection{Detektor tablica}
-	Model koji je korišćen za detekciju tablica je \href{https://huggingface.co/nickmuchi/yolos-small-finetuned-license-plate-detection}{YOLOS vizuelni transformer} \cite{fang2021looksequencerethinkingtransformer} inicijalno obučavan na ImageNet skupu podataka i fino podešen kroz 200 epoha na skupu od \href{https://universe.roboflow.com/objectdetection-jhgr1/license-plates-recognition/dataset/2}{5200 slika tablica}. Ovaj model je razvijen kako bi poboljšao efikasnost i preciznost detekcije objekata koristeći transformere umesto tradicionalnih konvolucionih mreža.
+	Model koji je korišćen za detekciju tablica je \href{https://huggingface.co/nickmuchi/yolos-small-finetuned-license-plate-detection}{YOLOS vizuelni transformer} \cite{fang2021looksequencerethinkingtransformer} inicijalno obučavan na ImageNet skupu podataka i fino podešen kroz 200 epoha na skupu od \href{https://universe.roboflow.com/objectdetection-jhgr1/license-plates-recognition/dataset/2}{5200 slika tablica} \cite{LicensePlatesRecognitionDatasetRoboflow}. Ovaj model je razvijen kako bi poboljšao efikasnost i preciznost detekcije objekata koristeći transformere umesto tradicionalnih konvolucionih mreža.
 	
 	YOLOS se oslanja na arhitekturu vizuelnog transformera koja omogućava modelu da obrađuje slike kao nizove vizuelnih tokova. Sa tim pristupom model može da uoči dugoročne zavisnosti i kompleksne obrasce na slikama, što poboljšava tačnost detekcije objekata.
 	
 	Ono što izdvaja YOLOS je jednostavnost dizajna modela, koja omogućava postizanje visokih performansi u detekciji objekata uz relativno manji broj slojeva i parametara u poređenju sa drugim transformer modelima.
 	
 	\subsubsection{Detektor teksta}
-	Za detekciju teksta na sceni je korišćen \href{https://github.com/clovaai/CRAFT-pytorch?tab=readme-ov-file}{CRAFT} model koji je osmišljen da poboljša prepoznavanje i lokalizaciju teksta u složenim slikama koristeći dve glavne komponente: svest o oblasti i klasifikaciju karaktera.
+	Za detekciju teksta na sceni je korišćen \href{https://github.com/clovaai/CRAFT-pytorch?tab=readme-ov-file}{CRAFT} model \cite{baek2019characterregionawarenesstext} koji je osmišljen da poboljša prepoznavanje i lokalizaciju teksta u složenim slikama koristeći dve glavne komponente: svest o oblasti i klasifikaciju karaktera.
 	
-	Deo modela zadužen za svest o oblasti se fokusira na identifikaciju i precizno lokalizovanje područja na slici gde se mogu nalaziti karakteri, omogućavajući modelu da prepozna različite oblike i orijentacije teksta. Deo vezan za klasifikaciju karaktera koristi karakteristične informacije za klasifikaciju prepoznatih regija i precizno identifikuje pojedinačne karaktere \cite{baek2019characterregionawarenesstext}.
+	Deo modela zadužen za svest o oblasti se fokusira na identifikaciju i precizno lokalizovanje područja na slici gde se mogu nalaziti karakteri, omogućavajući modelu da prepozna različite oblike i orijentacije teksta. Deo vezan za klasifikaciju karaktera koristi karakteristične informacije za klasifikaciju prepoznatih regija i precizno identifikuje pojedinačne karaktere.
 	
 	\subsection{Metodologije i tehonologije korišćene u razvoju servisa}
 	\subsubsection{PaddlePaddle}
@@ -451,27 +451,27 @@
 		\item RAM: 32GB
 	\end{itemize}
 
-	Za evaluaciju i praćenje obučavanja modela korišćeni su CTC, NRTR (Non-Recurrent Text Recognition) i sumarni gubitak te dve funkcije. \href{https://paperswithcode.com/method/ctc-loss}{CTC gubitak} se koristi u primerima gde je usklađenost između ulaznih i izlaznih sekvenci nepoznata. Ulazne sekvence u ovom slučaju predstavljaju slike koje sadrže tekst, a izlazne sekvence predstavljaju niz karaktera koji je zapisan na slici. CTC omogućava modelu da generiše sekvencu verovatnoća za svaki karakter i predstavlja dobar pristup za različite dužine ulaznih i izlaznih sekvenci. Funkcija gubitka izračunava verovatnoću ispravne sekvence sabiranjem svih mogućih usklađenja, što omogućava modelu da uči iz neusklađenih podataka \cite{inproceedings}. NRTR gubitak je dizajniran za nerekurentne modele, posebno za modele bazirane na transformer arhitekturi. Efikasan je za duge sekvence, jer ima sposobnost paralelnog procesiranja \cite{hu2020gtcguidedtrainingctc}.
+	Za evaluaciju i praćenje obučavanja modela korišćeni su CTC, NRTR (eng. Non-Recurrent Text Recognition) i sumarni gubitak te dve funkcije. \href{https://paperswithcode.com/method/ctc-loss}{CTC gubitak} se koristi u primerima gde je usklađenost između ulaznih i izlaznih sekvenci nepoznata. Ulazne sekvence u ovom slučaju predstavljaju slike koje sadrže tekst, a izlazne sekvence predstavljaju niz karaktera koji je zapisan na slici. CTC omogućava modelu da generiše sekvencu verovatnoća za svaki karakter i predstavlja dobar pristup za različite dužine ulaznih i izlaznih sekvenci. Funkcija gubitka izračunava verovatnoću ispravne sekvence sabiranjem svih mogućih usklađenja, što omogućava modelu da uči iz neusklađenih podataka \cite{inproceedings}. NRTR gubitak je dizajniran za nerekurentne modele, posebno za modele bazirane na transformer arhitekturi. Efikasan je za duge sekvence, jer ima sposobnost paralelnog procesiranja \cite{hu2020gtcguidedtrainingctc}.
 	
-	\subsubsection{Obučavanje koristeći samo realne podatke}
+	\subsubsection{Obučavanje koristeći samo stvarne podatke}
 	
-	Imajući u vidu da je za obučavanje modela bilo dostupno samo 5.838 realnih slika tablica vozila registrovanih uglavnom u Beogradu i koje su bile označene i proverene, obučavanje je trajalo samo par minuta. Model je konvergirao za nekoliko minuta i dostigao tačnost od 100\% (Slika \ref{fig:real-data-metrics}(a)) na trening skupu i 99.77\% (Slika \ref{fig:real-data-metrics}(b)) na validacionom skupu, koji je pomogao u usmeravanju obučavanja (Slika \ref{fig:train-code-real-data}).
+	Imajući u vidu da je za obučavanje modela bilo dostupno samo 5.838 stvarnih slika tablica vozila registrovanih uglavnom u Beogradu i koje su bile označene i proverene, obučavanje je trajalo samo par minuta. Model je konvergirao za nekoliko minuta i dostigao tačnost od 100\% (Slika \ref{fig:real-data-metrics}(a)) na trening skupu i 99.77\% (Slika \ref{fig:real-data-metrics}(b)) na validacionom skupu, koji je pomogao u usmeravanju obučavanja (Slika \ref{fig:train-code-real-data}).
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/train-code-real-data.png}
-		\caption{Proces obučavanja modela za detekciju teksta na realnim podacima.}
+		\caption{Proces obučavanja modela za detekciju teksta na stvarnim podacima.}
 		\label{fig:train-code-real-data}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/real-data-metrics.png}
-		\caption{Metrike u toku obučavanja modela sa realnim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela. f) Gubitak u toku obučavanja modela.}
+		\caption{Metrike u toku obučavanja modela sa stvarnim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela. f) Gubitak u toku obučavanja modela.}
 		\label{fig:real-data-metrics}
 	\end{figure}
 	
-	Dostupni skup realnih podataka je podeljen u sledeće podskupove:
+	Dostupni skup stvarnih podataka je podeljen u sledeće podskupove:
 	\begin{itemize}
 		\item Trening skup je činilo 70\% podataka, što je 4.086 slika;
 		\item Validacioni skup je činilo 15\% podataka, što je 875 slika;
@@ -480,12 +480,12 @@
 	
 	Uzevši u obzir veoma visoku tačnost na obučavanju i validacionim podacima, najbitnija provera koja validira da li je model dobro obučen ili je došlo do prekomerne prilagođenosti, jeste provera nad test skupom podataka. Uspešnost na nezavisnom testu nad skupom testnih podataka koje model nije mogao da vidi ni u jednom trenutku prilikom obučavanja iznosi 100\%, što ukazuje na to da model nije imao problem sa prekomernom prilagođenosti podataka prilikom obučavanja.
 	
-	Pored visoke tračnosti, model takođe ima i visok stepen sigurnosti prilikom predikcije, sa prosečnom sigurnošću od 99,91\% za svaku predikciju koju je izvršio na testnom skupu podataka.
+	Pored visoke tračnosti, model takođe ima i visok stepen sigurnosti prilikom predikcije, sa prosečnom sigurnošću od 99,91\% za svaku predikciju koju je izvršio na testnom skupu podataka. Sigurnost predikcije ukazuje na to koliko model veruje da je određeni karakter ili sekvenca karaktera tačna, na osnovu karakteristika izvučenih iz ulazne slike. Ovakva ocena pomaže u proceni pouzdanosti predikcija koje model pravi.
 	
-	Međutim, obzirom na to da skup realnih podataka nije bio ni kontekstualno dovoljno raznovrstan, niti kvantitativno dovoljno veliki, obučavanje je nastavljeno sa sintetičkim podacima.
+	Međutim, obzirom na to da skup stvarnih podataka nije bio ni kontekstualno dovoljno raznovrstan, niti kvantitativno dovoljno veliki, obučavanje je nastavljeno sa sintetičkim podacima.
 	
 	\subsubsection{Obučavanje koristeći samo sintetičke podatke}
-	Pre obučavanja na spojenim skupovima realnih i sintetičkih podataka, vršena je provera tačnosti modela u scenariju u kojem nije postojao pristup realnim podacima tokom obučavanja, već su korišćeni isključivo sintetički podaci.
+	Pre obučavanja na spojenim skupovima stvarnih i sintetičkih podataka, vršena je provera tačnosti modela u scenariju u kojem nije postojao pristup stvarnim podacima tokom obučavanja, već su korišćeni isključivo sintetički podaci.
 	
 	Sintetički podaci su značajno povećali količinu i kontekstualnu raznovrsnost podataka. Iako je sintetičkih podataka bilo dosta više, trening je ponovo trajao relativno kratko. Model je konvergirao za 10-ak minuta i dostigao tačnost od 100\% (Slika \ref{fig:synthetic-data-metrics}(a)) na trening skupu i najveću tačnost od 99.95\% (Slika \ref{fig:synthetic-data-metrics}(b)) na validacionom skupu dostigao za 15-ak minuta obučavanja (Slika \ref{fig:train-code-synthetic-data}).
 	
@@ -519,44 +519,44 @@
 		\label{fig:bad-predictions-synthetic-data-model}
 	\end{figure}
 	
-	Ovaj model, u odnosu na model obučavan na realnim slikama, ima manji ali i dalje visok stepen sigurnosti prilikom predikcije. Prosečna sigurnost modela obučavanog na sintetičkom skupu podataka je 98,73\% na testnom sintetičkom skupu podataka.
+	Ovaj model, u odnosu na model obučavan na stvarnim slikama, ima manji ali i dalje visok stepen sigurnosti prilikom predikcije. Prosečna sigurnost modela obučavanog na sintetičkom skupu podataka je 98,73\% na testnom sintetičkom skupu podataka.
 	
-	\subsubsection{Obučavanje koristeći realne i sintetičke podatke}
-	Finalni skup podataka koji je korišćen za obučavanje modela predstavlja kombinaciju realnih i sintetičkih podataka. Idealno, za obučavanje bi se pretežno koristili realni podaci, a sintetički podaci bi se dodavali kako bi doprineli diverzifikaciji skupa realnih podataka. Na taj način se osiguravamo da kontekst koji model uči tokom obučavanja što vernije odražava uslove u kojima će model funkcionisati u praksi. Međutim, uzevši u obzir nemogućnost pristupa većem skupu realnih podataka od onog je korišćen, nedostatak je nadoknađen dodavanjem velikog broja sinetičkih podataka.
+	\subsubsection{Obučavanje koristeći stvarne i sintetičke podatke}
+	Finalni skup podataka koji je korišćen za obučavanje modela predstavlja kombinaciju stvarnih i sintetičkih podataka. Idealno, za obučavanje bi se pretežno koristili stvarni podaci, a sintetički podaci bi se dodavali kako bi doprineli diverzifikaciji skupa stvarnih podataka. Na taj način se osiguravamo da kontekst koji model uči tokom obučavanja što vernije odražava uslove u kojima će model funkcionisati u praksi. Međutim, uzevši u obzir nemogućnost pristupa većem skupu stvarnih podataka od onog je korišćen, nedostatak je nadoknađen dodavanjem velikog broja sinetičkih podataka.
 	
-	Obučavanje na spojenom skupu realnih i sintetičkih podataka je trajalo oko 30 minuta. Model je dostigao tačnost od 100\% (Slika \ref{fig:real-and-synthetic-data-metrics}(a)) na trening skupu i 99.97\% (Slika \ref{fig:real-and-synthetic-data-metrics}(b)) na validacionom skupu podataka (Slika \ref{fig:train-code-real-and-synthetic-data}).
+	Obučavanje na spojenom skupu stvarnih i sintetičkih podataka je trajalo oko 30 minuta. Model je dostigao tačnost od 100\% (Slika \ref{fig:real-and-synthetic-data-metrics}(a)) na trening skupu i 99.97\% (Slika \ref{fig:real-and-synthetic-data-metrics}(b)) na validacionom skupu podataka (Slika \ref{fig:train-code-real-and-synthetic-data}).
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/train-code-real-and-synthetic-data.png}
-		\caption{Krajnja faza procesa obučavanja modela za detekciju teksta na spojenom skupu realnih i sintetičkih podataka.}
+		\caption{Krajnja faza procesa obučavanja modela za detekciju teksta na spojenom skupu stvarnih i sintetičkih podataka.}
 		\label{fig:train-code-real-and-synthetic-data}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/real-and-synthetic-data-metrics.png}
-		\caption{Metrike u toku obučavanja modela sa realnim i sintetičkim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela. f) Gubitak u toku obučavanja modela.}
+		\caption{Metrike u toku obučavanja modela sa stvarnim i sintetičkim podacima. a) Tačnost modela na trening podacima u toku obučavanja modela. b) Tačnost modela na validacionim podacima u toku obučavanja modela. c) Promena vrednosti stope učenja u toku obučavanja modela. d) CTC gubitak u toku obučavanja modela. e) NRTR gubitak u toku obučavanja modela. f) Gubitak u toku obučavanja modela.}
 		\label{fig:real-and-synthetic-data-metrics}
 	\end{figure}
 	
-	Kombinovani skup realnih i sintetičkih podataka je podeljen u sledeće podskupove:
+	Kombinovani skup stvarnih i sintetičkih podataka je podeljen u sledeće podskupove:
 	\begin{itemize}
-		\item Trening skup je činilo 70\% podataka, što je 87.386 slika, od kojih je 4.086 realnih i 83.300 sintetičkih slika;
-		\item Validacioni skup je činilo 15\% podataka, što je 18.725 slika, od kojih je 875 realnih i 17.850 sintetičkih slika;
-		\item Test skup je činilo 15\% podataka, što je 18.725 slika, od kojih je 875 realnih i 17.850 sintetičkih slika.
+		\item Trening skup je činilo 70\% podataka, što je 87.386 slika, od kojih je 4.086 stvarnih i 83.300 sintetičkih slika;
+		\item Validacioni skup je činilo 15\% podataka, što je 18.725 slika, od kojih je 875 stvarnih i 17.850 sintetičkih slika;
+		\item Test skup je činilo 15\% podataka, što je 18.725 slika, od kojih je 875 stvarnih i 17.850 sintetičkih slika.
 	\end{itemize}
 	
-	Na nezavisnom testnom skupu podataka model je dao pogrešne predikcije za samo 2 od 18.725 slika, beležeći tačnost od 99.98\% na nezavisnom skupu podataka. Slike tablica na kojima je model pogrešio prikazane su na Slici \ref{fig:bad-predictions-real-and-synthetic-data-model}. Model koji je obučavan na kombinovanom skupu realnih i sintetičkih podataka je imao problem sa predikcijom na slici tablice koja je pomoćnim trakama koje prelaze preko teksta zakačena za vozilo. Ovaj primer ilustruje korišćenje softvera u realnim uslovima, gde osoba koja kreira sintetički skup podataka ne može uvek da predvidi sve moguće scenarije koji se mogu desiti u praksi. To dodatno naglašava važnost pravih podataka i objašnjava zašto svi koji razvijaju ozbiljne modele teže ka potrazi za pravim podacima. Ovaj model, slično kao i model obučavan samo na sintetičkim podacima takođe pokazuje problem sa izrazito malim razlikama u boji između teksta i pozadine, ali u manjoj meri. Takvo pogrešno prepoznavanje teksta može se smatrati prihvatljivim, s obzirom na to da je veoma teško pročitati šta zapravo piše na takvoj slici.
+	Na nezavisnom testnom skupu podataka model je dao pogrešne predikcije za samo 2 od 18.725 slika, beležeći tačnost od 99.98\% na nezavisnom skupu podataka. Slike tablica na kojima je model pogrešio prikazane su na Slici \ref{fig:bad-predictions-real-and-synthetic-data-model}. Model koji je obučavan na kombinovanom skupu stvarnih i sintetičkih podataka je imao problem sa predikcijom na slici tablice koja je pomoćnim trakama koje prelaze preko teksta zakačena za vozilo. Ovaj primer ilustruje korišćenje softvera u stvarnim uslovima, gde osoba koja kreira sintetički skup podataka ne može uvek da predvidi sve moguće scenarije koji se mogu desiti u praksi. To dodatno naglašava važnost pravih podataka i objašnjava zašto svi koji razvijaju ozbiljne modele teže ka potrazi za pravim podacima. Ovaj model, slično kao i model obučavan samo na sintetičkim podacima takođe pokazuje problem sa izrazito malim razlikama u boji između teksta i pozadine, ali u manjoj meri. Takvo pogrešno prepoznavanje teksta može se smatrati prihvatljivim, s obzirom na to da je veoma teško pročitati šta zapravo piše na takvoj slici.
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\textwidth]{assets/bad-predictions-real-and-synthetic-data-model.png}
-		\caption{Primeri slika tablica na kojima je model obučavan na realnim i sintetičkim podacima dao pogrešne predikcije.}
+		\caption{Primeri slika tablica na kojima je model obučavan na stvarnim i sintetičkim podacima dao pogrešne predikcije.}
 		\label{fig:bad-predictions-real-and-synthetic-data-model}
 	\end{figure}
 	
-	Kombinovanjem realnih i sintetičkih podataka za vreme obučavanja, stepen sigurnosti modela prilikom predikcije je povećan u odnosu na model obučavan samo nad sintetičkim podacima. Prosečna sigurnost modela je 99,32\% na testnom skupu podataka. Sigurnost je i dalje nešto manja u odnosu na model obučavan koristeći isključivo realne podatke, što dodatno ukazuje na važnost korišćenja realnih podataka prilikom obučavanja modela.
+	Kombinovanjem stvarnih i sintetičkih podataka za vreme obučavanja, stepen sigurnosti modela prilikom predikcije je povećan u odnosu na model obučavan samo nad sintetičkim podacima. Prosečna sigurnost modela je 99,32\% na testnom skupu podataka. Sigurnost je i dalje nešto manja u odnosu na model obučavan koristeći isključivo stvarne podatke, što dodatno ukazuje na važnost korišćenja stvarnih podataka prilikom obučavanja modela.
 	
 	\subsubsection{Uporedna analiza tačnosti modela na sva tri testna seta}
 
@@ -569,14 +569,14 @@
 		\label{fig:comparative-analysis-on-test-set}
 	\end{table}
 	
-	Model koji je obučavan i testiran na realnim podacima postigao je najveću tačnost i sigurnost, što je očekivano s obzirom na to da su trening i testni skup sadržavali vrlo mali broj slika tablica koje su izdate isključivo na teritoriji Beograda. Ipak, iako ovaj model ima najbolju tačnost na realnim testnim podacima, njegova tačnost na ostalim testnim skupovima je značajno lošija u odnosu na ostale modele. Zbog toga, model koji je obučavan samo na realnim podacima nije najbolji izbor među tri ponuđena modela.
+	Model koji je obučavan i testiran na stvarnim podacima postigao je najveću tačnost i sigurnost, što je očekivano s obzirom na to da su trening i testni skup sadržavali vrlo mali broj slika tablica koje su izdate isključivo na teritoriji Beograda. Ipak, iako ovaj model ima najbolju tačnost na stvarnim testnim podacima, njegova tačnost na ostalim testnim skupovima je značajno lošija u odnosu na ostale modele. Zbog toga, model koji je obučavan samo na stvarnim podacima nije najbolji izbor među tri ponuđena modela.
 	
-	Najlošiju tačnost i sigurnost imao je model obučavan na realnim, a testiran na sintetičkim podacima. Vrlo sličan, ali nešto bolji rezultat ostvario je isti model na testnom skupu kombinovanih realnih i sintetičkih podataka. Jedan od razloga je to što je model tokom obučavanja na prvim dvema pozicijama video samo \enquote{BG} niz karaktera, dok su testni skupovi sadržali tablice iz svih opština Srbije koje imaju pravo da izdaju registarske tablice. Dodatno, korišćeni font za generisanje sintetičkih podataka je ručno napravljen i možda nije idealno replicirao originalni font, što je moglo uticati na tačnost.
+	Najlošiju tačnost i sigurnost imao je model obučavan na stvarnim, a testiran na sintetičkim podacima. Vrlo sličan, ali nešto bolji rezultat ostvario je isti model na testnom skupu kombinovanih stvarnih i sintetičkih podataka. Jedan od razloga je to što je model tokom obučavanja na prvim dvema pozicijama video samo \enquote{BG} niz karaktera, dok su testni skupovi sadržali tablice iz svih opština Srbije koje imaju pravo da izdaju registarske tablice. Dodatno, korišćeni font za generisanje sintetičkih podataka je ručno napravljen i možda nije idealno replicirao originalni font, što je moglo uticati na tačnost.
 	
-	Iako nema apsolutno najveću tačnost i sigurnost, najbolji model za korišćenje u realnim uslovima je onaj obučavan na realnim i sintetičkim podacima. Razlika u odnosu na model sa najvećom tačnošću je samo 0,02\%, i može se smatrati zanemarljivom. Ovaj model je imao najraznovrsniji i najobimniji trening skup, što mu uz odlične rezultate na validacionim i testnim skupovima daje prednost u izboru.
+	Model obučen na stvarnim i sintetičkim podacima ima najveću tačnost i u ovom slučaju je i najbolji model za korišćenje u stvarnim uslovima. Iako nema apsolutno najveću sigurnost prilikom predikcije, ovaj model je imao najraznovrsniji i najobimniji trening skup, što mu uz odlične rezultate na validacionim i testnim skupovima daje prednost u izboru.
 	
 	\subsubsection{Pregled tačnosti startnog modela na sva tri testna seta}
-	Model opšte namene za prepoznavanje teksta, koji je korišćen kao startni model za obučavanje na slikama tablica, ima neprihvatljivo lošu tačnost za produkcione uslove. Tačnost startnog modela na realnim podacima je 87.68\%, na sintetičkim 88.38\% i na kombinovanom skupu realnih i sintetičkih podataka 88.35\%.
+	Model opšte namene za prepoznavanje teksta, koji je korišćen kao startni model za obučavanje na slikama tablica, ima neprihvatljivo lošu tačnost za produkcione uslove. Tačnost startnog modela na stvarnim podacima je 87.68\%, na sintetičkim 88.38\% i na kombinovanom skupu stvarnih i sintetičkih podataka 88.35\%.
 	
 	Iako su ove vrednosti tačnosti relativno visoke, one nisu dovoljno pouzdane za produkcione sisteme koji zahtevaju veoma visoku preciznost, naročito u uslovima promenljivog osvetljenja i neidealnih uglova snimanja. Rezultati tačnosti nad startnim modelom ukazuju na objektivnu potrebu za daljim prilagođavanjem modela specifičnim karakteristikama registarskih tablica.
 	\newpage
@@ -614,7 +614,7 @@
 	
 	\section{Zaključak}
 	
-	U ovom radu je na detaljan i sistematičan način analiziran pristup automatskoj detekciji teksta sa tablica vozila u svrhe unapređenja različitih sistema koji se oslanjaju na prepoznavanje registarskih oznaka. Postignuti rezultat prepoznavanja teksta je na zadovoljavajućih 99.98\% preciznosti i vreme izvršavanja od oko 1.000ms dozvoljava korišćenje predloga rešenja u realnim uslovima.
+	U ovom radu je na detaljan i sistematičan način analiziran pristup automatskoj detekciji teksta sa tablica vozila u svrhe unapređenja različitih sistema koji se oslanjaju na prepoznavanje registarskih oznaka. Postignuti rezultat prepoznavanja teksta je na zadovoljavajućih 99.98\% preciznosti i vreme izvršavanja od oko 1.000ms dozvoljava korišćenje predloga rešenja u stvarnim uslovima.
 	
 	Posmatrajući rezultate obučavanja modela za prepoznavanje teksta, za postizanje visoke tačnosti ključno je obezbediti podatke koji što vernije odražavaju uslove u kojima će model biti korišćen u praksi. Na taj način, model će bolje prepoznavati obrasce i karakteristike koji će se pojaviti u novim, nepoznatim podacima. Ako su podaci korišćeni za obučavanje značajno različiti od onih koji se koriste u praksi, model može imati problem sa generalizacijom, što može dovesti do loših predikcija. Stoga je važno osigurati da skup podataka za obučavanje obuhvata raznovrsne i realistične primere koji odražavaju stvarne uslove rada.
 	
